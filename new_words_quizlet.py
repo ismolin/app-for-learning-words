@@ -77,17 +77,6 @@ async def start_quizlet(user_name):
 
 """This function generates one random new word and adds it to the list of words to study"""
 
-async def generate_word(user_name):
-    categories = random.choice(await create_categories_list(user_name))
-    new_word = await db_select(sql = f'''SELECT words_eng, words_rus FROM {categories} WHERE words_eng NOT IN 
-                                        (SELECT words_eng from {self.user_name}_days_words_list
-                                         UNION 
-                                         SELECT words_eng from {self.user_name}_words) 
-                                         ORDER BY RANDOM()
-                                         LIMIT 1''')
-    await db_update(sql = f"""INSERT INTO {self.user_name}_days_words_list(words_eng, words_rus) 
-                              VALUES ('{new_word[0][0]}','{new_word[0][1]}')""")
-
 async def generate_new_word(user_name):
 
     categories = random.choice(await create_categories_list(user_name))
