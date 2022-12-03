@@ -1,6 +1,6 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 
-button0 = KeyboardButton('Учить новые слова')
+button1 = KeyboardButton('Учить новые слова')
 button1 = KeyboardButton('Повторить слова')
 button2 = KeyboardButton('Настройки')
 

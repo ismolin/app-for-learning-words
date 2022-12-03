@@ -1,7 +1,6 @@
 from config import host, user, password, database
 import psycopg2
 from psycopg2.extras import execute_values
-import pymongo
 
 async def db_select(sql):
     with psycopg2.connect(host=host, database=database, user=user, password=password) as conn:
