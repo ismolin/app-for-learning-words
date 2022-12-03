@@ -4,10 +4,6 @@ from datetime import timedelta
 from database import db_select, db_update_many, db_update
 from aiogram.utils.markdown import hspoiler
 
-
-
-
-
 async def start_repeating_words(message, bot):
 
     now = datetime.datetime.now()
