@@ -1,11 +1,11 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 
-button1 = KeyboardButton('Учить новые слова')
-button1 = KeyboardButton('Повторить слова')
-button2 = KeyboardButton('Настройки')
+new_words = KeyboardButton('Учить новые слова')
+repeat_words = KeyboardButton('Повторить слова')
+settings = KeyboardButton('Настройки')
 
 user_keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
-user_keyboard.add(button0).add(button1)
+user_keyboard.add(new_words ).add(repeat_words)
 
 ########################################################################
 
