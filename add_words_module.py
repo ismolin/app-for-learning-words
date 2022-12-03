@@ -1,6 +1,6 @@
 from aiogram import Bot, types
 import async_google_trans_new
-from database import db_select, db_update
+from database import db_update
 import datetime
 from config import TOKEN
 
@@ -16,7 +16,6 @@ class NewUserWords:
 
 
     async def translate_and_add_word(self):
-
 
         self.translator = async_google_trans_new.AsyncTranslator()
         self.time_now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")

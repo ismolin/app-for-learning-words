@@ -114,7 +114,7 @@ async def test(message: types.Message):
                                                       'Показывать это слово еще'})
 async def test(message: types.Message):
 
-    time_now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        time_now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     if len(await db_select(sql=f"""SELECT * FROM {message.from_user.username}_days_words_list""")) == 1:
         await bot.delete_message(message.from_user.id, message.message.message_id)
@@ -122,7 +122,7 @@ async def test(message: types.Message):
                                reply_markup=user_keyboard)
     else:
         if message.data == 'Я уже знаю это слово':
-            await generate_word(message.from_user.username)
+            await generate_new_word(message.from_user.username)
             known_word = message.message.text.split('\n')
             await db_update(sql = f"""DELETE FROM {message.from_user.username}_days_words_list 
                                       WHERE words_eng = '{known_word[0]}';
@@ -206,11 +206,11 @@ async def test(message: types.Message):
 
 @dp.message_handler(lambda message: message.text in {'Повторить слова'})
 async def test(message: types.Message):
-    await start_repeating_words(message)
+    await start_repeating_words(message, bot)
 
 @dp.callback_query_handler(lambda call: call.data in {'Я вспомнил это слово', 'Не вспомнил'})
 async def repetition_words_next(message: types.Message):
-    await repetition_words(message)
+    await repetition_words(message, bot)
 
 @dp.message_handler(lambda message: message.text in {'Завершить'})
 async def repetition_words_next(message: types.Message):
@@ -227,7 +227,7 @@ async def repetition_words_next(message: types.Message):
 @dp.message_handler(content_types=['text'])
 async def start_bot(message: types.Message):
     new_word = NewUserWords(message)
-    await new_word.translate_and_add_word()
+    await new_word.translate_and_add_word(bot)
 
 
 executor.start_polling(dp, skip_updates=True)

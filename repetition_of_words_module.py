@@ -2,14 +2,13 @@ import datetime
 from buttons import repetition_words_keyboard, GeneralMenuButton, user_keyboard
 from datetime import timedelta
 from database import db_select, db_update_many, db_update
-from aiogram import Bot, types
 from aiogram.utils.markdown import hspoiler
-from config import TOKEN
-
-bot = Bot(TOKEN)
 
 
-async def start_repeating_words(message):
+
+
+
+async def start_repeating_words(message, bot):
 
     now = datetime.datetime.now()
     await db_update(f"""TRUNCATE TABLE {message.from_user.username}_repetition_list""")

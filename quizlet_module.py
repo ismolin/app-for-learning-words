@@ -5,6 +5,7 @@ import random
 """Сreating a list of new words to study in the database"""
 
 async def create_words_list(user_username):
+
     await db_update(f"""TRUNCATE TABLE {user_username}_days_words_list""")
 
     """Extracting the number of words per day, the number of user categories, 
@@ -20,7 +21,7 @@ async def create_words_list(user_username):
 
     """Determining the exact number of words to take from each category"""
 
-    if total_quantity_of_words / quantity_of_categories == 0:
+    if total_quantity_of_words % quantity_of_categories == 0:
         return [average_quantity_words for average_quantity_words in range(quantity_of_categories)]
     else:
         local_quantity_of_words_list = []
@@ -32,29 +33,27 @@ async def create_words_list(user_username):
                 cnt += 1
             else:
                 local_quantity_of_words_list.append(total_quantity_of_words)
-    print(local_quantity_of_words_list)
 
     """Creating a list of new words for the user and inserting it into the database"""
 
-    categories_list = await create_categories_list(user_username)
-    print(categories_list)
-    for catigories, local_count_of_words in zip(categories_list, local_quantity_of_words_list):
-        words = await db_select(f"""SELECT {catigories}.words_eng, {catigories}.words_rus
-                        FROM {catigories}
-                        WHERE {catigories}.words_eng NOT IN
-                        (SELECT words_eng FROM {user_username}_words)
-                        ORDER BY RANDOM()
-                        LIMIT {local_count_of_words}""")
-        print(words)
-        await db_update_many(f"""INSERT INTO {user_username}_days_words_list(words_eng, words_rus) 
+    categories_list = await create_categories_list(user_name)
+
+    for categories, local_count_of_words in zip(categories_list, local_quantity_of_words_list):
+        words = await db_select(f"""SELECT {categories}.words_eng, {categories}.words_rus
+                                    FROM {categories}
+                                    WHERE {categories}.words_eng NOT IN
+                                    (SELECT words_eng FROM {user_name}_words)
+                                    ORDER BY RANDOM()
+                                    LIMIT {local_count_of_words}""")
+        await db_update_many(f"""INSERT INTO {user_name}_days_words_list(words_eng, words_rus) 
                                  VALUES %s""", words)
 
 
 """Generating a list with user categories"""
 
-async def create_categories_list(user_username):
+async def create_categories_list(user_name):
     categories_import = await db_select(sql = f"""SELECT categories 
-                                                  FROM {user_username}_info 
+                                                  FROM {user_name}_info 
                                                   WHERE categories not in ('None')""")
     categories_list = []
     for i in categories_import:
@@ -73,7 +72,6 @@ async def start_quizlet(user_name):
     result = await db_select(f'''SELECT words_eng, words_rus 
                                  FROM {user_name}_days_words_list 
                                  LIMIT 1''')
-    print(result)
     spoiler = hspoiler(result[0][1])
     return result[0][0]+'\n'+f'{spoiler}'
 
@@ -89,3 +87,16 @@ async def generate_word(user_name):
                                          LIMIT 1''')
     await db_update(sql = f"""INSERT INTO {user_name}_days_words_list(words_eng, words_rus) 
                               VALUES ('{new_word[0][0]}','{new_word[0][1]}')""")
+
+class QuizletWords:
+
+    async def generate_new_word(user_name):
+        categories = random.choice(await create_categories_list(user_name))
+        new_word = await db_select(sql = f'''SELECT words_eng, words_rus FROM {categories} WHERE words_eng NOT IN 
+                                            (SELECT words_eng from {user_name}_days_words_list
+                                            UNION 
+                                            SELECT words_eng from {user_name}_words) 
+                                            ORDER BY RANDOM()
+                                            LIMIT 1''')
+        await db_update(sql = f"""INSERT INTO {user_name}_days_words_list(words_eng, words_rus) 
+                                VALUES ('{new_word[0][0]}','{new_word[0][1]}')""")
