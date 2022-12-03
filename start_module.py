@@ -114,7 +114,7 @@ async def test(message: types.Message):
                                                       'Показывать это слово еще'})
 async def test(message: types.Message):
 
-        time_now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    time_now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     if len(await db_select(sql=f"""SELECT * FROM {message.from_user.username}_days_words_list""")) == 1:
         await bot.delete_message(message.from_user.id, message.message.message_id)
