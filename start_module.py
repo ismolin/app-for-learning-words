@@ -228,7 +228,8 @@ async def repetition_words_next(message: types.Message):
 @dp.message_handler(content_types=['text'])
 async def start_bot(message: types.Message):
     new_word = NewUserWords(message)
-    await new_word.translate_and_add_word(bot)
+    translate_word = await new_word.translate_word()
+    translate_word.add_word_to_words_list(bot, *translate_word)
 
 
 executor.start_polling(dp, skip_updates=True)

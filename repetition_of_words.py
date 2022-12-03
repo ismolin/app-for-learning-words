@@ -35,7 +35,7 @@ async def start_repeating_words(message, bot):
         await bot.send_message(message.from_user.id, result[0][0] + '\n' + f'{spoiler}', parse_mode='HTML',
                                reply_markup=repetition_words_keyboard)
 
-async def repetition_words(message):
+async def repetition_words(message, bot):
     now = datetime.datetime.now()
     if message.data == 'Я вспомнил это слово':
         woerds_eng = message.message.text.split('\n')[0]

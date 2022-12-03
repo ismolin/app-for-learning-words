@@ -20,23 +20,27 @@ async def create_words_list(user_name):
     average_quantity_words = int(total_quantity_of_words / quantity_of_categories)
 
     """Determining the exact number of words to take from each category"""
+    if quantity_of_categories == 1:
+        local_quantity_of_words_list = [total_quantity_of_words]
 
-    if total_quantity_of_words % quantity_of_categories == 0:
-        return [average_quantity_words for average_quantity_words in range(quantity_of_categories)]
     else:
-        local_quantity_of_words_list = []
-        cnt = 1
-        for i in range(quantity_of_categories):
-            if cnt < quantity_of_categories:
-                local_quantity_of_words_list.append(average_quantity_words)
-                total_quantity_of_words -= average_quantity_words
-                cnt += 1
-            else:
-                local_quantity_of_words_list.append(total_quantity_of_words)
+        if total_quantity_of_words % quantity_of_categories == 0:
+            local_quantity_of_words_list = [average_quantity_words for average_quantity_words in range(quantity_of_categories)]
+
+        else:
+            local_quantity_of_words_list = []
+            cnt = 1
+            for i in range(quantity_of_categories):
+                if cnt < quantity_of_categories:
+                    local_quantity_of_words_list.append(average_quantity_words)
+                    total_quantity_of_words -= average_quantity_words
+                    cnt += 1
+                else:
+                    local_quantity_of_words_list.append(total_quantity_of_words)
 
     """Creating a list of new words for the user and inserting it into the database"""
 
-    categories_list = await create_categories_list(generate_new_word)
+    categories_list = await create_categories_list(user_name)
 
     for categories, local_count_of_words in zip(categories_list, local_quantity_of_words_list):
         words = await db_select(f"""SELECT {categories}.words_eng, {categories}.words_rus
@@ -88,3 +92,6 @@ async def generate_new_word(user_name):
                                          LIMIT 1''')
     await db_update(sql = f"""INSERT INTO {user_name}_days_words_list(words_eng, words_rus) 
                               VALUES ('{new_word[0][0]}','{new_word[0][1]}')""")
+
+
+
