@@ -1,13 +1,12 @@
 from aiogram import Bot, types
-from aiogram.dispatcher import Dispatcher, FSMContext
+from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
 from config import TOKEN
 from buttons import user_keyboard, word_count_keyboard, categories_keyboard, categories_keyboard_with_next_button, \
     time_repeat_keyboard, new_words_quizlet_keyboard, new_words_quizlet_keyboard2, GeneralMenuButton
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
-from database import db_select, db_update, db_update_many
-from quizlet_module import create_words_list, start_quizlet, generate_word
-from aiogram.utils.markdown import hspoiler
+from database import db_select, db_update
+from quizlet_module import create_words_list, start_quizlet
 import datetime
 from repetition_of_words_module import repetition_words, start_repeating_words
 from add_words_module import NewUserWords

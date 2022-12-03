@@ -1,4 +1,4 @@
-from aiogram import Bot, types
+from aiogram import Bot
 import async_google_trans_new
 from database import db_update
 import datetime
