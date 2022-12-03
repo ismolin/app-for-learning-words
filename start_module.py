@@ -1,18 +1,19 @@
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
-from config import TOKEN
+from dotenv import dotenv_values
 from buttons import user_keyboard, word_count_keyboard, categories_keyboard, categories_keyboard_with_next_button, \
     time_repeat_keyboard, new_words_quizlet_keyboard, new_words_quizlet_keyboard2, GeneralMenuButton
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from database import db_select, db_update
-from quizlet_module import create_words_list, start_quizlet
+from new_words_quizlet import create_words_list, start_quizlet, generate_new_word
 import datetime
-from repetition_of_words_module import repetition_words, start_repeating_words
-from add_words_module import NewUserWords
+from repetition_of_words import repetition_words, start_repeating_words
+from add_user_words import NewUserWords
 
+config = dotenv_values(".env")
 storage = MemoryStorage()
-bot = Bot(TOKEN)
+bot = Bot(config['TOKEN'])
 dp = Dispatcher(bot, storage=storage)
 
 
@@ -121,6 +122,7 @@ async def test(message: types.Message):
                                reply_markup=user_keyboard)
     else:
         if message.data == 'Я уже знаю это слово':
+
             await generate_new_word(message.from_user.username)
             known_word = message.message.text.split('\n')
             await db_update(sql = f"""DELETE FROM {message.from_user.username}_days_words_list 
