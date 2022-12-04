@@ -37,4 +37,4 @@ class NewUserWords:
                                 (words_eng, words_rus, words_count, last_repetition_time)
                                 VALUES ('{self.word_eng}', '{self.word_rus}', {1},  '{self.time_now}')""")
         await bot.send_message(self.user_id,
-                                   f"""Слово {self.word_eng} - {self.word_rus}, добавлено в ваш список для изучения!""")
+                                   f"""Слово {self.word_rus} - {self.word_eng}, добавлено в ваш список для изучения!""")
