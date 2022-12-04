@@ -10,6 +10,7 @@ from new_words_quizlet import create_words_list, start_quizlet, generate_new_wor
 import datetime
 from repetition_of_words import repetition_words, start_repeating_words
 from add_user_words import NewUserWords
+from new_words_quizlet import NewWordsQuizlet
 
 config = dotenv_values(".env")
 storage = MemoryStorage()
@@ -112,9 +113,9 @@ async def test(message: types.Message):
                                                       'Начать учить это слово',
                                                       'Я запомнил, отложить для повтора',
                                                       'Показывать это слово еще'})
-async def test(message: types.Message):
+async def new_words_quizlet(message: types.Message):
 
-    time_now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    # time_now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     if len(await db_select(sql=f"""SELECT * FROM {message.from_user.username}_days_words_list""")) == 1:
         await bot.delete_message(message.from_user.id, message.message.message_id)
@@ -122,9 +123,9 @@ async def test(message: types.Message):
                                reply_markup=user_keyboard)
     else:
         if message.data == 'Я уже знаю это слово':
-
-            await generate_new_word(message.from_user.username)
-            known_word = message.message.text.split('\n')
+            quizlet = NewWordsQuizlet(message)
+            quizlet.generate_new_word()
+            # known_word = message.message.text.split('\n')
             await db_update(sql = f"""DELETE FROM {message.from_user.username}_days_words_list 
                                       WHERE words_eng = '{known_word[0]}';
                                       INSERT INTO {message.from_user.username}_words
