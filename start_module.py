@@ -3,10 +3,9 @@ from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
 from dotenv import dotenv_values
 from buttons import user_keyboard, word_count_keyboard, categories_keyboard, categories_keyboard_with_next_button, \
-    time_repeat_keyboard, new_words_quizlet_keyboard, new_words_quizlet_keyboard2, GeneralMenuButton
+    time_repeat_keyboard, GeneralMenuButton
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from database import db_select, db_update
-from new_words_quizlet import create_words_list, start_quizlet, generate_new_word
 import datetime
 from repetition_of_words import repetition_words, start_repeating_words
 from add_user_words import NewUserWords
@@ -15,6 +14,7 @@ from new_words_quizlet import NewWordsQuizlet
 config = dotenv_values(".env")
 storage = MemoryStorage()
 bot = Bot(config['TOKEN'])
+
 dp = Dispatcher(bot, storage=storage)
 
 
@@ -101,13 +101,17 @@ async def test(message: types.Message):
 @dp.message_handler(lambda message: message.text in {'Учить новые слова'})
 async def test(message: types.Message):
 
-    await create_words_list(message.from_user.username)
+    quizlet = NewWordsQuizlet(message, bot, callback=False)
+    quantity_of_words_from_category_list = await quizlet.create_quantity_of_words_from_category_list()
+    categories_list = await quizlet.create_categories_list()
+    await quizlet.create_new_words_list(categories_list, quantity_of_words_from_category_list)
+
     words_count = await db_select(f"""SELECT COUNT(*) FROM {message.from_user.username}_days_words_list""")
-    print(words_count)
     await bot.send_message(message.from_user.id, f'Я подобрал тебе {words_count[0][0]} разных слов из всех твоих категорий',
                            reply_markup=GeneralMenuButton)
-    text = await start_quizlet(message.from_user.username)
-    await bot.send_message(message.from_user.id, text, parse_mode='HTML', reply_markup=new_words_quizlet_keyboard)
+    quizlet_card = await quizlet.create_quizlet_card()
+    await quizlet.send_quizlet_card(quizlet_card, start_quizlet=True)
+
 
 @dp.callback_query_handler(lambda call: call.data in {'Я уже знаю это слово',
                                                       'Начать учить это слово',
@@ -115,96 +119,38 @@ async def test(message: types.Message):
                                                       'Показывать это слово еще'})
 async def new_words_quizlet(message: types.Message):
 
-    # time_now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    quizlet = NewWordsQuizlet(message, bot,  callback=True)
 
-    if len(await db_select(sql=f"""SELECT * FROM {message.from_user.username}_days_words_list""")) == 1:
-        await bot.delete_message(message.from_user.id, message.message.message_id)
-        await bot.send_message(message.from_user.id, 'Так держать! Не забудь зайти повторить слова!', parse_mode='HTML',
-                               reply_markup=user_keyboard)
+    if await quizlet.this_is_last_word() == True:
+        await quizlet.the_end()
+
     else:
         if message.data == 'Я уже знаю это слово':
-            quizlet = NewWordsQuizlet(message)
-            quizlet.generate_new_word()
-            # known_word = message.message.text.split('\n')
-            await db_update(sql = f"""DELETE FROM {message.from_user.username}_days_words_list 
-                                      WHERE words_eng = '{known_word[0]}';
-                                      INSERT INTO {message.from_user.username}_words
-                                      (words_eng, words_rus, words_count) 
-                                      VALUES ('{known_word[0]}', '{known_word[1]}', {6})""")
-            await bot.delete_message(message.from_user.id, message.message.message_id)
-            next_word = await start_quizlet(message.from_user.username)
-            next_word_eng = next_word.split('\n')[0]
-            if len(await db_select(sql=f"""SELECT * FROM {message.from_user.username}_words 
-                                           WHERE words_eng = '{next_word_eng}'""")) > 0:
-                await bot.send_message(message.from_user.id, next_word, parse_mode='HTML',
-                                       reply_markup=new_words_quizlet_keyboard2)
-
-            else:
-                await bot.send_message(message.from_user.id, next_word, parse_mode='HTML',
-                                       reply_markup=new_words_quizlet_keyboard)
+            categories_list = await quizlet.create_categories_list()
+            await quizlet.generate_new_word(categories_list)
+            await quizlet.i_know_this_word()
+            next_word_card = await quizlet.create_quizlet_card()
+            await quizlet.send_quizlet_card(next_word_card, start_quizlet=False)
 
         elif message.data == 'Начать учить это слово':
-
-            unknown_word = message.message.text.split('\n')
-            print(time_now)
-            await db_update(sql=f"""DELETE FROM {message.from_user.username}_days_words_list 
-                                    WHERE words_eng = '{unknown_word[0]}';
-                                    INSERT INTO {message.from_user.username}_days_words_list(words_eng, words_rus) 
-                                    VALUES ('{unknown_word[0]}','{unknown_word[1]}');
-                                    INSERT INTO {message.from_user.username}_words 
-                                    (words_eng, words_rus, words_count, last_repetition_time) 
-                                    VALUES ('{unknown_word[0]}', '{unknown_word[1]}', {1},  '{time_now}')""")
-
-            await bot.delete_message(message.from_user.id, message.message.message_id)
-            next_word = await start_quizlet(message.from_user.username)
-            next_word_eng = next_word.split('\n')[0]
-            if len(await db_select(sql=f"""SELECT * FROM {message.from_user.username}_words 
-                                           WHERE words_eng = '{next_word_eng}'""")) > 0:
-                await bot.send_message(message.from_user.id, next_word, parse_mode='HTML',
-                                       reply_markup=new_words_quizlet_keyboard2)
-            else:
-                await bot.send_message(message.from_user.id, next_word, parse_mode='HTML',
-                                       reply_markup=new_words_quizlet_keyboard)
+            await quizlet.start_learning_this_word()
+            next_word_card = await quizlet.create_quizlet_card()
+            await quizlet.send_quizlet_card(next_word_card, start_quizlet=False)
 
         elif message.data == 'Я запомнил, отложить для повтора':
-            if len(await db_select(sql=f"""SELECT * FROM {message.from_user.username}_days_words_list""")) == 1:
-                    await bot.delete_message(message.from_user.id, message.message.message_id)
-                    await bot.send_message(message.from_user.id, 'Так держать! Не забудь зайти поторить слова!',
-                                           reply_markup=user_keyboard)
-            else:
-                known_word = message.message.text.split('\n')[0]
-                await db_update(sql=f"""DELETE FROM {message.from_user.username}_days_words_list 
-                                        WHERE words_eng = '{known_word}'""")
-                await bot.delete_message(message.from_user.id, message.message.message_id)
-                next_word = await start_quizlet(message.from_user.username)
-                next_word_eng = next_word.split('\n')[0]
 
-                if len(await db_select(sql=f"""SELECT * FROM {message.from_user.username}_words 
-                                               WHERE words_eng = '{next_word_eng}'""")) > 0:
-                    await bot.send_message(message.from_user.id, next_word, parse_mode='HTML',
-                                           reply_markup=new_words_quizlet_keyboard2)
-                else:
-                    await bot.send_message(message.from_user.id, next_word, parse_mode='HTML',
-                                           reply_markup=new_words_quizlet_keyboard)
+            if await quizlet.this_is_last_word():
+                await quizlet.the_end()
+
+            else:
+                await quizlet.delete_from_words_list()
+                next_word_card = await quizlet.create_quizlet_card()
+                await quizlet.send_quizlet_card(next_word_card, start_quizlet=False)
 
         elif message.data == 'Показывать это слово еще':
-
-            unknown_word = message.message.text.split('\n')
-            await db_update(sql=f"""DELETE FROM {message.from_user.username}_days_words_list 
-                                    WHERE words_eng = '{unknown_word[0]}';
-                                    INSERT INTO {message.from_user.username}_days_words_list(words_eng, words_rus) 
-                                    VALUES ('{unknown_word[0]}','{unknown_word[1]}')""")
-
-            await bot.delete_message(message.from_user.id, message.message.message_id)
-            next_word = await start_quizlet(message.from_user.username)
-            next_word_eng = next_word.split('\n')[0]
-            if len(await db_select(sql=f"""SELECT * FROM {message.from_user.username}_words 
-                                           WHERE words_eng = '{next_word_eng}'""")) > 0:
-                await bot.send_message(message.from_user.id, next_word, parse_mode='HTML',
-                                       reply_markup=new_words_quizlet_keyboard2)
-            else:
-                await bot.send_message(message.from_user.id, next_word, parse_mode='HTML',
-                                       reply_markup=new_words_quizlet_keyboard)
+            await quizlet.show_this_word_again()
+            next_word_card = await quizlet.create_quizlet_card()
+            await quizlet.send_quizlet_card(next_word_card, start_quizlet=False)
 
 @dp.message_handler(lambda message: message.text in {'Повторить слова'})
 async def test(message: types.Message):
@@ -220,11 +166,11 @@ async def repetition_words_next(message: types.Message):
     await bot.send_message(message.from_user.id, 'Окей, заходи потом еще!',
                            reply_markup=user_keyboard)
 
-@dp.message_handler(lambda message: message.text in {'Настройки'})
-async def repetition_words_next(message: types.Message):
-    await bot.delete_message(message.from_user.id, message.message_id-1)
-    await bot.send_message(message.from_user.id, 'Окей, заходи еще потом !',
-                           reply_markup=user_keyboard)
+# @dp.message_handler(lambda message: message.text in {'Настройки'})
+# async def repetition_words_next(message: types.Message):
+#     await bot.delete_message(message.from_user.id, message.message_id-1)
+#     await bot.send_message(message.from_user.id, 'Окей, заходи еще потом !',
+#                            reply_markup=user_keyboard)
 
 @dp.message_handler(content_types=['text'])
 async def start_bot(message: types.Message):
