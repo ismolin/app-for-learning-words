@@ -4,8 +4,8 @@ from buttons import new_words_quizlet_keyboard, new_words_quizlet_keyboard2, use
 import random
 import datetime
 
-class NewWordsQuizlet:
 
+class NewWordsQuizlet:
     def __init__(self, message, bot, callback: bool):
 
         self.bot = bot
@@ -17,8 +17,7 @@ class NewWordsQuizlet:
             self.word_en = message.message.text.split('\n')[0]
             self.word_ru = message.message.text.split('\n')[1]
 
-
-    """Сreating a list of new words to study in the database"""
+    """Creating a list of new words to study in the database"""
 
     async def create_quantity_of_words_from_category_list(self):
 
@@ -56,7 +55,6 @@ class NewWordsQuizlet:
                         quantity_of_words_from_category_list.append(total_quantity_of_words)
                 return quantity_of_words_from_category_list
 
-
     """Creating a list of new words for the user and inserting it into the database"""
 
     async def create_new_words_list(self, categories_list: list, quantity_of_words_from_category_list: list):
@@ -70,7 +68,6 @@ class NewWordsQuizlet:
                                         LIMIT {local_count_of_words}""")
             await db_update_many(f"""INSERT INTO {self.user_name}_days_words_list(words_eng, words_rus) 
                                      VALUES %s""", words)
-
 
     """Generating a list with user categories"""
 
@@ -89,7 +86,6 @@ class NewWordsQuizlet:
                 categories_list.append('most_used_it_words')
         return categories_list
 
-
     """Generating text for a quizlet card"""
 
     async def create_quizlet_card(self):
@@ -98,7 +94,6 @@ class NewWordsQuizlet:
                                      LIMIT 1''')
         spoiler = hspoiler(result[0][1])
         return result[0][0] + '\n' + f'{spoiler}'
-
 
     """This method generates one random new word and adds it to the list of words to study"""
 
@@ -114,8 +109,8 @@ class NewWordsQuizlet:
         await db_update(sql=f"""INSERT INTO {self.user_name}_days_words_list(words_eng, words_rus) 
                                 VALUES ('{new_word[0][0]}','{new_word[0][1]}')""")
 
-
-    '''This method removes a word from the quizlet list and adds the word to the user's list with the flag "6" - "known" '''
+    '''This method removes a word from the quizlet list and adds the word to the user's list 
+                                     with the flag "6" - "known" '''
 
     async def i_know_this_word(self):
 
@@ -124,7 +119,6 @@ class NewWordsQuizlet:
                                 INSERT INTO {self.user_name}_words
                                 (words_eng, words_rus, words_count) 
                                 VALUES ('{self.word_en}', '{self.word_ru}', {6})""")
-
 
     '''This method moves the word to the end of the quizlet list and adds the word to the user's list'''
 
@@ -140,14 +134,13 @@ class NewWordsQuizlet:
                                 (words_eng, words_rus, words_count, last_repetition_time) 
                                 VALUES ('{self.word_en}', '{self.word_ru}', {1},  '{time_now}')""")
 
-
     '''This method sends a quizlet card with the required keyboard'''
 
     async def send_quizlet_card(self, next_word_card: str, start_quizlet: bool):
 
-        if start_quizlet == True:
+        if start_quizlet:
             await self.bot.send_message(self.user_id, next_word_card, parse_mode='HTML',
-                                   reply_markup=new_words_quizlet_keyboard)
+                                        reply_markup=new_words_quizlet_keyboard)
 
         else:
             await self.bot.delete_message(self.user_id, self.message_id)
@@ -155,12 +148,11 @@ class NewWordsQuizlet:
             if len(await db_select(sql=f"""SELECT * FROM {self.user_name}_words 
                                            WHERE words_eng = '{word_en}'""")) > 0:
                 await self.bot.send_message(self.user_id, next_word_card, parse_mode='HTML',
-                                       reply_markup=new_words_quizlet_keyboard2)
+                                            reply_markup=new_words_quizlet_keyboard2)
 
             else:
                 await self.bot.send_message(self.user_id, next_word_card, parse_mode='HTML',
-                                       reply_markup=new_words_quizlet_keyboard)
-
+                                            reply_markup=new_words_quizlet_keyboard)
 
     '''This method removes a word from the user's list'''
 
@@ -169,13 +161,11 @@ class NewWordsQuizlet:
         await db_update(sql=f"""DELETE FROM {self.user_name}_days_words_list 
                                 WHERE words_eng = '{self.word_en}'""")
 
-
     '''This method checks if the word is the last one in the list'''
 
     async def this_is_last_word(self):
 
         return len(await db_select(sql=f"""SELECT * FROM {self.user_name}_days_words_list""")) == 1
-
 
     '''This method completes the learning of new words'''
 
@@ -183,8 +173,7 @@ class NewWordsQuizlet:
 
         await self.bot.delete_message(self.user_id, self.message_id)
         await self.bot.send_message(self.user_id, 'Так держать! Не забудь зайти повторить слова!', parse_mode='HTML',
-                               reply_markup=user_keyboard)
-
+                                    reply_markup=user_keyboard)
 
     '''This method moves a word to last position in user's list'''
 
