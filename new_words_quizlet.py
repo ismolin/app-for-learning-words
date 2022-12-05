@@ -3,7 +3,9 @@ from aiogram.utils.markdown import hspoiler
 from buttons import new_words_quizlet_keyboard, new_words_quizlet_keyboard2, user_keyboard
 import random
 import datetime
+
 class NewWordsQuizlet:
+
     def __init__(self, message, bot, callback: bool):
 
         self.bot = bot
@@ -17,6 +19,7 @@ class NewWordsQuizlet:
 
 
     """Сreating a list of new words to study in the database"""
+
     async def create_quantity_of_words_from_category_list(self):
 
         await db_update(f"""TRUNCATE TABLE {self.user_name}_days_words_list""")
@@ -25,14 +28,15 @@ class NewWordsQuizlet:
         and the average number of words to take from each category"""
 
         total_quantity_of_words_query = await db_select(sql=f"""SELECT total_quantity_of_words 
-                                                                      FROM {self.user_name}_info LIMIT 1""")
+                                                                FROM {self.user_name}_info LIMIT 1""")
         total_quantity_of_words = int(total_quantity_of_words_query[0][0])
         quantity_of_categories_query = await db_select(sql=f"""SELECT COUNT(categories) 
-                                                                     FROM {self.user_name}_info""")
+                                                               FROM {self.user_name}_info""")
         quantity_of_categories = int(quantity_of_categories_query[0][0])
         average_quantity_words = int(total_quantity_of_words / quantity_of_categories)
 
         """Determining the exact number of words to take from each category"""
+
         if quantity_of_categories == 1:
             return [total_quantity_of_words]
 
@@ -54,6 +58,7 @@ class NewWordsQuizlet:
 
 
     """Creating a list of new words for the user and inserting it into the database"""
+
     async def create_new_words_list(self, categories_list: list, quantity_of_words_from_category_list: list):
 
         for categories, local_count_of_words in zip(categories_list, quantity_of_words_from_category_list):
@@ -68,6 +73,7 @@ class NewWordsQuizlet:
 
 
     """Generating a list with user categories"""
+
     async def create_categories_list(self):
 
         categories_import = await db_select(sql=f"""SELECT categories 
@@ -85,6 +91,7 @@ class NewWordsQuizlet:
 
 
     """Generating text for a quizlet card"""
+
     async def create_quizlet_card(self):
         result = await db_select(f'''SELECT words_eng, words_rus 
                                      FROM {self.user_name}_days_words_list 
@@ -94,6 +101,7 @@ class NewWordsQuizlet:
 
 
     """This method generates one random new word and adds it to the list of words to study"""
+
     async def generate_new_word(self, categories):
 
         category = random.choice(categories)
@@ -108,6 +116,7 @@ class NewWordsQuizlet:
 
 
     '''This method removes a word from the quizlet list and adds the word to the user's list with the flag "6" - "known" '''
+
     async def i_know_this_word(self):
 
         await db_update(sql=f"""DELETE FROM {self.user_name}_days_words_list 
@@ -118,6 +127,7 @@ class NewWordsQuizlet:
 
 
     '''This method moves the word to the end of the quizlet list and adds the word to the user's list'''
+
     async def start_learning_this_word(self):
 
         time_now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -132,6 +142,7 @@ class NewWordsQuizlet:
 
 
     '''This method sends a quizlet card with the required keyboard'''
+
     async def send_quizlet_card(self, next_word_card: str, start_quizlet: bool):
 
         if start_quizlet == True:
@@ -152,6 +163,7 @@ class NewWordsQuizlet:
 
 
     '''This method removes a word from the user's list'''
+
     async def delete_from_words_list(self):
 
         await db_update(sql=f"""DELETE FROM {self.user_name}_days_words_list 
@@ -159,12 +171,14 @@ class NewWordsQuizlet:
 
 
     '''This method checks if the word is the last one in the list'''
+
     async def this_is_last_word(self):
 
         return len(await db_select(sql=f"""SELECT * FROM {self.user_name}_days_words_list""")) == 1
 
 
     '''This method completes the learning of new words'''
+
     async def the_end(self):
 
         await self.bot.delete_message(self.user_id, self.message_id)
@@ -173,6 +187,7 @@ class NewWordsQuizlet:
 
 
     '''This method moves a word to last position in user's list'''
+
     async def show_this_word_again(self):
 
         await db_update(sql=f"""DELETE FROM {self.user_name}_days_words_list 

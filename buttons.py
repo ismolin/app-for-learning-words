@@ -65,5 +65,5 @@ repetition_words_keyboard.add(button40).add(button41)
 
 buttonGeneralMenuButton = KeyboardButton('Завершить')
 
-GeneralMenuButton= ReplyKeyboardMarkup(resize_keyboard=True)
-GeneralMenuButton.add(buttonGeneralMenuButton)
+general_menu_button= ReplyKeyboardMarkup(resize_keyboard=True)
+general_menu_button.add(buttonGeneralMenuButton)
