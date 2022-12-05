@@ -7,4 +7,8 @@ This is an application for learning English words that uses interval repetition.
 * Interval repetition according to the Sebastian Leutner system
 * A large database of words and the ability to choose a specific category to study
 
-![Alt Text](https://giphy.com/gifs/w025DbvwrUDeaaTKSW?utm_source=media-link&utm_medium=landing&utm_campaign=Media%20Links&utm_term=)
+![IMG_3773](https://user-images.githubusercontent.com/112561306/205625824-23c26e6e-af5d-46fa-b893-f0abf5cad8b2.GIF)
+
+
+
+
