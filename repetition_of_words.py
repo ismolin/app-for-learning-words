@@ -4,7 +4,10 @@ from datetime import timedelta
 from database import db_select, db_update_many, db_update
 from aiogram.utils.markdown import hspoiler
 
+
 """This class allows you to implement interval repetition using quizlet cards"""
+
+
 class RepeatingWords:
     def __init__(self, message, bot, callback: bool):
         self.bot = bot
@@ -17,6 +20,7 @@ class RepeatingWords:
             self.word_ru = message.message.text.split('\n')[1]
 
     """This method generates a list of the user's words that are ready for repetition"""
+
     async def start_repeating_words(self):
 
         now = datetime.datetime.now()
@@ -43,6 +47,7 @@ class RepeatingWords:
                                         reply_markup=general_menu_button)
 
     """This method sends the card to be repeated"""
+
     async def send_repetition_card(self):
 
         result = await db_select(f'''SELECT words_eng, words_rus 
@@ -53,6 +58,7 @@ class RepeatingWords:
                                     reply_markup=repetition_words_keyboard)
 
     """This method checks this is last word in list or not"""
+
     async def this_is_last_word_in_list(self):
 
         return len(await db_select(sql=f"""SELECT * FROM {self.user_name}_repetition_list 
@@ -60,6 +66,7 @@ class RepeatingWords:
 
     """This method updated information about words such as 
     quantity of repetition and next available time of repetition"""
+
     async def update_information_of_word(self):
 
         now = datetime.datetime.now()
@@ -75,6 +82,7 @@ class RepeatingWords:
         await self.bot.delete_message(self.user_id, self.message_id)
 
     """This method allows you to finish the repetition of words"""
+
     async def the_end(self):
 
         now = datetime.datetime.now()
@@ -87,6 +95,9 @@ class RepeatingWords:
                                     f'''На этом пока все, следующие слова для повтора будут доступны\n
                                     через {time[0]} ч {time[1]} мин!''', parse_mode='HTML',
                                     reply_markup=user_keyboard)
+
+    """This staticmethod generates a time interval after which the word will need to be repeated the next time"""
+
     @staticmethod
     async def _get_repetition_intervals(words_count):
         one_min = timedelta(minutes=1)
