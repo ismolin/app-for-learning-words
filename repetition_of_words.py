@@ -7,7 +7,6 @@ from aiogram.utils.markdown import hspoiler
 
 """This class allows you to implement interval repetition using quizlet cards"""
 
-
 class RepeatingWords:
     def __init__(self, message, bot, callback: bool):
         self.bot = bot

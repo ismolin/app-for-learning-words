@@ -5,6 +5,7 @@ import random
 import datetime
 
 """This class allows you to implement the study of not yet known words with the help of quizlet cards"""
+
 class NewWordsQuizlet:
     def __init__(self, message, bot, callback: bool):
 
