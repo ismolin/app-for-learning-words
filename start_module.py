@@ -3,7 +3,7 @@ from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
 from dotenv import dotenv_values
 from buttons import user_keyboard, word_count_keyboard, categories_keyboard, categories_keyboard_with_next_button, \
-    time_repeat_keyboard, general_menu_button
+    time_repeat_keyboard, general_menu_button, settings_keyboard
 from database import db_select, db_update
 import datetime
 from repetition_of_words import RepeatingWords
@@ -95,7 +95,7 @@ async def test(message: types.Message):
 
 
 @dp.message_handler(lambda message: message.text in {'Учить новые слова'})
-async def test(message: types.Message):
+async def start_new_words_quizlet(message: types.Message):
     quizlet = NewWordsQuizlet(message, bot, callback=False)
     quantity_of_words_from_category_list = await quizlet.create_quantity_of_words_from_category_list()
     categories_list = await quizlet.create_categories_list()
@@ -149,14 +149,14 @@ async def new_words_quizlet(call: types.CallbackQuery):
 
 
 @dp.message_handler(lambda message: message.text in {'Повторить слова'})
-async def test(message: types.Message):
+async def start_repeating_words(message: types.Message):
     repeating_words = RepeatingWords(message, bot, callback=False)
     await repeating_words.start_repeating_words()
     await repeating_words.send_repetition_card()
 
 
 @dp.callback_query_handler(lambda call: call.data in {'Я вспомнил это слово', 'Не вспомнил'})
-async def repetition_words_next(call: types.CallbackQuery):
+async def repeating_words(call: types.CallbackQuery):
     repeating_words = RepeatingWords(call, bot, callback=True)
     if call.data in {'Я вспомнил это слово'}:
         if await repeating_words.this_is_last_word_in_list():
@@ -171,23 +171,22 @@ async def repetition_words_next(call: types.CallbackQuery):
 
 
 @dp.message_handler(lambda message: message.text in {'Завершить'})
-async def repetition_words_next(message: types.Message):
+async def stop_quizlet(message: types.Message):
     await bot.delete_message(message.from_user.id, message.message_id - 1)
     await bot.send_message(message.from_user.id, 'Окей, заходи потом еще!',
                            reply_markup=user_keyboard)
 
 
-# @dp.message_handler(lambda message: message.text in {'Настройки'})
-# async def repetition_words_next(message: types.Message):
-#     await bot.delete_message(message.from_user.id, message.message_id-1)
-#     await bot.send_message(message.from_user.id, 'Окей, заходи еще потом !',
-#                            reply_markup=user_keyboard)
+@dp.message_handler(lambda message: message.text in {'Настройки'})
+async def settings(message: types.Message):
+    await bot.send_message(message.from_user.id, 'Давай мы с тобой тут все настроим...',
+                           reply_markup=settings_keyboard)
+
 
 @dp.message_handler(content_types=['text'])
-async def start_bot(message: types.Message):
+async def add_new_user_word(message: types.Message):
     new_word = NewUserWords(message)
     translate_word = await new_word.translate_word()
     await new_word.add_word_to_words_list(bot, *translate_word)
-
 
 executor.start_polling(dp, skip_updates=True)

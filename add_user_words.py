@@ -9,13 +9,13 @@ class NewUserWords:
 
         self.user_id = message.from_user.id
         self.user_name = message.from_user.username
-        self.text = message.text.lower()
+        self.text = message.text
 
     async def translate_word(self):
 
         translator = async_google_trans_new.AsyncTranslator()
 
-        if not set('абвгдеёжзийклмнопрстуфхцчшщъыьэюя').isdisjoint(self.text.lower()):
+        if not set('абвгдеёжзийклмнопрстуфхцчшщъыьэюя').isdisjoint(self.text):
             rus_word = await translator.translate(self.text, 'en')
             return [self.text, rus_word]
 

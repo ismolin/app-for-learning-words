@@ -7,7 +7,7 @@ repeat_words = KeyboardButton('Повторить слова')
 settings = KeyboardButton('Настройки')
 
 user_keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
-user_keyboard.add(new_words).add(repeat_words)
+user_keyboard.add(new_words).add(repeat_words).add(settings)
 
 ########################### word count keyboard ########################
 
@@ -65,3 +65,13 @@ buttonGeneralMenuButton = KeyboardButton('Завершить')
 
 general_menu_button = ReplyKeyboardMarkup(resize_keyboard=True)
 general_menu_button.add(buttonGeneralMenuButton)
+
+##################### settings keyboard #############################
+
+words_per_day_button = KeyboardButton('Изменить количество слов в день')
+change_categories_button = KeyboardButton('Изменить категории')
+notification_settings = KeyboardButton('Настройки уведомлений')
+general_menu = KeyboardButton('Главное меню')
+
+settings_keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
+settings_keyboard.add(words_per_day_button).add(change_categories_button).add(notification_settings).add(general_menu)
