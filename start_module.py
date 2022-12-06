@@ -4,40 +4,37 @@ from aiogram.utils import executor
 from dotenv import dotenv_values
 from buttons import user_keyboard, word_count_keyboard, categories_keyboard, categories_keyboard_with_next_button, \
     time_repeat_keyboard, general_menu_button
-from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from database import db_select, db_update
 import datetime
-from repetition_of_words import repetition_words, start_repeating_words
+from repetition_of_words import RepeatingWords
 from add_user_words import NewUserWords
 from new_words_quizlet import NewWordsQuizlet
 
 config = dotenv_values(".env")
-storage = MemoryStorage()
 bot = Bot(config['TOKEN'])
 
-dp = Dispatcher(bot, storage=storage)
+dp = Dispatcher(bot)
 
-"""Handler of the start command"""
-
+"""Handler of the start command: checks the presence in the database or creation of custom tables"""
 
 @dp.message_handler(commands=['start'])
 async def start_bot(message: types.Message):
     if len(await db_select(sql=f"""SELECT user_id 
-                                     FROM users 
-                                     WHERE user_id = '{str(message.from_user.id)}'""")) > 0:
+                                   FROM users 
+                                   WHERE user_id = '{str(message.from_user.id)}'""")) > 0:
         await bot.send_message(message.from_user.id, "С возвращением!", reply_markup=user_keyboard)
     else:
         await db_update(sql=f"""INSERT INTO users(user_id, date_of_registration, state) 
-                                  VALUES ({message.from_user.id}, '{datetime.datetime.now()}' ,'Start');
-                                  CREATE TABLE {message.from_user.username}_info 
-                                  (categories varchar(255), total_quantity_of_words varchar(255));
-                                  CREATE TABLE {message.from_user.username}_words 
-                                  (words_eng varchar(255), words_rus varchar(255), words_count INT, 
-                                  last_repetition_time TIMESTAMP);
-                                  CREATE TABLE {message.from_user.username}_days_words_list 
-                                  (words_eng varchar(255), words_rus varchar(255));
-                                  CREATE TABLE {message.from_user.username}_repetition_list 
-                                  (words_eng varchar(255), words_rus varchar(255), words_count INT)""")
+                                VALUES ({message.from_user.id}, '{datetime.datetime.now()}' ,'Start');
+                                CREATE TABLE {message.from_user.username}_info 
+                                (categories varchar(255), total_quantity_of_words varchar(255));
+                                CREATE TABLE {message.from_user.username}_words 
+                                (words_eng varchar(255), words_rus varchar(255), words_count INT, 
+                                last_repetition_time TIMESTAMP);
+                                CREATE TABLE {message.from_user.username}_days_words_list 
+                                (words_eng varchar(255), words_rus varchar(255));
+                                CREATE TABLE {message.from_user.username}_repetition_list 
+                                (words_eng varchar(255), words_rus varchar(255), words_count INT)""")
 
         await bot.send_message(message.from_user.id, "Привет! Это бот для запоминания английских слов!")
         await bot.send_message(message.from_user.id, "Выбери количество слов в день, которое бы ты хотел изучать:",
@@ -116,26 +113,26 @@ async def test(message: types.Message):
                                                       'Начать учить это слово',
                                                       'Я запомнил, отложить для повтора',
                                                       'Показывать это слово еще'})
-async def new_words_quizlet(message: types.Message):
-    quizlet = NewWordsQuizlet(message, bot, callback=True)
+async def new_words_quizlet(call: types.CallbackQuery):
+    quizlet = NewWordsQuizlet(call, bot, callback=True)
 
     if await quizlet.this_is_last_word():
         await quizlet.the_end()
 
     else:
-        if message.data == 'Я уже знаю это слово':
+        if call.data == 'Я уже знаю это слово':
             categories_list = await quizlet.create_categories_list()
             await quizlet.generate_new_word(categories_list)
             await quizlet.i_know_this_word()
             next_word_card = await quizlet.create_quizlet_card()
             await quizlet.send_quizlet_card(next_word_card, start_quizlet=False)
 
-        elif message.data == 'Начать учить это слово':
+        elif call.data == 'Начать учить это слово':
             await quizlet.start_learning_this_word()
             next_word_card = await quizlet.create_quizlet_card()
             await quizlet.send_quizlet_card(next_word_card, start_quizlet=False)
 
-        elif message.data == 'Я запомнил, отложить для повтора':
+        elif call.data == 'Я запомнил, отложить для повтора':
 
             if await quizlet.this_is_last_word():
                 await quizlet.the_end()
@@ -145,7 +142,7 @@ async def new_words_quizlet(message: types.Message):
                 next_word_card = await quizlet.create_quizlet_card()
                 await quizlet.send_quizlet_card(next_word_card, start_quizlet=False)
 
-        elif message.data == 'Показывать это слово еще':
+        elif call.data == 'Показывать это слово еще':
             await quizlet.show_this_word_again()
             next_word_card = await quizlet.create_quizlet_card()
             await quizlet.send_quizlet_card(next_word_card, start_quizlet=False)
@@ -153,12 +150,24 @@ async def new_words_quizlet(message: types.Message):
 
 @dp.message_handler(lambda message: message.text in {'Повторить слова'})
 async def test(message: types.Message):
-    await start_repeating_words(message, bot)
+    repeating_words = RepeatingWords(message, bot, callback=False)
+    await repeating_words.start_repeating_words()
+    await repeating_words.send_repetition_card()
 
 
 @dp.callback_query_handler(lambda call: call.data in {'Я вспомнил это слово', 'Не вспомнил'})
-async def repetition_words_next(message: types.Message):
-    await repetition_words(message, bot)
+async def repetition_words_next(call: types.CallbackQuery):
+    repeating_words = RepeatingWords(call, bot, callback=True)
+    if call.data in {'Я вспомнил это слово'}:
+        if await repeating_words.this_is_last_word_in_list():
+            await repeating_words.update_information_of_word()
+            await repeating_words.the_end()
+        else:
+            await repeating_words.update_information_of_word()
+            await repeating_words.send_repetition_card()
+    else:
+        await repeating_words.update_information_of_word()
+        await repeating_words.send_repetition_card()
 
 
 @dp.message_handler(lambda message: message.text in {'Завершить'})

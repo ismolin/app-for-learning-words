@@ -4,7 +4,7 @@ from buttons import new_words_quizlet_keyboard, new_words_quizlet_keyboard2, use
 import random
 import datetime
 
-
+"""This class allows you to implement the study of not yet known words with the help of quizlet cards"""
 class NewWordsQuizlet:
     def __init__(self, message, bot, callback: bool):
 
