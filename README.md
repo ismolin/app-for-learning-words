@@ -1,8 +1,8 @@
 # WordsLearn
 
 This is an application for learning English words that uses interval repetition. 
-It is built on the basis of a Telegram bot, written in Python 3.10, on the asynchronous Aiogram library 
-and Postgresql as database/
+It is built on the basis of a Telegram bot, written in Python 3.10, on the asynchronous aiogram library 
+and postgresql as database.
 
 Overview of the main functions:
 * Convenient sending of unknown words to study directly from the browser
