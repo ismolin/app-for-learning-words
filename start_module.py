@@ -12,10 +12,10 @@ from new_words_quizlet import NewWordsQuizlet
 
 config = dotenv_values(".env")
 bot = Bot(config['TOKEN'])
-
 dp = Dispatcher(bot)
 
 """Handler of the start command: checks the presence in the database or creation of custom tables"""
+
 
 @dp.message_handler(commands=['start'])
 async def start_bot(message: types.Message):
@@ -150,24 +150,24 @@ async def new_words_quizlet(call: types.CallbackQuery):
 
 @dp.message_handler(lambda message: message.text in {'Повторить слова'})
 async def start_repeating_words(message: types.Message):
-    repeating_words = RepeatingWords(message, bot, callback=False)
-    await repeating_words.start_repeating_words()
-    await repeating_words.send_repetition_card()
+    new_repeating_words = RepeatingWords(message, bot, callback=False)
+    await new_repeating_words.start_repeating_words()
+    await new_repeating_words.send_repetition_card()
 
 
 @dp.callback_query_handler(lambda call: call.data in {'Я вспомнил это слово', 'Не вспомнил'})
 async def repeating_words(call: types.CallbackQuery):
-    repeating_words = RepeatingWords(call, bot, callback=True)
+    new_repeating_words = RepeatingWords(call, bot, callback=True)
     if call.data in {'Я вспомнил это слово'}:
-        if await repeating_words.this_is_last_word_in_list():
-            await repeating_words.update_information_of_word()
-            await repeating_words.the_end()
+        if await new_repeating_words.this_is_last_word_in_list():
+            await new_repeating_words.update_information_of_word()
+            await new_repeating_words.the_end()
         else:
-            await repeating_words.update_information_of_word()
-            await repeating_words.send_repetition_card()
+            await new_repeating_words.update_information_of_word()
+            await new_repeating_words.send_repetition_card()
     else:
-        await repeating_words.update_information_of_word()
-        await repeating_words.send_repetition_card()
+        await new_repeating_words.update_information_of_word()
+        await new_repeating_words.send_repetition_card()
 
 
 @dp.message_handler(lambda message: message.text in {'Завершить'})
