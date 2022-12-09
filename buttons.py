@@ -75,3 +75,11 @@ general_menu = KeyboardButton('Главное меню')
 
 settings_keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
 settings_keyboard.add(words_per_day_button).add(change_categories_button).add(notification_settings).add(general_menu)
+
+##################### add user words keyboard #############################
+
+change_translate = InlineKeyboardButton('Изменить перевод', callback_data='Изменить перевод')
+do_not_add_this_card = InlineKeyboardButton('Не добавлять эту карточку', callback_data='Не добавлять эту карточку')
+
+add_user_words_keyboard = InlineKeyboardMarkup()
+add_user_words_keyboard.add(change_translate).add(do_not_add_this_card)

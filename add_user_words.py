@@ -1,15 +1,19 @@
 import async_google_trans_new
 from database import db_update
 import datetime
+from buttons import add_user_words_keyboard
 
 
 class NewUserWords:
-
-    def __init__(self, message):
-
+    def __init__(self, message, bot, callback: bool):
+        self.bot = bot
         self.user_id = message.from_user.id
         self.user_name = message.from_user.username
-        self.text = message.text
+
+        if callback:
+            self.message_id = message.message.message_id
+        else:
+            self.text = message.text
 
     async def translate_word(self):
 
@@ -23,7 +27,7 @@ class NewUserWords:
             eng_word = await translator.translate(self.text, 'ru')
             return [eng_word, self.text]
 
-    async def add_word_to_words_list(self, bot, *translate_word):
+    async def add_word_to_words_list(self, *translate_word):
 
         word_eng = translate_word[0].lower()
         word_rus = translate_word[1].lower()
@@ -32,5 +36,28 @@ class NewUserWords:
         await db_update(sql=f"""INSERT INTO {self.user_name}_words
                                 (words_eng, words_rus, words_count, last_repetition_time)
                                 VALUES ('{word_eng}', '{word_rus}', {1},  '{time_now}')""")
-        await bot.send_message(self.user_id,
-                               f"""Слово {word_rus} - {word_eng}, добавлено в ваш список для изучения!""")
+        await self.bot.send_message(self.user_id,
+                               f"""Карточка {word_rus} - {word_eng}, добавлена в ваш список для изучения!""",
+                               reply_markup=add_user_words_keyboard)
+
+    async def request_new_translation(self):
+
+        await self.bot.send_message(self.user_id, "Отправь нужный перевод одним сообщением")
+        await db_update(sql=f"""UPDATE users
+                                SET state = 'change_translation'
+                                WHERE user_id = '{self.user_id}'""")
+    async def change_translation(self):
+
+        if not set('абвгдеёжзийклмнопрстуфхцчшщъыьэюя').isdisjoint(self.text):
+            await db_update(sql=f"""UPDATE {self.user_name}_words
+                                    SET words_eng = '{self.text}'
+                                    WHERE """)
+        else:
+            await db_update(sql=f"""UPDATE {self.user_name}_words
+                                    SET words_rus = '{self.text}'
+                                    WHERE """)
+
+    async def do_not_add_this_word
+
+
+

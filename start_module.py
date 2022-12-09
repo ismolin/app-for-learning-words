@@ -183,10 +183,30 @@ async def settings(message: types.Message):
                            reply_markup=settings_keyboard)
 
 
+@dp.message_handler(lambda message: message.text in {'Главное меню'})
+async def settings(message: types.Message):
+    await bot.send_message(message.from_user.id, 'Давай уже учиться...',
+                           reply_markup=user_keyboard)
+
+@dp.callback_query_handler(lambda call: call.data in {'Изменить перевод', 'Не добавлять эту карточку'})
+async def new_user_word_changes(call: types.CallbackQuery):
+    new_word = NewUserWords(call, bot, callback=True)
+    if call.data in {'Изменить перевод'}:
+        await new_word.request_new_translation()
+    else:
+        pass
+
 @dp.message_handler(content_types=['text'])
 async def add_new_user_word(message: types.Message):
-    new_word = NewUserWords(message)
-    translate_word = await new_word.translate_word()
-    await new_word.add_word_to_words_list(bot, *translate_word)
+    if len(await db_select(sql=f"""SELECT * FROM users
+                                   WHERE state = 'change_translation' 
+                                   AND user_id = '{message.from_user.id}'""")) == 0:
+        new_word = NewUserWords(message, bot, callback=False)
+        translate_word = await new_word.translate_word()
+        await new_word.add_word_to_words_list(*translate_word)
+    else:
+        new_word = NewUserWords(message, bot, callback=False)
+        new_word.change_translation()
+
 
 executor.start_polling(dp, skip_updates=True)

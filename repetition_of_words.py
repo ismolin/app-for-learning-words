@@ -53,8 +53,8 @@ class RepeatingWords:
         result = await db_select(f'''SELECT words_eng, words_rus 
                                      FROM {self.user_name}_repetition_list 
                                      LIMIT 1''')
-        spoiler = hspoiler(result[0][1])
-        await self.bot.send_message(self.user_id, result[0][0] + '\n' + f'{spoiler}', parse_mode='HTML',
+        spoiler = hspoiler(result[0][0])
+        await self.bot.send_message(self.user_id, result[0][1] + '\n' + f'{spoiler}', parse_mode='HTML',
                                     reply_markup=repetition_words_keyboard)
 
     """This method checks this is last word in list or not"""
