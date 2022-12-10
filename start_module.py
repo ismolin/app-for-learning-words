@@ -164,23 +164,30 @@ async def repeating_words(call: types.CallbackQuery):
         await new_repeating_words.send_repetition_card()
 
 
-@dp.message_handler(lambda message: message.text in {'Завершить'})
-async def stop_quizlet(message: types.Message):
-    await bot.delete_message(message.from_user.id, message.message_id - 1)
-    await bot.send_message(message.from_user.id, 'Окей, заходи потом еще!',
-                           reply_markup=user_keyboard)
-
-
-@dp.message_handler(lambda message: message.text in {'Настройки'})
+@dp.message_handler(lambda message: message.text in {'Настройки', 'Изменить количество слов в день',
+                                                     'Главное меню', 'Завершить', 'Изменить категории', 'Настройки уведомлений'})
 async def settings(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Давай мы с тобой тут все настроим...',
+    if message.text == 'Настройки':
+        await bot.send_message(message.from_user.id, 'Давай мы с тобой тут все настроим...',
                            reply_markup=settings_keyboard)
+    elif message.text == 'Изменить количество слов в день':
+        await bot.send_message(message.from_user.id, "Выбери количество слов в день, которое бы ты хотел изучать:",
+                               reply_markup=word_count_keyboard)
+    elif message.text == 'Главное меню':
+        await bot.send_message(message.from_user.id, 'Давай уже учиться...',
+                               reply_markup=user_keyboard)
+    elif message.text == 'Завершить':
+        await bot.delete_message(message.from_user.id, message.message_id - 1)
+        await bot.send_message(message.from_user.id, 'Окей, заходи потом еще!',
+                               reply_markup=user_keyboard)
+    elif message.text == 'Изменить категории':
+        await bot.send_message(message.from_user.id, "Выбери категории слов, которые бы ты хотел изучать:",
+                               reply_markup=categories_keyboard)
+    elif message.text == 'Настройки уведомлений':
+        await bot.send_message(message.from_user.id, 'Выбери время (МСК) в которое тебе будет удобно заниматься:',
+                               reply_markup=time_repeat_keyboard)
 
 
-@dp.message_handler(lambda message: message.text in {'Главное меню'})
-async def settings(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Давай уже учиться...',
-                           reply_markup=user_keyboard)
 
 @dp.callback_query_handler(lambda call: call.data in {'Изменить перевод', 'Не добавлять эту карточку'})
 async def new_user_word_changes(call: types.CallbackQuery):
@@ -189,6 +196,7 @@ async def new_user_word_changes(call: types.CallbackQuery):
         await new_word.request_new_translation()
     else:
         new_word.do_not_add_this_word()
+
 
 @dp.message_handler(content_types=['text'])
 async def add_new_user_word(message: types.Message):
