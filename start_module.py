@@ -9,6 +9,7 @@ import datetime
 from repetition_of_words import RepeatingWords
 from add_user_words import NewUserWords
 from new_words_quizlet import NewWordsQuizlet
+from settings import UserSettings
 
 config = dotenv_values(".env")
 bot = Bot(config['TOKEN'])
@@ -19,23 +20,11 @@ dp = Dispatcher(bot)
 
 @dp.message_handler(commands=['start'])
 async def start_bot(message: types.Message):
-    if len(await db_select(sql=f"""SELECT user_id 
-                                   FROM users 
-                                   WHERE user_id = '{str(message.from_user.id)}'""")) > 0:
+    user_settings = UserSettings()
+    if user_settings.user_exist()
         await bot.send_message(message.from_user.id, "С возвращением!", reply_markup=user_keyboard)
     else:
-        await db_update(sql=f"""INSERT INTO users(user_id, date_of_registration, state) 
-                                VALUES ({message.from_user.id}, '{datetime.datetime.now()}' ,'Start');
-                                CREATE TABLE {message.from_user.username}_info 
-                                (categories varchar(255), total_quantity_of_words varchar(255));
-                                CREATE TABLE {message.from_user.username}_words 
-                                (words_eng varchar(255), words_rus varchar(255), words_count INT, 
-                                last_repetition_time TIMESTAMP);
-                                CREATE TABLE {message.from_user.username}_days_words_list 
-                                (words_eng varchar(255), words_rus varchar(255));
-                                CREATE TABLE {message.from_user.username}_repetition_list 
-                                (words_eng varchar(255), words_rus varchar(255), words_count INT)""")
-
+        await user_settings.create_user_tables()
         await bot.send_message(message.from_user.id, "Привет! Это бот для запоминания английских слов!")
         await bot.send_message(message.from_user.id, "Выбери количество слов в день, которое бы ты хотел изучать:",
                                reply_markup=word_count_keyboard)
@@ -43,36 +32,37 @@ async def start_bot(message: types.Message):
 
 @dp.message_handler(lambda message: message.text in {'5', '10', '15', '20'})
 async def test(message: types.Message):
-    if len(await db_select(sql=f"""SELECT state FROM users WHERE state = 'Start'""")) > 0:
-        await bot.send_message(message.from_user.id, "OK! Хороший выбор!")
-        await db_update(sql=f"""INSERT INTO {str(message.from_user.username)}_info(total_quantity_of_words) 
-                                VALUES ({message.text})""")
+    user_settings = UserSettings()
+    if user_settings.this_is_first_settings():
+        await user_settings.update_total_quantity_of_words()
         await bot.send_message(message.from_user.id,
                                "Давай я буду напоминать тебе изучать слова, чтобы прогресс шел быстрее? \n "
                                "\nВыбери время (МСК) в которое тебе будет удобно заниматься:",
                                reply_markup=time_repeat_keyboard)
-
     else:
-        pass
+        await user_settings.update_total_quantity_of_words()
 
 
 @dp.message_handler(lambda message: message.text in {'00:00', '01:00', '02:00', '03:00', '04:00', '05:00',
                                                      '06:00', '07:00', '08:00', '09:00', '10:00', '11:00',
                                                      '12:00', '13:00', '14:00', '15:00', '16:00', '17:00',
                                                      '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'})
-async def test(message: types.Message):
-    if len(await db_select(sql=f"""SELECT state FROM users WHERE state = 'Start'""")) > 0:
-        await bot.send_message(message.from_user.id, f"OK, буду напоминать в {message.text}!")
+async def time_tepetition(message: types.Message):
+    user_settings = UserSettings()
+    if user_settings.this_is_first_settings():
+        await user_settings.update_time_repetition()
         await bot.send_message(message.from_user.id, "Выбери категории слов, которые бы ты хотел изучать:",
                                reply_markup=categories_keyboard)
+    else:
+        await user_settings.update_time_repetition()
 
 
 @dp.message_handler(lambda message: message.text in {'1000 самых употребляемых слов',
                                                      '5000 самых употребляемых слов',
                                                      'Слова для IT', 'Продолжить'})
 async def test(message: types.Message):
-    if len(await db_select(sql=f"""SELECT state FROM users WHERE state = 'Start'""")) > 0:
-
+    user_settings = UserSettings()
+    if user_settings.this_is_first_settings():
         if message.text == 'Продолжить':
             await bot.send_message(message.from_user.id,
                                    "Ну что, начнем? \n\nКнопками внизу можно делать все, что душе угодно...\n"
@@ -80,18 +70,22 @@ async def test(message: types.Message):
                                    reply_markup=user_keyboard)
 
         else:
-            if len(await db_select(sql=f"""SELECT categories 
-                                           FROM {message.from_user.username}_info 
-                                           WHERE categories = '{message.text}'""")) > 0:
+            if user_settings.category_exist():
                 await bot.send_message(message.from_user.id, f"Вы уже добавили категорию '{message.text}' к себе...",
                                        reply_markup=categories_keyboard_with_next_button)
             else:
-                await db_update(sql=f"""INSERT INTO {str(message.from_user.username)}_info(categories) 
-                                        VALUES ('{message.text}')""")
-                await bot.send_message(message.from_user.id, f"Категория '{message.text}' добавлена!",
-                                       reply_markup=categories_keyboard_with_next_button)
+                await user_settings.update_category()
     else:
-        pass
+        if message.text == 'Продолжить':
+            await bot.send_message(message.from_user.id, 'Давай мы с тобой тут все настроим...',
+                                   reply_markup=settings_keyboard)
+
+        else:
+            if user_settings.category_exist():
+                await bot.send_message(message.from_user.id, f"Вы уже добавили категорию '{message.text}' к себе...",
+                                       reply_markup=categories_keyboard_with_next_button)
+            else:
+                await user_settings.update_category()
 
 
 @dp.message_handler(lambda message: message.text in {'Учить новые слова'})
@@ -194,18 +188,17 @@ async def new_user_word_changes(call: types.CallbackQuery):
     if call.data in {'Изменить перевод'}:
         await new_word.request_new_translation()
     else:
-        pass
+        new_word.do_not_add_this_word()
 
 @dp.message_handler(content_types=['text'])
 async def add_new_user_word(message: types.Message):
+    new_word = NewUserWords(message, bot, callback=False)
     if len(await db_select(sql=f"""SELECT * FROM users
                                    WHERE state = 'change_translation' 
                                    AND user_id = '{message.from_user.id}'""")) == 0:
-        new_word = NewUserWords(message, bot, callback=False)
         translate_word = await new_word.translate_word()
         await new_word.add_word_to_words_list(*translate_word)
     else:
-        new_word = NewUserWords(message, bot, callback=False)
         new_word.change_translation()
 
 
