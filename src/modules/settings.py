@@ -1,5 +1,5 @@
 from src.data.database import db_update, db_select
-from src.keyboards.buttons import categories_keyboard_with_next_button
+from src.keyboards.buttons import categories_keyboard_with_next_button, settings_keyboard
 import datetime
 
 
@@ -36,13 +36,16 @@ class UserSettings:
 
     async def this_is_first_settings(self):
         return len(await db_select(sql=f"""SELECT * FROM users 
-                                           WHERE state = 'Start' AND user_id = {self.user_id} = """)) > 0
+                                           WHERE state = 'Start' AND user_id = '{self.user_id}' """)) > 0
 
     async def update_total_quantity_of_words(self):
-        await self.bot.send_message(self.user_id, "OK! Хороший выбор!")
+        await self.bot.send_message(self.user_id, "OK! Хороший выбор!", reply_markup=settings_keyboard)
+        current_total_quantity_of_words = await db_select(sql=f"""SELECT total_quantity_of_words
+                                                                  FROM {self.user_name}_info 
+                                                                  LIMIT 1""")
         await db_update(sql=f"""UPDATE {self.user_name}_info 
-                                SET total_quantity_of_words 
-                                VALUES ({self.text})""")
+                                SET total_quantity_of_words = {self.text}
+                                WHERE total_quantity_of_words = '{current_total_quantity_of_words[0][0]}'""")
 
     async def update_time_repetition(self):
         await self.bot.send_message(self.user_id, f"OK, буду напоминать в {self.text}!")

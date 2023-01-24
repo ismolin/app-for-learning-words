@@ -2,7 +2,8 @@ from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
 from dotenv import dotenv_values
-from src.keyboards.buttons import user_keyboard, word_count_keyboard, categories_keyboard, categories_keyboard_with_next_button, \
+from src.keyboards.buttons import user_keyboard, word_count_keyboard, \
+    categories_keyboard, categories_keyboard_with_next_button, \
     time_repeat_keyboard, general_menu_button, settings_keyboard
 from src.data.database import db_select
 from src.modules.repetition_of_words import RepeatingWords
@@ -10,15 +11,15 @@ from src.modules.add_user_words import NewUserWords
 from src.modules.new_words_quizlet import NewWordsQuizlet
 from src.modules.settings import UserSettings
 
-config = dotenv_values(".env")
+config = dotenv_values("/home/ubuntu/PycharmProjects/app-for-learning-words/env.txt")
 bot = Bot(config['TOKEN'])
 dp = Dispatcher(bot)
-
-"""Handler of the start command: checks the presence in the database or creation of custom tables"""
 
 
 @dp.message_handler(commands=['start'])
 async def start_bot(message: types.Message):
+    """Handler of the start command: checks the presence in the database or creation of custom tables"""
+
     user_settings = UserSettings(message, bot, callback=False)
     if user_settings.user_exist():
         await bot.send_message(message.from_user.id, "С возвращением!", reply_markup=user_keyboard)
@@ -32,7 +33,7 @@ async def start_bot(message: types.Message):
 @dp.message_handler(lambda message: message.text in {'5', '10', '15', '20'})
 async def test(message: types.Message):
     user_settings = UserSettings(message, bot, callback=False)
-    if user_settings.this_is_first_settings():
+    if await user_settings.this_is_first_settings():
         await user_settings.update_total_quantity_of_words()
         await bot.send_message(message.from_user.id,
                                "Давай я буду напоминать тебе изучать слова, чтобы прогресс шел быстрее? \n "
@@ -164,11 +165,12 @@ async def repeating_words(call: types.CallbackQuery):
 
 
 @dp.message_handler(lambda message: message.text in {'Настройки', 'Изменить количество слов в день',
-                                                     'Главное меню', 'Завершить', 'Изменить категории', 'Настройки уведомлений'})
+                                                     'Главное меню', 'Завершить', 'Изменить категории',
+                                                     'Настройки уведомлений'})
 async def settings(message: types.Message):
     if message.text == 'Настройки':
         await bot.send_message(message.from_user.id, 'Давай мы с тобой тут все настроим...',
-                           reply_markup=settings_keyboard)
+                               reply_markup=settings_keyboard)
     elif message.text == 'Изменить количество слов в день':
         await bot.send_message(message.from_user.id, "Выбери количество слов в день, которое бы ты хотел изучать:",
                                reply_markup=word_count_keyboard)
@@ -187,14 +189,13 @@ async def settings(message: types.Message):
                                reply_markup=time_repeat_keyboard)
 
 
-
 @dp.callback_query_handler(lambda call: call.data in {'Изменить перевод', 'Не добавлять эту карточку'})
 async def new_user_word_changes(call: types.CallbackQuery):
     new_word = NewUserWords(call, bot, callback=True)
     if call.data in {'Изменить перевод'}:
         await new_word.request_new_translation()
     else:
-        new_word.do_not_add_this_word()
+        await new_word.do_not_add_this_word()
 
 
 @dp.message_handler(content_types=['text'])
