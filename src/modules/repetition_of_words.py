@@ -5,10 +5,9 @@ from src.data.database import db_select, db_update_many, db_update
 from aiogram.utils.markdown import hspoiler
 
 
-"""This class allows you to implement interval repetition using quizlet cards"""
-
-
 class RepeatingWords:
+    """This class allows you to implement interval repetition using quizlet cards"""
+
     def __init__(self, message, bot, callback: bool):
         self.bot = bot
         self.user_id = message.from_user.id
@@ -19,9 +18,8 @@ class RepeatingWords:
             self.word_en = message.message.text.split('\n')[0]
             self.word_ru = message.message.text.split('\n')[1]
 
-    """This method generates a list of the user's words that are ready for repetition"""
-
     async def start_repeating_words(self):
+        """This method generates a list of the user's words that are ready for repetition"""
 
         now = datetime.datetime.now()
         await db_update(f"""TRUNCATE TABLE {self.user_name}_repetition_list""")
@@ -46,9 +44,8 @@ class RepeatingWords:
             await self.bot.send_message(self.user_id, f'Тебе доступно {len(words)} слов для повтора!',
                                         reply_markup=general_menu_button)
 
-    """This method sends the card to be repeated"""
-
     async def send_repetition_card(self):
+        """This method sends the card to be repeated"""
 
         result = await db_select(f'''SELECT words_eng, words_rus 
                                      FROM {self.user_name}_repetition_list 
@@ -57,17 +54,15 @@ class RepeatingWords:
         await self.bot.send_message(self.user_id, result[0][1] + '\n' + f'{spoiler}', parse_mode='HTML',
                                     reply_markup=repetition_words_keyboard)
 
-    """This method checks this is last word in list or not"""
-
     async def this_is_last_word_in_list(self):
+        """This method checks this is last word in list or not"""
 
         return len(await db_select(sql=f"""SELECT * FROM {self.user_name}_repetition_list 
                                            WHERE words_eng NOT IN ('{self.word_en}')""")) == 0
 
-    """This method updated information about words such as 
-    quantity of repetition and next available time of repetition"""
-
     async def update_information_of_word(self):
+        """This method updated information about words such as
+        quantity of repetition and next available time of repetition"""
 
         now = datetime.datetime.now()
         known_word = await db_select(sql=f"""SELECT * FROM {self.user_name}_repetition_list
@@ -81,9 +76,8 @@ class RepeatingWords:
                                 WHERE words_eng = '{known_word[0][0]}'""")
         await self.bot.delete_message(self.user_id, self.message_id)
 
-    """This method allows you to finish the repetition of words"""
-
     async def the_end(self):
+        """This method allows you to finish the repetition of words"""
 
         now = datetime.datetime.now()
         nearest_time = await db_select(sql=f"""SELECT MIN(last_repetition_time) 
@@ -96,10 +90,10 @@ class RepeatingWords:
                                     через {time[0]} ч {time[1]} мин!''', parse_mode='HTML',
                                     reply_markup=user_keyboard)
 
-    """This staticmethod generates a time interval after which the word will need to be repeated the next time"""
-
     @staticmethod
     async def _get_repetition_intervals(words_count):
+        """This staticmethod generates a time interval after which the word will need to be repeated the next time"""
+
         one_min = timedelta(minutes=1)
         one_hour = timedelta(hours=1)
         five_hour = timedelta(hours=5)

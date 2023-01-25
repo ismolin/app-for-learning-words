@@ -78,7 +78,7 @@ settings_keyboard.add(words_per_day_button).add(change_categories_button).add(no
 
 ##################### add user words keyboard #############################
 
-change_translate = InlineKeyboardButton('Изменить перевод', callback_data='Изменить перевод')
+change_translate = InlineKeyboardButton('Изменить карточку', callback_data='Изменить перевод')
 do_not_add_this_card = InlineKeyboardButton('Не добавлять эту карточку', callback_data='Не добавлять эту карточку')
 
 add_user_words_keyboard = InlineKeyboardMarkup()

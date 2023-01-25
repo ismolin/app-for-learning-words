@@ -42,15 +42,21 @@ class UserSettings:
         await self.bot.send_message(self.user_id, "OK! Хороший выбор!", reply_markup=settings_keyboard)
         current_total_quantity_of_words = await db_select(sql=f"""SELECT total_quantity_of_words
                                                                   FROM {self.user_name}_info 
-                                                                  LIMIT 1""")
+                                                                  WHERE total_quantity_of_words IS NOT NULL""")
         await db_update(sql=f"""UPDATE {self.user_name}_info 
                                 SET total_quantity_of_words = {self.text}
                                 WHERE total_quantity_of_words = '{current_total_quantity_of_words[0][0]}'""")
 
+    async def set_time_repetition(self):
+        await self.bot.send_message(self.user_id, f"OK, буду напоминать в {self.text}!", reply_markup=settings_keyboard)
+        await db_update(sql=f"""UPDATE users 
+                                SET time_of_repetition = '{self.text}' 
+                                WHERE user_id = '{self.user_id}'""")
+
     async def update_time_repetition(self):
-        await self.bot.send_message(self.user_id, f"OK, буду напоминать в {self.text}!")
-        await db_update(sql=f"""UPDATE users
-                                SET time_repetition = '{self.text}'
+        await self.bot.send_message(self.user_id, f"OK, буду напоминать в {self.text}!", reply_markup=settings_keyboard)
+        await db_update(sql=f"""UPDATE users 
+                                SET time_of_repetition = '{self.text}' 
                                 WHERE user_id = '{self.user_id}'""")
 
     async def category_exist(self):
@@ -63,3 +69,9 @@ class UserSettings:
                                 VALUES ('{self.text}')""")
         await self.bot.send_message(self.user_id, f"Категория '{self.text}' добавлена!",
                                     reply_markup=categories_keyboard_with_next_button)
+
+    async def set_state(self, state):
+        await db_update(sql=f"""UPDATE users 
+                                SET state = '{state}' 
+                                WHERE user_id = '{self.user_id}'""")
+

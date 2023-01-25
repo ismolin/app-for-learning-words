@@ -17,21 +17,23 @@ dp = Dispatcher(bot)
 
 
 @dp.message_handler(commands=['start'])
-async def start_bot(message: types.Message):
+async def start_command(message: types.Message):
     """Handler of the start command: checks the presence in the database or creation of custom tables"""
 
     user_settings = UserSettings(message, bot, callback=False)
     if user_settings.user_exist():
         await bot.send_message(message.from_user.id, "С возвращением!", reply_markup=user_keyboard)
+        await user_settings.set_state("Work")
     else:
         await user_settings.create_user_tables()
+        await user_settings.set_state("Start")
         await bot.send_message(message.from_user.id, "Привет! Это бот для запоминания английских слов!")
         await bot.send_message(message.from_user.id, "Выбери количество слов в день, которое бы ты хотел изучать:",
                                reply_markup=word_count_keyboard)
 
 
 @dp.message_handler(lambda message: message.text in {'5', '10', '15', '20'})
-async def test(message: types.Message):
+async def set_and_update_total_quantity_of_words(message: types.Message):
     user_settings = UserSettings(message, bot, callback=False)
     if await user_settings.this_is_first_settings():
         await user_settings.update_total_quantity_of_words()
@@ -47,10 +49,10 @@ async def test(message: types.Message):
                                                      '06:00', '07:00', '08:00', '09:00', '10:00', '11:00',
                                                      '12:00', '13:00', '14:00', '15:00', '16:00', '17:00',
                                                      '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'})
-async def time_tepetition(message: types.Message):
+async def set_and_update_time_repetition(message: types.Message):
     user_settings = UserSettings(message, bot, callback=False)
     if await user_settings.this_is_first_settings():
-        await user_settings.update_time_repetition()
+        await user_settings.set_time_repetition()
         await bot.send_message(message.from_user.id, "Выбери категории слов, которые бы ты хотел изучать:",
                                reply_markup=categories_keyboard)
     else:
@@ -60,7 +62,7 @@ async def time_tepetition(message: types.Message):
 @dp.message_handler(lambda message: message.text in {'1000 самых употребляемых слов',
                                                      '5000 самых употребляемых слов',
                                                      'Слова для IT', 'Продолжить'})
-async def test(message: types.Message):
+async def set_and_update_categories(message: types.Message):
     user_settings = UserSettings(message, bot, callback=False)
     if user_settings.this_is_first_settings():
         if message.text == 'Продолжить':
@@ -68,6 +70,7 @@ async def test(message: types.Message):
                                    "Ну что, начнем? \n\nКнопками внизу можно делать все, что душе угодно...\n"
                                    "\nА для добавления своего слова - просто пришли его боту!",
                                    reply_markup=user_keyboard)
+            await user_settings.set_state("Work")
 
         else:
             if await user_settings.category_exist():
@@ -167,7 +170,7 @@ async def repeating_words(call: types.CallbackQuery):
 @dp.message_handler(lambda message: message.text in {'Настройки', 'Изменить количество слов в день',
                                                      'Главное меню', 'Завершить', 'Изменить категории',
                                                      'Настройки уведомлений'})
-async def settings(message: types.Message):
+async def set_settings(message: types.Message):
     if message.text == 'Настройки':
         await bot.send_message(message.from_user.id, 'Давай мы с тобой тут все настроим...',
                                reply_markup=settings_keyboard)
@@ -201,13 +204,11 @@ async def new_user_word_changes(call: types.CallbackQuery):
 @dp.message_handler(content_types=['text'])
 async def add_new_user_word(message: types.Message):
     new_word = NewUserWords(message, bot, callback=False)
-    if len(await db_select(sql=f"""SELECT * FROM users
-                                   WHERE state = 'change_translation' 
-                                   AND user_id = '{message.from_user.id}'""")) == 0:
+    if await new_word.state_is_change_card():
+        await new_word.change_translation()
+    else:
         translate_word = await new_word.translate_word()
         await new_word.add_word_to_words_list(*translate_word)
-    else:
-        await new_word.change_translation()
 
 
 executor.start_polling(dp, skip_updates=True)
