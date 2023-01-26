@@ -17,7 +17,6 @@ First you need to clone the repository:
 
 ```
 git clone https://github.com/ismolin/app-for-learning-words.git
-
 ```
 To create images and launch application containers, you need to use Docker-compose file:
 
