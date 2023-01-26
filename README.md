@@ -23,5 +23,4 @@ To create images and launch application containers, you need to use Docker-compo
 
 ```
 docker-compose up -d
-
 ```
