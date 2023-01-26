@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=word_learn
+    ports:
+      - "5433:5432"
+    volumes:
+      - /data/db:/var/lib/postgresql/data
+      - ./src/database/dbdump.sql:/docker-entrypoint-initdb.d/dbdump.sql
+    container_name: db_word_learn
+
+  app :
+    build: ./src/
+    container_name: db_word_learn
+    ports:
+      - "8000:8000"
+
+

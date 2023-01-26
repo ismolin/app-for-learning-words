@@ -5,7 +5,7 @@ from dotenv import dotenv_values
 from src.keyboards.buttons import user_keyboard, word_count_keyboard, \
     categories_keyboard, categories_keyboard_with_next_button, \
     time_repeat_keyboard, general_menu_button, settings_keyboard
-from src.data.database import db_select
+from src.database.connections import db_select
 from src.modules.repetition_of_words import RepeatingWords
 from src.modules.add_user_words import NewUserWords
 from src.modules.new_words_quizlet import NewWordsQuizlet

@@ -1,4 +1,4 @@
-from src.data.database import db_select, db_update, db_update_many
+from src.database.connections import db_select, db_update, db_update_many
 from aiogram.utils.markdown import hspoiler
 from src.keyboards.buttons import new_words_quizlet_keyboard, new_words_quizlet_keyboard2, user_keyboard
 import random

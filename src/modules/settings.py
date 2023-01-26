@@ -1,4 +1,4 @@
-from src.data.database import db_update, db_select
+from src.database.connections import db_update, db_select
 from src.keyboards.buttons import categories_keyboard_with_next_button, settings_keyboard
 import datetime
 

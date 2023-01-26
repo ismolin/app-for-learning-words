@@ -1,5 +1,5 @@
 import async_google_trans_new
-from src.data.database import db_update, db_select
+from src.database.connections import db_update, db_select
 import datetime
 from src.keyboards.buttons import add_user_words_keyboard
 
