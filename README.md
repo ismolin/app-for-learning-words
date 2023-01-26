@@ -9,8 +9,19 @@ Overview of the main functions:
 * Effective word learning using quizlet cards
 * Interval repetition according to the Sebastian Leitner system
 * A large database of words and the ability to choose a specific category to study
+* 
+# How to run in Docker
 
+To install, you must have Docker and Docker-compose on your machine. 
+First you need to clone the repository:
 
+```
+git clone https://github.com/ismolin/app-for-learning-words.git
 
+```
+To create images and launch application containers, you need to use Docker-compose file:
 
+```
+docker-compose up -d
 
+```
