@@ -2,7 +2,7 @@ from dotenv import dotenv_values
 import psycopg2
 from psycopg2.extras import execute_values
 
-config = dotenv_values("/src/env.txt")
+config = dotenv_values("env.txt")
 
 async def db_select(sql):
     with psycopg2.connect(host=config['host'], port=config['port'], database=config['database'], user=config['user'],
