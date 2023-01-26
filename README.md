@@ -8,8 +8,8 @@ Overview of the main functions:
 * Convenient sending of unknown words to study directly from the browser
 * Effective word learning using quizlet cards
 * Interval repetition according to the Sebastian Leitner system
-* A large database of words and the ability to choose a specific category to study
-* 
+* The application has a built-in database with the most frequent words
+
 # How to run in Docker
 
 To install, you must have Docker and Docker-compose on your machine. 
