@@ -11,7 +11,7 @@ from src.modules.add_user_words import NewUserWords
 from src.modules.new_words_quizlet import NewWordsQuizlet
 from src.modules.settings import UserSettings
 
-config = dotenv_values("/home/ubuntu/PycharmProjects/env.txt")
+config = dotenv_values("env.txt")
 bot = Bot(config['TOKEN'])
 dp = Dispatcher(bot)
 

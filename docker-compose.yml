@@ -1,23 +1,29 @@
-version: "3.8"
+version: "3.1"
 services:
-  db:
-    image: postgres
+
+  database:
+    build: ./src/database/
+    container_name: database_wl
     restart: always
-    environment:
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=word_learn
     ports:
-      - "5433:5432"
+      - "5432:5432"
     volumes:
-      - /data/db:/var/lib/postgresql/data
-      - ./src/database/dbdump.sql:/docker-entrypoint-initdb.d/dbdump.sql
-    container_name: db_word_learn
+      - /home/ubuntu/PycharmProjects/data/postgres
 
   app :
-    build: ./src/
-    container_name: db_word_learn
+    build: ./
+    container_name: app_wl
+    restart: always
     ports:
       - "8000:8000"
+
+#  adminer:
+#    image: adminer
+#    container_name: app_word_learn
+#    restart: always
+#    depends_on:
+#      - database
+#    ports:
+#      - "8080:8080"
 
 
