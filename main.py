@@ -21,7 +21,7 @@ async def start_command(message: types.Message):
     """Handler of the start command: checks the presence in the database or creation of custom tables"""
 
     user_settings = UserSettings(message, bot, callback=False)
-    if user_settings.user_exist():
+    if await user_settings.user_exist():
         await bot.send_message(message.from_user.id, "С возвращением!", reply_markup=user_keyboard)
         await user_settings.set_state("Work")
     else:

@@ -21,9 +21,10 @@ class UserSettings:
                                            FROM users 
                                            WHERE user_id = '{self.user_id}'""")) > 0
 
+
     async def create_user_tables(self):
         await db_update(sql=f"""INSERT INTO users(user_id, date_of_registration, state) 
-                                VALUES ({self.user_name}, '{datetime.datetime.now()}' ,'Start');
+                                VALUES ({self.user_id}, '{datetime.datetime.now()}' ,'Start');
                                 CREATE TABLE {self.user_name}_info 
                                 (categories varchar(255), total_quantity_of_words varchar(255));
                                 CREATE TABLE {self.user_name}_words 
