@@ -36,478 +36,7 @@ CREATE TABLE public.five_thousands_most_used_words (
 
 ALTER TABLE public.five_thousands_most_used_words OWNER TO postgres;
 
---
--- TOC entry 215 (class 1259 OID 16393)
--- Name: ilya_smolin_days_words_list; Type: TABLE; Schema: public; Owner: postgres
---
 
-CREATE TABLE public.ilya_smolin_days_words_list (
-    words_eng character varying(255),
-    words_rus character varying(255)
-);
-
-
-ALTER TABLE public.ilya_smolin_days_words_list OWNER TO postgres;
-
---
--- TOC entry 216 (class 1259 OID 16398)
--- Name: ilya_smolin_info; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.ilya_smolin_info (
-    categories character varying(255),
-    total_quantity_of_words character varying(255)
-);
-
-
-ALTER TABLE public.ilya_smolin_info OWNER TO postgres;
-
---
--- TOC entry 217 (class 1259 OID 16403)
--- Name: ilya_smolin_repetition_list; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.ilya_smolin_repetition_list (
-    words_eng character varying(255),
-    words_rus character varying(255),
-    words_count integer
-);
-
-
-ALTER TABLE public.ilya_smolin_repetition_list OWNER TO postgres;
-
---
--- TOC entry 218 (class 1259 OID 16408)
--- Name: ilya_smolin_words; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.ilya_smolin_words (
-    words_eng character varying(255),
-    words_rus character varying(255),
-    words_count integer,
-    last_repetition_time timestamp without time zone
-);
-
-
-ALTER TABLE public.ilya_smolin_words OWNER TO postgres;
-
---
--- TOC entry 219 (class 1259 OID 16413)
--- Name: matvata_days_words_list; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.matvata_days_words_list (
-    words_eng character varying(255),
-    words_rus character varying(255)
-);
-
-
-ALTER TABLE public.matvata_days_words_list OWNER TO postgres;
-
---
--- TOC entry 220 (class 1259 OID 16418)
--- Name: matvata_info; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.matvata_info (
-    categories character varying(255),
-    total_quantity_of_words character varying(255)
-);
-
-
-ALTER TABLE public.matvata_info OWNER TO postgres;
-
---
--- TOC entry 221 (class 1259 OID 16423)
--- Name: matvata_repetition_list; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.matvata_repetition_list (
-    words_eng character varying(255),
-    words_rus character varying(255),
-    words_count integer
-);
-
-
-ALTER TABLE public.matvata_repetition_list OWNER TO postgres;
-
---
--- TOC entry 222 (class 1259 OID 16428)
--- Name: matvata_words; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.matvata_words (
-    words_eng character varying(255),
-    words_rus character varying(255),
-    words_count integer,
-    last_repetition_time timestamp without time zone
-);
-
-
-ALTER TABLE public.matvata_words OWNER TO postgres;
-
---
--- TOC entry 223 (class 1259 OID 16433)
--- Name: most_used_it_words; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.most_used_it_words (
-    id character varying(255),
-    words_eng character varying(255),
-    words_rus character varying(255)
-);
-
-
-ALTER TABLE public.most_used_it_words OWNER TO postgres;
-
---
--- TOC entry 224 (class 1259 OID 16438)
--- Name: none_days_words_list; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.none_days_words_list (
-    words_eng character varying(255),
-    words_rus character varying(255)
-);
-
-
-ALTER TABLE public.none_days_words_list OWNER TO postgres;
-
---
--- TOC entry 225 (class 1259 OID 16443)
--- Name: none_info; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.none_info (
-    categories character varying(255),
-    total_quantity_of_words character varying(255)
-);
-
-
-ALTER TABLE public.none_info OWNER TO postgres;
-
---
--- TOC entry 226 (class 1259 OID 16448)
--- Name: none_repetition_list; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.none_repetition_list (
-    words_eng character varying(255),
-    words_rus character varying(255),
-    words_count integer
-);
-
-
-ALTER TABLE public.none_repetition_list OWNER TO postgres;
-
---
--- TOC entry 227 (class 1259 OID 16453)
--- Name: none_words; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.none_words (
-    words_eng character varying(255),
-    words_rus character varying(255),
-    words_count integer,
-    last_repetition_time timestamp without time zone
-);
-
-
-ALTER TABLE public.none_words OWNER TO postgres;
-
---
--- TOC entry 228 (class 1259 OID 16458)
--- Name: okkruglov_days_words_list; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.okkruglov_days_words_list (
-    words_eng character varying(255),
-    words_rus character varying(255)
-);
-
-
-ALTER TABLE public.okkruglov_days_words_list OWNER TO postgres;
-
---
--- TOC entry 229 (class 1259 OID 16463)
--- Name: okkruglov_info; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.okkruglov_info (
-    categories character varying(255),
-    total_quantity_of_words character varying(255)
-);
-
-
-ALTER TABLE public.okkruglov_info OWNER TO postgres;
-
---
--- TOC entry 230 (class 1259 OID 16468)
--- Name: okkruglov_repetition_list; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.okkruglov_repetition_list (
-    words_eng character varying(255),
-    words_rus character varying(255),
-    words_count integer
-);
-
-
-ALTER TABLE public.okkruglov_repetition_list OWNER TO postgres;
-
---
--- TOC entry 231 (class 1259 OID 16473)
--- Name: okkruglov_words; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.okkruglov_words (
-    words_eng character varying(255),
-    words_rus character varying(255),
-    words_count integer,
-    last_repetition_time timestamp without time zone
-);
-
-
-ALTER TABLE public.okkruglov_words OWNER TO postgres;
-
---
--- TOC entry 232 (class 1259 OID 16478)
--- Name: polina_dorohova_days_words_list; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.polina_dorohova_days_words_list (
-    words_eng character varying(255),
-    words_rus character varying(255)
-);
-
-
-ALTER TABLE public.polina_dorohova_days_words_list OWNER TO postgres;
-
---
--- TOC entry 233 (class 1259 OID 16483)
--- Name: polina_dorohova_info; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.polina_dorohova_info (
-    categories character varying(255),
-    total_quantity_of_words character varying(255)
-);
-
-
-ALTER TABLE public.polina_dorohova_info OWNER TO postgres;
-
---
--- TOC entry 234 (class 1259 OID 16488)
--- Name: polina_dorohova_repetition_list; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.polina_dorohova_repetition_list (
-    words_eng character varying(255),
-    words_rus character varying(255),
-    words_count integer
-);
-
-
-ALTER TABLE public.polina_dorohova_repetition_list OWNER TO postgres;
-
---
--- TOC entry 235 (class 1259 OID 16493)
--- Name: polina_dorohova_words; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.polina_dorohova_words (
-    words_eng character varying(255),
-    words_rus character varying(255),
-    words_count integer,
-    last_repetition_time timestamp without time zone
-);
-
-
-ALTER TABLE public.polina_dorohova_words OWNER TO postgres;
-
---
--- TOC entry 236 (class 1259 OID 16498)
--- Name: shevchenyaa_days_words_list; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.shevchenyaa_days_words_list (
-    words_eng character varying(255),
-    words_rus character varying(255)
-);
-
-
-ALTER TABLE public.shevchenyaa_days_words_list OWNER TO postgres;
-
---
--- TOC entry 237 (class 1259 OID 16503)
--- Name: shevchenyaa_info; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.shevchenyaa_info (
-    categories character varying(255),
-    total_quantity_of_words character varying(255)
-);
-
-
-ALTER TABLE public.shevchenyaa_info OWNER TO postgres;
-
---
--- TOC entry 238 (class 1259 OID 16508)
--- Name: shevchenyaa_repetition_list; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.shevchenyaa_repetition_list (
-    words_eng character varying(255),
-    words_rus character varying(255),
-    words_count integer
-);
-
-
-ALTER TABLE public.shevchenyaa_repetition_list OWNER TO postgres;
-
---
--- TOC entry 239 (class 1259 OID 16513)
--- Name: shevchenyaa_words; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.shevchenyaa_words (
-    words_eng character varying(255),
-    words_rus character varying(255),
-    words_count integer,
-    last_repetition_time timestamp without time zone
-);
-
-
-ALTER TABLE public.shevchenyaa_words OWNER TO postgres;
-
---
--- TOC entry 240 (class 1259 OID 16518)
--- Name: tebaatusasulax_days_words_list; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.tebaatusasulax_days_words_list (
-    words_eng character varying(255),
-    words_rus character varying(255)
-);
-
-
-ALTER TABLE public.tebaatusasulax_days_words_list OWNER TO postgres;
-
---
--- TOC entry 241 (class 1259 OID 16523)
--- Name: tebaatusasulax_info; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.tebaatusasulax_info (
-    categories character varying(255),
-    total_quantity_of_words character varying(255)
-);
-
-
-ALTER TABLE public.tebaatusasulax_info OWNER TO postgres;
-
---
--- TOC entry 242 (class 1259 OID 16528)
--- Name: tebaatusasulax_repetition_list; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.tebaatusasulax_repetition_list (
-    words_eng character varying(255),
-    words_rus character varying(255),
-    words_count integer
-);
-
-
-ALTER TABLE public.tebaatusasulax_repetition_list OWNER TO postgres;
-
---
--- TOC entry 243 (class 1259 OID 16533)
--- Name: tebaatusasulax_words; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.tebaatusasulax_words (
-    words_eng character varying(255),
-    words_rus character varying(255),
-    words_count integer,
-    last_repetition_time timestamp without time zone
-);
-
-
-ALTER TABLE public.tebaatusasulax_words OWNER TO postgres;
-
---
--- TOC entry 244 (class 1259 OID 16538)
--- Name: thousand_most_used_words; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.thousand_most_used_words (
-    id character varying(255),
-    words_eng character varying(255),
-    words_rus character varying(255)
-);
-
-
-ALTER TABLE public.thousand_most_used_words OWNER TO postgres;
-
---
--- TOC entry 245 (class 1259 OID 16543)
--- Name: tofannapvp_days_words_list; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.tofannapvp_days_words_list (
-    words_eng character varying(255),
-    words_rus character varying(255)
-);
-
-
-ALTER TABLE public.tofannapvp_days_words_list OWNER TO postgres;
-
---
--- TOC entry 246 (class 1259 OID 16548)
--- Name: tofannapvp_info; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.tofannapvp_info (
-    categories character varying(255),
-    total_quantity_of_words character varying(255)
-);
-
-
-ALTER TABLE public.tofannapvp_info OWNER TO postgres;
-
---
--- TOC entry 247 (class 1259 OID 16553)
--- Name: tofannapvp_repetition_list; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.tofannapvp_repetition_list (
-    words_eng character varying(255),
-    words_rus character varying(255),
-    words_count integer
-);
-
-
-ALTER TABLE public.tofannapvp_repetition_list OWNER TO postgres;
-
---
--- TOC entry 248 (class 1259 OID 16558)
--- Name: tofannapvp_words; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.tofannapvp_words (
-    words_eng character varying(255),
-    words_rus character varying(255),
-    words_count integer,
-    last_repetition_time timestamp without time zone
-);
-
-
-ALTER TABLE public.tofannapvp_words OWNER TO postgres;
-
---
--- TOC entry 249 (class 1259 OID 16563)
--- Name: users; Type: TABLE; Schema: public; Owner: postgres
---
 
 CREATE TABLE public.users (
     user_id character varying(255),
@@ -519,66 +48,6 @@ CREATE TABLE public.users (
 
 ALTER TABLE public.users OWNER TO postgres;
 
---
--- TOC entry 250 (class 1259 OID 16568)
--- Name: valeriaaleksan_days_words_list; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.valeriaaleksan_days_words_list (
-    words_eng character varying(255),
-    words_rus character varying(255)
-);
-
-
-ALTER TABLE public.valeriaaleksan_days_words_list OWNER TO postgres;
-
---
--- TOC entry 251 (class 1259 OID 16573)
--- Name: valeriaaleksan_info; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.valeriaaleksan_info (
-    categories character varying(255),
-    total_quantity_of_words character varying(255)
-);
-
-
-ALTER TABLE public.valeriaaleksan_info OWNER TO postgres;
-
---
--- TOC entry 252 (class 1259 OID 16578)
--- Name: valeriaaleksan_repetition_list; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.valeriaaleksan_repetition_list (
-    words_eng character varying(255),
-    words_rus character varying(255),
-    words_count integer
-);
-
-
-ALTER TABLE public.valeriaaleksan_repetition_list OWNER TO postgres;
-
---
--- TOC entry 253 (class 1259 OID 16583)
--- Name: valeriaaleksan_words; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.valeriaaleksan_words (
-    words_eng character varying(255),
-    words_rus character varying(255),
-    words_count integer,
-    last_repetition_time timestamp without time zone
-);
-
-
-ALTER TABLE public.valeriaaleksan_words OWNER TO postgres;
-
---
--- TOC entry 3473 (class 0 OID 16388)
--- Dependencies: 214
--- Data for Name: five_thousands_most_used_words; Type: TABLE DATA; Schema: public; Owner: postgres
---
 
 COPY public.five_thousands_most_used_words (id, words_eng, words_rus) FROM stdin;
 1	abandon	оставить, забросить
@@ -6899,7 +6368,7 @@ COPY public.thousand_most_used_words (id, words_eng, words_rus) FROM stdin;
 511	спать	to smoke
 512	курить	to spend (spent – spent)
 513	проводить (время), тратить	to take off
-514	, <td align="left" style="vertical-align: middle;" width="390">to try	пытаться
+514	to try	пытаться
 515	to use	использовать
 516	to visit	посещать
 517	to wait	ждать
@@ -7160,7 +6629,965 @@ COPY public.thousand_most_used_words (id, words_eng, words_rus) FROM stdin;
 772	a goose (pl. geese)	гусь
 773	a horse	лошадь
 774	an insect	насекомое
-775	, <td align="left" style="vertical-align: middle;" width="390">a monkey	обезьяна
+775	a monkey	обезьяна
+776	a mouse (pl. mice)	мышь
+777	a pig	свинья
+778	a rabbit	заяц
+779	a rat	крыса
+780	a snake	змея
+781	a spider	паук
+782	a squirrel	белка
+783	a plant	растение
+784	a bush	куст
+785	a flower	цветок
+786	grass	трава
+787	a leaf	лист
+788	a tree	дерево
+789	nature	природа
+790	a beach	пляж
+791	a coast	морское побережье
+792	a field	поле
+793	fire	огонь, пожар
+794	a forest	лес
+795	an island	остров
+796	a lake	озеро
+797	a mountain	гора
+798	the ocean	океан
+799	a river	река
+800	sand	песок
+801	the sea	море
+802	a stone	камень
+803	a world	мир (планета)
+804	air	воздух
+805	degree	градус
+806	moon	луна
+807	sky	небо
+808	sun	солнце
+809	temperature	температура
+810	weather	погода
+811	clear	ясный
+812	cloudy	облачный
+813	cold	холодный, холодно
+814	cool	прохладный, прохладно
+815	foggy	туманный
+816	hot	горячий, жаркий, жарко
+817	rainy	дождливый, дождливо
+818	snowy	снежный, снежно
+819	warm	тепло, теплый
+820	windy	ветрено
+821	a birthday	день рождения
+822	Christmas	Рождество
+823	death	смерть
+824	Easter	Пасха
+825	a game	игра
+826	a holiday (AmE: a vacation)	праздник, каникулы, отпуск
+827	a meeting	встреча, собрание
+828	New Year’s Eve	канун Нового года
+829	a party	вечеринка
+830	a wedding	свадьба
+831	a balloon	воздушный шар
+832	a box	коробка, боксировать
+833	a guest	гость
+834	an invitation	приглашение
+835	a present	подарок
+836	a toy	игрушка
+837	a country	страна
+838	customs	таможня
+839	a city	город
+840	a town	небольшой город, городок
+841	a village	деревня
+842	an airport	аэропорт
+843	a bank	банк
+844	a bridge	мост
+845	a building	здание
+846	a café	кафе
+847	a centre (AmE: a center)	центр (города)
+848	a church	церковь
+849	a cinema	кинотеатр
+850	a company	компания, фирма
+851	entrance	вход
+852	exit	выход
+853	a factory	фабрика, завод
+854	garbage	мусор
+855	a hospital	больница
+856	a hotel	гостиница
+857	an intersection	перекресток, точка пересечения
+858	a market	рынок
+859	an office	офис
+860	a park	парк
+861	a pavement (AmE: a sidewalk)	тротуар
+862	a pharmacy (AmE: a drug store)	аптека
+863	a police	полиция
+864	a post office	почта
+865	a restaurant	ресторан
+866	a road	дорога
+867	a school	школа
+868	a shop (AmE: a store)	магазин
+869	a station	станция, вокзал
+870	a street	улица
+871	a theatre (AmE: a theater)	театр
+872	a university	университет
+873	clean	чистый
+874	comfortable	удобный, уютный
+875	crowded	людный, переполненный
+876	dirty	грязный
+877	main	основной, главный
+878	this/these	этот/эти
+879	that/those	тот/те
+880	left	левый, налево
+881	right	правый, направо
+882	here	тут, сюда
+883	there	там, туда
+884	down	вниз
+885	up	вверх
+886	about	о, около, примерно
+887	above	над
+888	against	против
+889	behind	сзади, позади
+890	between	между
+891	from	из
+892	in	в
+893	in front of	впереди
+894	on	на
+895	through	через, сквозь
+896	to	по направлению к
+897	under	под
+898	with	с
+899	without	без
+900	a flat (AmE: an apartment)	квартира
+901	a house	дом (помещение)
+902	a balcony	балкон
+903	a bathroom	ванная
+904	a bedroom	спальня
+905	a curtain	штора
+906	a door	дверь
+907	a fence	забор
+908	a floor	пол, этаж
+909	a hall	коридор
+910	a kitchen	кухня
+911	a living room	гостиная, зал
+912	a roof	крыша
+913	a room	комната
+914	a shower	душ
+915	a sink	раковина
+916	a socket	розетка
+917	stairs	лестница, ступеньки
+918	a toilet	туалет
+919	a wall	стена
+920	a window	окно
+921	a yard	двор
+922	furniture	мебель
+923	an armchair	кресло
+924	a bed	кровать
+925	a chair	стул
+926	a shelf	полка
+927	a sofa	диван
+928	a table	стол
+929	a wardrobe (AmE: a closet)	шкаф
+930	a battery	батарейка, аккумулятор
+931	a camera	камера
+932	a computer	компьютер
+933	a fridge	холодильник
+934	an iron	утюг
+935	a keyboard	клавиатура
+936	a lamp	лампа
+937	a laptop	ноутбук
+938	a microwave	микроволновка
+939	an oven	печь, духовка
+940	a phone	телефон
+941	a radio	радио
+942	a cooker (AmE: a stove)	кухонная плита
+943	a TV	телевизор
+944	a wire	провод
+945	a ball	мяч, шар
+946	a blanket	одеяло
+947	a carpet	ковер
+948	a key	ключ, клавиша
+949	a magazine	журнал
+950	mail	почта
+951	a mirror	зеркало
+952	a newspaper	газета
+953	a package	упаковка, посылка
+954	a pillow	подушка
+955	a sheet	простыня
+956	a soap	мыло
+957	a towel	полотенце
+958	a vase	ваза
+1	a person (pl. people)	человек, персона
+2	a man (pl. men)	мужчина
+3	a woman (pl. women)	женщина
+4	a child (pl. children)	ребенок
+5	a boy	мальчик
+6	a girl	девочка
+7	a friend	друг
+8	a neighbour (AmE: a neighbor)	сосед
+9	a name	имя, название
+10	a surname (AmE: a last name)	фамилия
+11	a maiden name	девичья фамилия
+12	an address	адрес
+13	single	холостой/незамужняя
+14	married	женатый/замужняя
+15	age	возраст
+16	old	старый
+17	young	молодой
+18	I	я
+19	you	ты, вы
+20	we	мы
+21	they	они
+22	he	он
+23	she	она
+24	it	оно (о неодушевленном в единственном числе)
+25	my/me	мой/мне
+26	your/you	твой, ваш / тебе, вам
+27	our/us	наш/нам
+28	their/them	их/им
+29	his/him	его/ему
+30	her	ее/ей
+31	its/it	его, ее / ему, ей (о неодушевленном)
+32	parents	родители
+33	a father	отец
+34	a mother (AmE: a mom, BrE: a mum)	мать
+35	a husband	муж
+36	a wife	жена
+37	a son	сын
+38	a daughter	дочь
+39	a brother	брат
+40	a sister	сестра
+41	a grandfather	дедушка
+42	a grandmother	бабушка
+43	an uncle	дядя
+44	an aunt	тетя
+45	a nephew	племянник
+46	a niece	племянница
+47	a cousin	двоюродный брат/сестра
+48	an arm	рука
+49	a back	спина
+50	a beard	борода
+51	a bone	кость
+52	buttocks	ягодицы
+53	a cheek	щека
+54	a chest	грудь
+55	a chin	подбородок
+56	an ear	ухо
+57	an elbow	локоть
+58	an eye	глаз
+59	an eyebrow	бровь
+60	a face	лицо
+61	a finger	палец на руке
+62	a foot (pl. feet)	ступня
+63	a forehead	лоб
+64	hair	волосы
+65	a hand	кисть руки
+66	a head	голова
+67	a heart	сердце
+68	a heel	пятка
+69	a knee	колено
+70	a leg	нога
+71	lips	губы
+72	a mouth	рот
+73	a mustache	усы
+74	a nail	ноготь
+75	a neck	шея
+76	a nose	нос
+77	an organ	орган
+78	a shoulder	плечо
+79	skin	кожа
+80	a spine	позвоночник
+81	a stomach	живот, желудок
+82	a throat	горло
+83	a toe	палец на ноге
+84	a tongue	язык
+85	a tooth (pl. teeth)	зуб
+86	blood	кровь
+87	a bruise	синяк
+88	dizziness	головокружение
+89	fever	жар
+90	flu	грипп
+91	pain	боль
+92	running nose	насморк
+93	a spot	пятно, точка
+94	a wound	рана
+95	to sneeze	чихать
+96	to hurt (hurt – hurt)	ранить, повреждать
+97	fit	в хорошей форме
+98	healthy	здоровый
+99	swollen	опухший
+100	sick	больной
+101	fat	толстый, жирный
+102	dead	мертвый
+103	positive	положительный
+104	amazing	удивительный
+105	beautiful	красивый
+106	handsome	красивый (о мужчине)
+107	brave	смелый
+108	calm	спокойный
+109	careful	осторожный
+110	clever	умный
+111	curious	любопытный
+112	elegant	элегантный
+113	energetic	энергичный
+114	fair	справедливый, честный
+115	fine	прекрасный, прекрасно
+116	friendly	дружелюбный
+117	good	хороший, добрый
+118	happy	счастливый
+119	hard-working	трудолюбивый
+120	honest	честный
+121	kind	добрый
+122	lucky	везучий, счастливый
+123	nice	милый, хороший, приятный
+124	polite	вежливый
+125	talented	талантливый
+126	neutral	нейтральный
+127	average	средний
+128	boring	скучный
+129	busy	занятой
+130	clumsy	неуклюжий
+131	dear	дорогой
+132	different	другой, разный
+133	difficult	трудный, тяжелый
+134	easy	легкий, нетрудный
+135	embarrassed	смущенный
+136	famous	знаменитый
+137	important	важный
+138	impossible	невозможный
+139	interesting	интересный
+140	real	настоящий
+141	rich	богатый
+142	new	новый
+143	modern	современный
+144	negative	отрицательный
+145	angry	сердитый
+146	annoying	раздражающий
+147	awful	ужасный, отвратительный
+148	bad	плохой
+149	crazy	безумный, сумасшедший
+150	dangerous	опасный
+151	jealous	ревнивый
+152	lazy	ленивый
+153	nervous	нервный
+154	poor	бедный, плохой (язык, знания)
+155	rude	грубый
+156	an accountant	бухгалтер
+157	an actor/actress	актер/актриса
+158	an artist	художник
+159	a boss	босс
+160	a businessman (pl. businessmen)	бизнесмен
+161	a chief	руководитель, главный
+162	a client	клиент
+163	a colleague (AmE: a co-worker)	коллега
+164	a doctor	врач
+165	a driver	водитель
+166	an engineer	инженер
+167	a flight attendant	стюардесса, бортпроводник
+168	a journalist	журналист
+169	a lawyer	адвокат, юрист
+170	a lifeguard	спасатель
+171	a mechanic	механик
+172	a musician	музыкант
+173	a nanny	няня
+174	a nurse	медсестра
+175	a pilot	пилот
+176	a plumber	сантехник
+177	a policeman (pl. policemen)	полицейский
+178	a pupil	школьник
+179	a shop assistant	продавец
+180	a student	студент
+181	a teacher	учитель
+182	a waiter/waitress	официант/официантка
+183	a worker	рабочий
+184	an area	область, сфера, район
+185	a case	дело
+307	sixteen	шестнадцать
+186	a circumstance	обстоятельство
+187	a decision	решение
+188	a duty	обязанность
+189	a goal	цель
+190	an opportunity	возможность
+191	a problem	проблема
+192	a permit	разрешение (на въезд/выезд/проживание)
+193	a reason	причина
+194	a result	результат
+195	success	успех
+196	a task	задача, задание
+197	a belt	пояс, ремень
+198	a blouse	блузка
+199	a boot	сапог, ботинок
+200	a cap	кепка
+201	a cardigan	кардиган, кофта
+202	a coat	пальто
+203	a glove	перчатка
+204	a hat	шляпа
+205	a hood	капюшон
+206	a jacket	жакет, пиджак, куртка
+207	a jeans	джинсы
+208	pyjamas (AmE: pajamas)	пижама
+209	a scarf	шарф
+210	a shirt	рубашка
+211	shoes	обувь
+212	shorts	шорты
+213	a skirt	юбка
+214	a sock	носок
+215	a sweater	свитер
+216	a tie	галстук
+217	tights	колготы
+218	trainers (AmE: sneakers)	кроссовки
+219	trousers (AmE: pants)	штаны
+220	a T-shirt	футболка
+221	an underwear	нижнее белье
+222	a bracelet	браслет
+223	an earring	сережка
+224	glasses	очки
+225	a necklace	ожерелье
+226	a purse	дамская сумка, кошелек
+227	a wallet	бумажник
+228	red	красный
+229	orange	оранжевый
+230	yellow	желтый
+231	green	зеленый
+232	blue	голубой, синий
+233	purple	фиолетовый
+234	pink	розовый
+235	brown	коричневый
+236	black	черный
+237	grey	серый
+238	white	белый
+239	bright	яркий
+240	colourful	цветной
+241	dark	темный
+242	light	светлый, легкий
+243	a circle	круг
+244	round	округлый
+245	, straight	прямой, ровный
+246	a wheel	колесо
+247	distance	расстояние
+248	size	размер
+249	speed	скорость
+250	strength	сила
+251	a lot of	много
+252	many	много (с исчисляемыми существительными в отрицаниях и вопросах)
+253	much	много (с неисчисляемыми существительными в отрицаниях и вопросах)
+254	few	мало (с исчисляемыми существительными)
+255	little	мало (с неисчисляемыми существительными)
+256	less	меньше, менее
+257	more	больше, более
+258	some	несколько, некоторое количество (в утверждениях)
+259	any	несколько, некоторое количество (в отрицаниях и вопросах), какой-нибудь
+260	a pair	пара (вещей, объектов)
+261	a part	часть
+262	a piece	кусок, часть
+263	big	большой
+264	far	далекий
+265	fast	быстрый, быстро
+266	hard	твердый, трудный, жесткий, усердно
+267	heavy	тяжелый
+268	high	высокий (об объектах)
+269	large	большой, просторный
+270	long	длинный, долгий
+271	loud	громкий
+272	low	низкий, низко
+273	narrow	узкий
+274	near	близкий
+275	noisy	шумный
+276	powerful	мощный
+277	quick	быстрый
+278	quiet	тихий
+279	short	низкий, короткий
+280	again	снова
+281	all	все, весь
+282	almost	почти
+283	each	каждый (по отдельности)
+284	enough	достаточно
+285	every	каждый
+286	only	только
+287	than	чем (в сравнениях)
+288	together	вместе
+289	too	тоже, слишком
+290	very	очень
+291	zero	ноль
+292	one	один
+293	two	два
+294	three	три
+295	four	четыре
+296	five	пять
+297	six	шесть
+298	seven	семь
+299	eight	восемь
+300	nine	девять
+301	ten	десять
+302	eleven	одиннадцать
+303	twelve	двенадцать
+304	thirteen	тринадцать
+305	fourteen	четырнадцать
+306	fifteen	пятнадцать
+308	seventeen	семнадцать
+309	eighteen	восемнадцать
+310	nineteen	девятнадцать
+311	twenty	двадцать
+312	thirty	тридцать
+313	forty	сорок
+314	fifty	пятьдесят
+315	sixty	шестьдесят
+316	seventy	семьдесят
+317	eighty	восемьдесят
+318	ninety	девяносто
+319	hundred	сто
+320	thousand	тысяча
+321	million	миллион
+322	first	первый
+323	second	второй
+324	third	третий
+325	fourth	четвертый
+326	fifth	пятый
+327	a season	сезон, время года
+328	winter	зима
+329	spring	весна
+330	summer	лето
+331	autumn (AmE: fall)	осень
+332	a month	месяц
+333	January	январь
+334	February	февраль
+335	March	март
+336	April	апрель
+337	May	май
+338	June	июнь
+339	July	июль
+340	August	август
+341	September	сентябрь
+342	October	октябрь
+343	November	ноябрь
+344	December	декабрь
+345	a day	день
+346	Monday	понедельник
+347	Tuesday	вторник
+348	Wednesday	среда
+349	Thursday	четверг
+350	Friday	пятница
+351	Saturday	суббота
+352	Sunday	воскресенье
+353	yesterday	вчера
+354	today	сегодня
+355	now	сейчас, теперь
+356	morning	утро
+357	afternoon	день (после полудня)
+358	evening	вечер
+359	night	ночь
+360	tonight	сегодня вечером, ночью
+361	midnight	полночь
+362	tomorrow	завтра
+363	a second	секунда
+364	a minute	минута
+365	an hour	час
+366	a week	неделя
+367	a year	год
+368	a century	век
+369	ago	назад (например, 2 дня назад)
+370	early	ранний, рано
+371	last	последний, прошлый
+372	late	поздний, поздно, опоздавший
+373	next	следующий (год, неделя)
+374	after	после
+375	before	до
+376	during	во время
+377	for	для, в течение (времени)
+378	since	с (определенного времени)
+379	then	затем, потом, тогда
+380	always	всегда
+381	never	никогда
+382	often	часто
+383	sometimes	иногда
+384	soon	скоро
+385	usually	обычно
+386	already	уже
+387	just	только что, просто
+388	yet	еще не
+389	probably	вероятно
+390	really	действительно
+391	will	для образования будущего времени
+392	a bill	счет
+393	cash	наличка
+394	discount	скидка
+395	price	цена
+396	tip	чаевые
+397	cheap	дешевый
+398	expensive	дорогой (о цене)
+399	free	бесплатный, свободный
+400	art	искусство
+401	a film (AmE: a movie)	фильм
+402	literature	литература
+403	music	музыка
+404	a photo	фото
+405	a picture	картина, фотография
+406	a song	песня
+407	a story	история, рассказ
+408	to act	,to build (built – built)
+409	строить	to create
+410	создавать	, to do (did – done)
+411	делать	to draw (drew – drawn)
+412	рисовать	to listen
+413	слушать	to make (made – made)
+414	делать, изготавливать	, to read (read – read)
+415	читать	to sing (sang – sung)
+416	петь	to swim (swam – swum)
+417	плавать	to teach (taught – taught)
+418	учить, преподавать	to write (wrote – written)
+419	писать	a backpack
+420	рюкзак	a bag
+421	сумка	a card
+422	открытка, карточка (банковская)	, a destination
+423	пункт назначения	a luggage (AmE: a baggage)
+424	багаж	a map
+425	карта	a suitcase
+426	чемодан	a ticket
+427	билет	a bicycle
+428	велосипед	a bus
+429	автобус	a car
+430	автомобиль	a plane
+431	самолет	a ship
+432	корабль	a taxi (AmE: a cab)
+433	такси	a train
+434	поезд	a tram (AmE: a trolley)
+435	трамвай	insurance
+436	страховка	to arrive
+437	прибывать	to bring (brought – brought)
+438	приносить	to catch (caught – caught)
+439	ловить	to come (came – come)
+440	приходить	to drive (drove – driven)
+441	водить (транспорт)	to drop
+442	ронять	to fall (fell – fallen)
+443	падать	to finish
+444	заканчивать	to fly (flew – flown)
+445	летать	to go (went – gone)
+446	идти, уезжать	to grow (grew – grown)
+447	расти	to happen
+448	случаться	to jump
+449	прыгать	to land
+450	приземляться	to leave (left – left)
+451	покидать, оставлять, уходить	to move
+452	двигаться	to pass
+453	проходить	to pull
+454	тянуть	to push
+455	толкать	to put (put – put)
+456	положить, класть	to ride (rode – ridden)
+457	ездить верхом (на лошади, велосипеде)	to run (ran – run)
+458	бежать	to stand (stood – stood)
+459	стоять	to start
+460	начинать	to stay
+461	оставаться	to stop
+462	останавливаться	to take (took – taken)
+463	брать	to throw (threw – thrown)
+464	бросать	to travel
+465	путешествовать	to turn
+466	поворачивать	to walk
+467	идти пешком, гулять	to add
+468	добавлять	to be (was/were – been)
+469	быть	to become (became – become)
+470	становиться	to begin (began – begun)
+471	начинать	to break (broke – broken)
+472	ломать	to buy (bought – bought)
+473	покупать	to change
+474	менять	to check
+475	проверять	to choose (chose – chosen)
+476	выбирать	to close
+477	закрывать	to continue
+478	продолжать	to control
+479	контролировать	to cook
+480	готовить	to cost (cost – cost)
+481	стоить	to cut (cut – cut)
+482	резать	to develop
+483	развивать	to drink (drank – drunk)
+484	пить	to eat (ate – eaten)
+485	есть, кушать	to feed (fed – fed)
+486	кормить	to find (found – found)
+487	находить	to get (got – got)
+488	получать, добывать	to give (gave – given)
+489	давать	to have (had – had)
+490	иметь, обладать	to hold (held – held)
+491	держать	to keep (kept – kept)
+492	хранить, продолжать	to kill
+493	убивать	to live
+494	жить	to look
+495	выглядеть	to open
+496	открывать	to order
+497	заказывать	to pay
+498	платить	to plan
+499	планировать	to put on
+500	надевать	to rest
+501	отдыхать	to ring (rang – rung)
+502	звенеть, звонить	to risk
+503	рисковать	to save
+504	спасать, сохранять	to sell (sold – sold)
+505	продавать	to send (sent – sent)
+506	отправлять	to shave
+507	бриться	to show (showed – shown)
+508	показывать	to sign
+509	подписывать	to sit (sat – sat)
+510	сидеть	to sleep (slept – slept)
+511	спать	to smoke
+512	курить	to spend (spent – spent)
+513	проводить (время), тратить	to take off
+514	to try	пытаться
+515	to use	использовать
+516	to visit	посещать
+517	to wait	ждать
+518	to wake up (woke – woken)	просыпаться
+519	to wash	мыть, стирать
+520	to watch	смотреть, наблюдать
+521	to wear (wore – worn)	носить (одежду)
+522	to work	работать
+523	yes	да
+524	no	нет
+525	not	не
+526	hi	привет
+527	hello	здравствуйте
+528	sorry	извините (просим прощения)
+529	excuse me	извините (просим разрешение)
+530	please	пожалуйста, прошу
+531	thank you	спасибо
+532	you are welcome	не за что
+533	bye	пока
+534	maybe	может быть
+535	would like to	хотелось бы (сделать что-то)
+536	to agree	соглашаться
+537	to answer	отвечать
+538	to argue	спорить, ругаться
+539	to ask	спрашивать
+540	to call	звонить, звать, называть
+541	to complain	жаловаться
+542	to describe	описывать
+543	to discuss	обсуждать
+544	to disturb	беспокоить
+545	to explain	объяснять
+546	to fight (fought – fought)	драться
+547	to forgive (forgave – forgiven)	прощать
+548	to help	помогать
+549	to hit (hit – hit)	ударять
+550	to join	присоединяться
+551	to joke	шутить
+552	to lie	обманывать, врать
+553	to meet (met – met)	встречать
+554	to offer	предлагать
+555	to protect	защищать
+556	to say (said – said)	сказать
+557	to share	делиться
+558	to speak (spoke – spoken)	разговаривать
+559	to support	поддерживать
+560	to surprise	удивлять
+561	to talk	разговаривать
+562	to tell (told – told)	рассказывать
+563	also	также
+564	and	и
+565	because	потому что
+566	because of	из-за
+567	but	но
+568	if	если
+569	or	или
+570	so	итак, таким образом, поэтому
+571	what	что, какой
+572	who	кто
+573	when	когда
+574	where	где, куда
+575	how	как, каким образом
+576	why	почему, зачем
+577	fear	страх
+578	fun	веселье
+579	passion	страсть
+580	peace	мир
+581	pleasure	удовольствие
+582	to cry	плакать, кричать
+583	to enjoy	наслаждаться
+584	to laugh	смеяться
+585	to like	нравиться
+586	to love	любить
+587	to miss	скучать
+588	to need	нуждаться
+589	to smile	улыбаться
+590	to want	хотеть
+591	to worry	беспокоиться
+592	to feel (felt – felt)	чувствовать
+593	to hear (heard – heard)	слышать
+594	to see (saw – seen)	видеть
+595	to smell (smelt – smelt)	нюхать, иметь запах
+596	to taste	пробовать, иметь вкус
+597	behavior	поведение
+598	choice	выбор
+599	experience	опыт
+600	habit	привычка
+601	language	язык
+602	meaning	значение, смысл
+603	memory	память, воспоминание
+604	soul	душа
+605	to believe	верить
+606	to compare	сравнивать
+607	to count	считать
+608	to decide	принимать решение
+609	to dream (dreamt – dreamt)	мечтать, видеть сон
+610	to expect	ожидать
+611	to forget (forgot – forgotten)	забывать
+612	to hope	надеяться
+613	to know (knew – known)	знать
+614	to learn (learnt – learnt)	учить, изучать
+615	to let (let – let)	позволять (сделать что-то)
+616	to remember	помнить
+617	to solve	решать (проблему, задачу)
+618	to think (thought – thought)	думать, считать
+619	a book	книга
+620	a calendar	календарь
+621	a notebook	тетрадь
+622	a dictionary	словарь
+623	an exercise	упражнение
+624	information	информация
+625	knowledge	знание
+626	a lesson	урок
+627	a letter	буква, письмо
+628	a mistake	ошибка
+629	a note	записка, запись
+630	a page	страница
+631	paper	бумага
+632	a pen	ручка
+633	a pencil	карандаш
+634	science	наука
+635	scissors	ножницы
+636	a test	тест
+637	a word	слово
+638	can	уметь, мочь (сделать что-то)
+639	have to	быть вынужденным (сделать что-то)
+640	may	иметь разрешение (сделать что-то)
+641	must	быть должным, обязанным (сделать что-то)
+642	should	должен, следует (сделать что-то)
+643	full	сытый, полный
+644	hungry	голодный
+645	delivery	доставка
+646	baked	запеченный
+647	boiled	вареный
+648	fried	жареный
+649	ready	готовый
+650	bitter	горький
+651	delicious	очень вкусный
+652	salty	соленый
+653	sour	кислый
+654	spicy	острый
+655	sweet	сладкий
+656	a meal	прием пищи
+657	breakfast	завтрак
+658	lunch	обед
+659	dinner	ужин
+660	snack	перекус
+661	a dish	блюдо
+662	noodles	лапша
+663	porridge	каша
+664	salad	салат
+665	a sandwich	бутерброд
+666	soup	суп
+667	fruit	фрукты
+668	vegetables	овощи
+669	an apple	яблоко
+670	an apricot	абрикос
+671	a banana	банан
+672	a berry	ягода
+673	a cherry	вишня
+674	a cucumber	огурец
+675	grapes	виноград
+676	a lemon	лимон
+677	a mandarin	мандарин
+678	a mango	манго
+679	a melon	дыня
+680	a peach	персик
+681	a pear	груша
+682	a pineapple	ананас
+683	a plum	слива
+684	a pumpkin	тыква
+685	a raspberry	малина
+686	a strawberry	клубника
+687	a tomato	помидор
+688	a watermelon	арбуз
+689	an aubergine (AmE: an eggplant)	баклажан
+690	beans	бобы, фасоль
+691	a beetroot	свекла
+692	a bell pepper	болгарский перец
+693	a cabbage	капуста
+694	a carrot	морковь
+695	corn	кукуруза
+696	a courgette (AmE: a zucchini)	кабачок
+697	garlic	чеснок
+698	an onion	лук
+699	a mushroom	гриб
+700	potato	картофель
+701	dairy	молочные продукты
+702	butter	масло
+703	cheese	сыр
+704	cream	крем, сливки
+705	curd	творог
+706	milk	молоко
+707	yogurt	йогурт
+708	a cutlet	котлета
+709	meat	мясо
+710	beef	говядина
+711	chicken	курица, цыпленок
+712	fish	рыба
+713	duck	утка
+714	ham	ветчина
+715	lamb	баранина, ягненок
+716	pork	свинина
+717	sausage	колбаса, сосиска
+718	seafood	морепродукты
+719	dessert	десерт
+720	biscuit (AmE: cookie)	печенье
+721	a bun	булочка
+722	a cake	торт
+723	chocolate	шоколад
+724	honey	мед
+725	ice cream	мороженое
+726	jam	варенье
+727	a pie	пирог
+728	bread	хлеб
+729	an egg	яйцо
+730	flour	мука
+731	a nut	орех
+732	oatmeal	овсянка
+733	oil	растительное масло
+734	pepper	перец
+735	rice	рис
+736	salt	соль
+737	sauce	соус
+738	spices	специи
+739	sugar	сахар
+740	a drink	напиток
+741	coffee	кофе
+742	juice	сок
+743	soda	газировка
+744	tea	чай
+745	water	вода
+746	wine	вино
+747	a bottle	бутылка
+748	a glass	стакан, стекло
+749	a cup	чашка
+750	a kettle	чайник
+751	a bowl	глубокая тарелка, миска
+752	a plate	тарелка
+753	a fork	вилка
+754	a knife	нож
+755	a spoon	ложка
+756	a frying pan	сковородка
+757	a pan	кастрюля
+758	a napkin	салфетка
+759	an animal	животное
+760	an ant	муравей
+761	a bear	медведь
+762	a bee	пчела
+763	a bird	птица
+764	a cat	кот, кошка
+765	a cockroach	таракан
+766	a cow	корова
+767	a dog	собака
+768	a elephant	слон
+769	a fox	лиса
+770	a frog	лягушка
+771	a giraffe	жираф
+772	a goose (pl. geese)	гусь
+773	a horse	лошадь
+774	an insect	насекомое
+775	a monkey	обезьяна
 776	a mouse (pl. mice)	мышь
 777	a pig	свинья
 778	a rabbit	заяц
@@ -7431,7 +7858,7 @@ COPY public.thousand_most_used_words (id, words_eng, words_rus) FROM stdin;
 85	a tooth (pl. teeth)	зуб
 86	blood	кровь
 87	a bruise	синяк
-88	, <td align="left" style="vertical-align: middle;" width="390">dizziness	головокружение
+88	dizziness	головокружение
 89	fever	жар
 90	flu	грипп
 91	pain	боль
@@ -7529,7 +7956,6 @@ COPY public.thousand_most_used_words (id, words_eng, words_rus) FROM stdin;
 183	a worker	рабочий
 184	an area	область, сфера, район
 185	a case	дело
-307	sixteen	шестнадцать
 186	a circumstance	обстоятельство
 187	a decision	решение
 188	a duty	обязанность
@@ -7651,6 +8077,7 @@ COPY public.thousand_most_used_words (id, words_eng, words_rus) FROM stdin;
 304	thirteen	тринадцать
 305	fourteen	четырнадцать
 306	fifteen	пятнадцать
+307	sixteen	шестнадцать
 308	seventeen	семнадцать
 309	eighteen	восемнадцать
 310	nineteen	девятнадцать
@@ -8302,1197 +8729,7 @@ COPY public.thousand_most_used_words (id, words_eng, words_rus) FROM stdin;
 956	a soap	мыло
 957	a towel	полотенце
 958	a vase	ваза
-1	a person (pl. people)	человек, персона
-2	a man (pl. men)	мужчина
-3	a woman (pl. women)	женщина
-4	a child (pl. children)	ребенок
-5	a boy	мальчик
-6	a girl	девочка
-7	a friend	друг
-8	a neighbour (AmE: a neighbor)	сосед
-9	a name	имя, название
-10	a surname (AmE: a last name)	фамилия
-11	a maiden name	девичья фамилия
-12	an address	адрес
-13	single	холостой/незамужняя
-14	married	женатый/замужняя
-15	age	возраст
-16	old	старый
-17	young	молодой
-18	I	я
-19	you	ты, вы
-20	we	мы
-21	they	они
-22	he	он
-23	she	она
-24	it	оно (о неодушевленном в единственном числе)
-25	my/me	мой/мне
-26	your/you	твой, ваш / тебе, вам
-27	our/us	наш/нам
-28	their/them	их/им
-29	his/him	его/ему
-30	her	ее/ей
-31	its/it	его, ее / ему, ей (о неодушевленном)
-32	parents	родители
-33	a father	отец
-34	a mother (AmE: a mom, BrE: a mum)	мать
-35	a husband	муж
-36	a wife	жена
-37	a son	сын
-38	a daughter	дочь
-39	a brother	брат
-40	a sister	сестра
-41	a grandfather	дедушка
-42	a grandmother	бабушка
-43	an uncle	дядя
-44	an aunt	тетя
-45	a nephew	племянник
-46	a niece	племянница
-47	a cousin	двоюродный брат/сестра
-48	an arm	рука
-49	a back	спина
-50	a beard	борода
-51	a bone	кость
-52	buttocks	ягодицы
-53	a cheek	щека
-54	a chest	грудь
-55	a chin	подбородок
-56	an ear	ухо
-57	an elbow	локоть
-58	an eye	глаз
-59	an eyebrow	бровь
-60	a face	лицо
-61	a finger	палец на руке
-62	a foot (pl. feet)	ступня
-63	a forehead	лоб
-64	hair	волосы
-65	a hand	кисть руки
-66	a head	голова
-67	a heart	сердце
-68	a heel	пятка
-69	a knee	колено
-70	a leg	нога
-71	lips	губы
-72	a mouth	рот
-73	a mustache	усы
-74	a nail	ноготь
-75	a neck	шея
-76	a nose	нос
-77	an organ	орган
-78	a shoulder	плечо
-79	skin	кожа
-80	a spine	позвоночник
-81	a stomach	живот, желудок
-82	a throat	горло
-83	a toe	палец на ноге
-84	a tongue	язык
-85	a tooth (pl. teeth)	зуб
-86	blood	кровь
-87	a bruise	синяк
-88	, <td align="left" style="vertical-align: middle;" width="390">dizziness	головокружение
-89	fever	жар
-90	flu	грипп
-91	pain	боль
-92	running nose	насморк
-93	a spot	пятно, точка
-94	a wound	рана
-95	to sneeze	чихать
-96	to hurt (hurt – hurt)	ранить, повреждать
-97	fit	в хорошей форме
-98	healthy	здоровый
-99	swollen	опухший
-100	sick	больной
-101	fat	толстый, жирный
-102	dead	мертвый
-103	positive	положительный
-104	amazing	удивительный
-105	beautiful	красивый
-106	handsome	красивый (о мужчине)
-107	brave	смелый
-108	calm	спокойный
-109	careful	осторожный
-110	clever	умный
-111	curious	любопытный
-112	elegant	элегантный
-113	energetic	энергичный
-114	fair	справедливый, честный
-115	fine	прекрасный, прекрасно
-116	friendly	дружелюбный
-117	good	хороший, добрый
-118	happy	счастливый
-119	hard-working	трудолюбивый
-120	honest	честный
-121	kind	добрый
-122	lucky	везучий, счастливый
-123	nice	милый, хороший, приятный
-124	polite	вежливый
-125	talented	талантливый
-126	neutral	нейтральный
-127	average	средний
-128	boring	скучный
-129	busy	занятой
-130	clumsy	неуклюжий
-131	dear	дорогой
-132	different	другой, разный
-133	difficult	трудный, тяжелый
-134	easy	легкий, нетрудный
-135	embarrassed	смущенный
-136	famous	знаменитый
-137	important	важный
-138	impossible	невозможный
-139	interesting	интересный
-140	real	настоящий
-141	rich	богатый
-142	new	новый
-143	modern	современный
-144	negative	отрицательный
-145	angry	сердитый
-146	annoying	раздражающий
-147	awful	ужасный, отвратительный
-148	bad	плохой
-149	crazy	безумный, сумасшедший
-150	dangerous	опасный
-151	jealous	ревнивый
-152	lazy	ленивый
-153	nervous	нервный
-154	poor	бедный, плохой (язык, знания)
-155	rude	грубый
-156	an accountant	бухгалтер
-157	an actor/actress	актер/актриса
-158	an artist	художник
-159	a boss	босс
-160	a businessman (pl. businessmen)	бизнесмен
-161	a chief	руководитель, главный
-162	a client	клиент
-163	a colleague (AmE: a co-worker)	коллега
-164	a doctor	врач
-165	a driver	водитель
-166	an engineer	инженер
-167	a flight attendant	стюардесса, бортпроводник
-168	a journalist	журналист
-169	a lawyer	адвокат, юрист
-170	a lifeguard	спасатель
-171	a mechanic	механик
-172	a musician	музыкант
-173	a nanny	няня
-174	a nurse	медсестра
-175	a pilot	пилот
-176	a plumber	сантехник
-177	a policeman (pl. policemen)	полицейский
-178	a pupil	школьник
-179	a shop assistant	продавец
-180	a student	студент
-181	a teacher	учитель
-182	a waiter/waitress	официант/официантка
-183	a worker	рабочий
-184	an area	область, сфера, район
-185	a case	дело
-186	a circumstance	обстоятельство
-187	a decision	решение
-188	a duty	обязанность
-189	a goal	цель
-190	, <td align="left" style="vertical-align: middle;" width="390">an opportunity	возможность
-191	a problem	проблема
-192	a permit	разрешение (на въезд/выезд/проживание)
-193	a reason	причина
-194	a result	результат
-195	success	успех
-196	a task	задача, задание
-197	a belt	пояс, ремень
-198	a blouse	блузка
-199	a boot	сапог, ботинок
-200	a cap	кепка
-201	a cardigan	кардиган, кофта
-202	a coat	пальто
-203	, <td align="left" style="vertical-align: middle;" width="390">a glove	перчатка
-204	a hat	шляпа
-205	a hood	капюшон
-206	a jacket	жакет, пиджак, куртка
-207	a jeans	джинсы
-208	pyjamas (AmE: pajamas)	пижама
-209	a scarf	шарф
-210	a shirt	рубашка
-211	shoes	обувь
-212	shorts	шорты
-213	a skirt	юбка
-214	a sock	носок
-215	, <td align="left" style="vertical-align: middle;" width="390">a sweater	свитер
-216	a tie	галстук
-217	tights	колготы
-218	trainers (AmE: sneakers)	кроссовки
-219	trousers (AmE: pants)	штаны
-220	a T-shirt	футболка
-221	an underwear	нижнее белье
-222	a bracelet	браслет
-223	an earring	сережка
-224	glasses	очки
-225	a necklace	ожерелье
-226	a purse	дамская сумка, кошелек
-227	a wallet	бумажник
-228	red	красный
-229	orange	оранжевый
-230	yellow	желтый
-231	green	зеленый
-232	blue	голубой, синий
-233	purple	фиолетовый
-234	pink	розовый
-235	brown	коричневый
-236	black	черный
-237	grey	серый
-238	white	белый
-239	bright	яркий
-240	colourful	цветной
-241	dark	темный
-242	light	светлый, легкий
-243	a circle	круг
-244	round	округлый
-245	, <td align="left" style="vertical-align: middle;" width="390">straight	прямой, ровный
-246	a wheel	колесо
-247	distance	расстояние
-248	size	размер
-249	speed	скорость
-250	strength	сила
-251	a lot of	много
-252	many	много (с исчисляемыми существительными в отрицаниях и вопросах)
-253	much	много (с неисчисляемыми существительными в отрицаниях и вопросах)
-254	few	мало (с исчисляемыми существительными)
-255	little	мало (с неисчисляемыми существительными)
-256	less	меньше, менее
-257	more	больше, более
-258	some	несколько, некоторое количество (в утверждениях)
-259	any	несколько, некоторое количество (в отрицаниях и вопросах), какой-нибудь
-260	a pair	пара (вещей, объектов)
-261	a part	часть
-262	a piece	кусок, часть
-263	big	большой
-264	far	далекий
-265	fast	быстрый, быстро
-266	hard	твердый, трудный, жесткий, усердно
-267	heavy	тяжелый
-268	high	высокий (об объектах)
-269	large	большой, просторный
-270	long	длинный, долгий
-271	loud	громкий
-272	low	низкий, низко
-273	narrow	узкий
-274	near	близкий
-275	noisy	шумный
-276	powerful	мощный
-277	quick	быстрый
-278	quiet	тихий
-279	short	низкий, короткий
-280	again	снова
-281	all	все, весь
-282	almost	почти
-283	each	каждый (по отдельности)
-284	enough	достаточно
-285	every	каждый
-286	only	только
-287	than	чем (в сравнениях)
-288	together	вместе
-289	too	тоже, слишком
-290	very	очень
-291	zero	ноль
-292	one	один
-293	two	два
-294	three	три
-295	four	четыре
-296	five	пять
-297	six	шесть
-298	seven	семь
-299	eight	восемь
-300	nine	девять
-301	ten	десять
-302	eleven	одиннадцать
-303	twelve	двенадцать
-304	thirteen	тринадцать
-305	fourteen	четырнадцать
-306	fifteen	пятнадцать
-307	sixteen	шестнадцать
-308	seventeen	семнадцать
-309	eighteen	восемнадцать
-310	nineteen	девятнадцать
-311	twenty	двадцать
-312	thirty	тридцать
-313	forty	сорок
-314	fifty	пятьдесят
-315	sixty	шестьдесят
-316	seventy	семьдесят
-317	eighty	восемьдесят
-318	ninety	девяносто
-319	hundred	сто
-320	thousand	тысяча
-321	million	миллион
-322	first	первый
-323	second	второй
-324	third	третий
-325	fourth	четвертый
-326	fifth	пятый
-327	a season	сезон, время года
-328	winter	зима
-329	spring	весна
-330	summer	лето
-331	autumn (AmE: fall)	осень
-332	a month	месяц
-333	January	январь
-334	February	февраль
-335	March	март
-336	April	апрель
-337	May	май
-338	June	июнь
-339	July	июль
-340	August	август
-341	September	сентябрь
-342	October	октябрь
-343	November	ноябрь
-344	December	декабрь
-345	a day	день
-346	Monday	понедельник
-347	Tuesday	вторник
-348	Wednesday	среда
-349	Thursday	четверг
-350	Friday	пятница
-351	Saturday	суббота
-352	Sunday	воскресенье
-353	yesterday	вчера
-354	today	сегодня
-355	now	сейчас, теперь
-356	morning	утро
-357	afternoon	день (после полудня)
-358	evening	вечер
-359	night	ночь
-360	tonight	сегодня вечером, ночью
-361	midnight	полночь
-362	tomorrow	завтра
-363	a second	секунда
-364	a minute	минута
-365	an hour	час
-366	a week	неделя
-367	a year	год
-368	a century	век
-369	ago	назад (например, 2 дня назад)
-370	early	ранний, рано
-371	last	последний, прошлый
-372	late	поздний, поздно, опоздавший
-373	next	следующий (год, неделя)
-374	after	после
-375	before	до
-376	during	во время
-377	for	для, в течение (времени)
-378	since	с (определенного времени)
-379	then	затем, потом, тогда
-380	always	всегда
-381	never	никогда
-382	often	часто
-383	sometimes	иногда
-384	soon	скоро
-385	usually	обычно
-386	already	уже
-387	just	только что, просто
-388	yet	еще не
-389	probably	вероятно
-390	really	действительно
-391	will	для образования будущего времени
-392	a bill	счет
-393	cash	наличка
-394	discount	скидка
-395	price	цена
-396	tip	чаевые
-397	cheap	дешевый
-398	expensive	дорогой (о цене)
-399	free	бесплатный, свободный
-400	art	искусство
-401	a film (AmE: a movie)	фильм
-402	literature	литература
-403	music	музыка
-404	a photo	фото
-405	a picture	картина, фотография
-406	a song	песня
-407	a story	история, рассказ
-408	to act	, <td align="left" style="vertical-align: middle;" width="390">to build (built – built)
-409	строить	to create
-410	создавать	, <td align="left" style="vertical-align: middle;" width="390">to do (did – done)
-411	делать	to draw (drew – drawn)
-412	рисовать	to listen
-413	слушать	to make (made – made)
-414	делать, изготавливать	, <td align="left" style="vertical-align: middle;" width="390">to read (read – read)
-415	читать	to sing (sang – sung)
-416	петь	to swim (swam – swum)
-417	плавать	to teach (taught – taught)
-418	учить, преподавать	to write (wrote – written)
-419	писать	a backpack
-420	рюкзак	a bag
-421	сумка	a card
-422	открытка, карточка (банковская)	, <td align="left" style="vertical-align: middle;" width="390">a destination
-423	пункт назначения	a luggage (AmE: a baggage)
-424	багаж	a map
-425	карта	a suitcase
-426	чемодан	a ticket
-427	билет	a bicycle
-428	велосипед	a bus
-429	автобус	a car
-430	автомобиль	a plane
-431	самолет	a ship
-432	корабль	a taxi (AmE: a cab)
-433	такси	a train
-434	поезд	a tram (AmE: a trolley)
-435	трамвай	insurance
-436	страховка	to arrive
-437	прибывать	to bring (brought – brought)
-438	приносить	to catch (caught – caught)
-439	ловить	to come (came – come)
-440	приходить	to drive (drove – driven)
-441	водить (транспорт)	to drop
-442	ронять	to fall (fell – fallen)
-443	падать	to finish
-444	заканчивать	to fly (flew – flown)
-445	летать	to go (went – gone)
-446	идти, уезжать	to grow (grew – grown)
-447	расти	to happen
-448	случаться	to jump
-449	прыгать	to land
-450	приземляться	to leave (left – left)
-451	покидать, оставлять, уходить	to move
-452	двигаться	to pass
-453	проходить	to pull
-454	тянуть	to push
-455	толкать	to put (put – put)
-456	положить, класть	to ride (rode – ridden)
-457	ездить верхом (на лошади, велосипеде)	to run (ran – run)
-458	бежать	to stand (stood – stood)
-459	стоять	to start
-460	начинать	to stay
-461	оставаться	to stop
-462	останавливаться	to take (took – taken)
-463	брать	to throw (threw – thrown)
-464	бросать	to travel
-465	путешествовать	to turn
-466	поворачивать	to walk
-467	идти пешком, гулять	to add
-468	добавлять	to be (was/were – been)
-469	быть	to become (became – become)
-470	становиться	to begin (began – begun)
-471	начинать	to break (broke – broken)
-472	ломать	to buy (bought – bought)
-473	покупать	to change
-474	менять	to check
-475	проверять	to choose (chose – chosen)
-476	выбирать	to close
-477	закрывать	to continue
-478	продолжать	to control
-479	контролировать	to cook
-480	готовить	to cost (cost – cost)
-481	стоить	to cut (cut – cut)
-482	резать	to develop
-483	развивать	to drink (drank – drunk)
-484	пить	to eat (ate – eaten)
-485	есть, кушать	to feed (fed – fed)
-486	кормить	to find (found – found)
-487	находить	to get (got – got)
-488	получать, добывать	to give (gave – given)
-489	давать	to have (had – had)
-490	иметь, обладать	to hold (held – held)
-491	держать	to keep (kept – kept)
-492	хранить, продолжать	to kill
-493	убивать	to live
-494	жить	to look
-495	выглядеть	to open
-496	открывать	to order
-497	заказывать	to pay
-498	платить	to plan
-499	планировать	to put on
-500	надевать	to rest
-501	отдыхать	to ring (rang – rung)
-502	звенеть, звонить	to risk
-503	рисковать	to save
-504	спасать, сохранять	to sell (sold – sold)
-505	продавать	to send (sent – sent)
-506	отправлять	to shave
-507	бриться	to show (showed – shown)
-508	показывать	to sign
-509	подписывать	to sit (sat – sat)
-510	сидеть	to sleep (slept – slept)
-511	спать	to smoke
-512	курить	to spend (spent – spent)
-513	проводить (время), тратить	to take off
-514	, <td align="left" style="vertical-align: middle;" width="390">to try	пытаться
-515	to use	использовать
-516	to visit	посещать
-517	to wait	ждать
-518	to wake up (woke – woken)	просыпаться
-519	to wash	мыть, стирать
-520	to watch	смотреть, наблюдать
-521	to wear (wore – worn)	носить (одежду)
-522	to work	работать
-523	yes	да
-524	no	нет
-525	not	не
-526	hi	привет
-527	hello	здравствуйте
-528	sorry	извините (просим прощения)
-529	excuse me	извините (просим разрешение)
-530	please	пожалуйста, прошу
-531	thank you	спасибо
-532	you are welcome	не за что
-533	bye	пока
-534	maybe	может быть
-535	would like to	хотелось бы (сделать что-то)
-536	to agree	соглашаться
-537	to answer	отвечать
-538	to argue	спорить, ругаться
-539	to ask	спрашивать
-540	to call	звонить, звать, называть
-541	to complain	жаловаться
-542	to describe	описывать
-543	to discuss	обсуждать
-544	to disturb	беспокоить
-545	to explain	объяснять
-546	to fight (fought – fought)	драться
-547	to forgive (forgave – forgiven)	прощать
-548	to help	помогать
-549	to hit (hit – hit)	ударять
-550	to join	присоединяться
-551	to joke	шутить
-552	to lie	обманывать, врать
-553	to meet (met – met)	встречать
-554	to offer	предлагать
-555	to protect	защищать
-556	to say (said – said)	сказать
-557	to share	делиться
-558	to speak (spoke – spoken)	разговаривать
-559	to support	поддерживать
-560	to surprise	удивлять
-561	to talk	разговаривать
-562	to tell (told – told)	рассказывать
-563	also	также
-564	and	и
-565	because	потому что
-566	because of	из-за
-567	but	но
-568	if	если
-569	or	или
-570	so	итак, таким образом, поэтому
-571	what	что, какой
-572	who	кто
-573	when	когда
-574	where	где, куда
-575	how	как, каким образом
-576	why	почему, зачем
-577	fear	страх
-578	fun	веселье
-579	passion	страсть
-580	peace	мир
-581	pleasure	удовольствие
-582	to cry	плакать, кричать
-583	to enjoy	наслаждаться
-584	to laugh	смеяться
-585	to like	нравиться
-586	to love	любить
-587	to miss	скучать
-588	to need	нуждаться
-589	to smile	улыбаться
-590	to want	хотеть
-591	to worry	беспокоиться
-592	to feel (felt – felt)	чувствовать
-593	to hear (heard – heard)	слышать
-594	to see (saw – seen)	видеть
-595	to smell (smelt – smelt)	нюхать, иметь запах
-596	to taste	пробовать, иметь вкус
-597	behavior	поведение
-598	choice	выбор
-599	experience	опыт
-600	habit	привычка
-601	language	язык
-602	meaning	значение, смысл
-603	memory	память, воспоминание
-604	soul	душа
-605	to believe	верить
-606	to compare	сравнивать
-607	to count	считать
-608	to decide	принимать решение
-609	to dream (dreamt – dreamt)	мечтать, видеть сон
-610	to expect	ожидать
-611	to forget (forgot – forgotten)	забывать
-612	to hope	надеяться
-613	to know (knew – known)	знать
-614	to learn (learnt – learnt)	учить, изучать
-615	to let (let – let)	позволять (сделать что-то)
-616	to remember	помнить
-617	to solve	решать (проблему, задачу)
-618	to think (thought – thought)	думать, считать
-619	a book	книга
-620	a calendar	календарь
-621	a notebook	тетрадь
-622	a dictionary	словарь
-623	an exercise	упражнение
-624	information	информация
-625	knowledge	знание
-626	a lesson	урок
-627	a letter	буква, письмо
-628	a mistake	ошибка
-629	a note	записка, запись
-630	a page	страница
-631	paper	бумага
-632	a pen	ручка
-633	a pencil	карандаш
-634	science	наука
-635	scissors	ножницы
-636	a test	тест
-637	a word	слово
-638	can	уметь, мочь (сделать что-то)
-639	have to	быть вынужденным (сделать что-то)
-640	may	иметь разрешение (сделать что-то)
-641	must	быть должным, обязанным (сделать что-то)
-642	should	должен, следует (сделать что-то)
-643	full	сытый, полный
-644	hungry	голодный
-645	delivery	доставка
-646	baked	запеченный
-647	boiled	вареный
-648	fried	жареный
-649	ready	готовый
-650	bitter	горький
-651	delicious	очень вкусный
-652	salty	соленый
-653	sour	кислый
-654	spicy	острый
-655	sweet	сладкий
-656	a meal	прием пищи
-657	breakfast	завтрак
-658	lunch	обед
-659	dinner	ужин
-660	snack	перекус
-661	a dish	блюдо
-662	noodles	лапша
-663	porridge	каша
-664	salad	салат
-665	a sandwich	бутерброд
-666	soup	суп
-667	fruit	фрукты
-668	vegetables	овощи
-669	an apple	яблоко
-670	an apricot	абрикос
-671	a banana	банан
-672	a berry	ягода
-673	a cherry	вишня
-674	a cucumber	огурец
-675	grapes	виноград
-676	a lemon	лимон
-677	a mandarin	мандарин
-678	a mango	манго
-679	a melon	дыня
-680	a peach	персик
-681	a pear	груша
-682	a pineapple	ананас
-683	a plum	слива
-684	a pumpkin	тыква
-685	a raspberry	малина
-686	a strawberry	клубника
-687	a tomato	помидор
-688	a watermelon	арбуз
-689	an aubergine (AmE: an eggplant)	баклажан
-690	beans	бобы, фасоль
-691	a beetroot	свекла
-692	a bell pepper	болгарский перец
-693	a cabbage	капуста
-694	a carrot	морковь
-695	corn	кукуруза
-696	a courgette (AmE: a zucchini)	кабачок
-697	garlic	чеснок
-698	an onion	лук
-699	a mushroom	гриб
-700	potato	картофель
-701	dairy	молочные продукты
-702	butter	масло
-703	cheese	сыр
-704	cream	крем, сливки
-705	curd	творог
-706	milk	молоко
-707	yogurt	йогурт
-708	a cutlet	котлета
-709	meat	мясо
-710	beef	говядина
-711	chicken	курица, цыпленок
-712	fish	рыба
-713	duck	утка
-714	ham	ветчина
-715	lamb	баранина, ягненок
-716	pork	свинина
-717	sausage	колбаса, сосиска
-718	seafood	морепродукты
-719	dessert	десерт
-720	biscuit (AmE: cookie)	печенье
-721	a bun	булочка
-722	a cake	торт
-723	chocolate	шоколад
-724	honey	мед
-725	ice cream	мороженое
-726	jam	варенье
-727	a pie	пирог
-728	bread	хлеб
-729	an egg	яйцо
-730	flour	мука
-731	a nut	орех
-732	oatmeal	овсянка
-733	oil	растительное масло
-734	pepper	перец
-735	rice	рис
-736	salt	соль
-737	sauce	соус
-738	spices	специи
-739	sugar	сахар
-740	a drink	напиток
-741	coffee	кофе
-742	juice	сок
-743	soda	газировка
-744	tea	чай
-745	water	вода
-746	wine	вино
-747	a bottle	бутылка
-748	a glass	стакан, стекло
-749	a cup	чашка
-750	a kettle	чайник
-751	a bowl	глубокая тарелка, миска
-752	a plate	тарелка
-753	a fork	вилка
-754	a knife	нож
-755	a spoon	ложка
-756	a frying pan	сковородка
-757	a pan	кастрюля
-758	a napkin	салфетка
-759	an animal	животное
-760	an ant	муравей
-761	a bear	медведь
-762	a bee	пчела
-763	a bird	птица
-764	a cat	кот, кошка
-765	a cockroach	таракан
-766	a cow	корова
-767	a dog	собака
-768	a elephant	слон
-769	a fox	лиса
-770	a frog	лягушка
-771	a giraffe	жираф
-772	a goose (pl. geese)	гусь
-773	a horse	лошадь
-774	an insect	насекомое
-775	, <td align="left" style="vertical-align: middle;" width="390">a monkey	обезьяна
-776	a mouse (pl. mice)	мышь
-777	a pig	свинья
-778	a rabbit	заяц
-779	a rat	крыса
-780	a snake	змея
-781	a spider	паук
-782	a squirrel	белка
-783	a plant	растение
-784	a bush	куст
-785	a flower	цветок
-786	grass	трава
-787	a leaf	лист
-788	a tree	дерево
-789	nature	природа
-790	a beach	пляж
-791	a coast	морское побережье
-792	a field	поле
-793	fire	огонь, пожар
-794	a forest	лес
-795	an island	остров
-796	a lake	озеро
-797	a mountain	гора
-798	the ocean	океан
-799	a river	река
-800	sand	песок
-801	the sea	море
-802	a stone	камень
-803	a world	мир (планета)
-804	air	воздух
-805	degree	градус
-806	moon	луна
-807	sky	небо
-808	sun	солнце
-809	temperature	температура
-810	weather	погода
-811	clear	ясный
-812	cloudy	облачный
-813	cold	холодный, холодно
-814	cool	прохладный, прохладно
-815	foggy	туманный
-816	hot	горячий, жаркий, жарко
-817	rainy	дождливый, дождливо
-818	snowy	снежный, снежно
-819	warm	тепло, теплый
-820	windy	ветрено
-821	a birthday	день рождения
-822	Christmas	Рождество
-823	death	смерть
-824	Easter	Пасха
-825	a game	игра
-826	a holiday (AmE: a vacation)	праздник, каникулы, отпуск
-827	a meeting	встреча, собрание
-828	New Year’s Eve	канун Нового года
-829	a party	вечеринка
-830	a wedding	свадьба
-831	a balloon	воздушный шар
-832	a box	коробка, боксировать
-833	a guest	гость
-834	an invitation	приглашение
-835	a present	подарок
-836	a toy	игрушка
-837	a country	страна
-838	customs	таможня
-839	a city	город
-840	a town	небольшой город, городок
-841	a village	деревня
-842	an airport	аэропорт
-843	a bank	банк
-844	a bridge	мост
-845	a building	здание
-846	a café	кафе
-847	a centre (AmE: a center)	центр (города)
-848	a church	церковь
-849	a cinema	кинотеатр
-850	a company	компания, фирма
-851	entrance	вход
-852	exit	выход
-853	a factory	фабрика, завод
-854	garbage	мусор
-855	a hospital	больница
-856	a hotel	гостиница
-857	an intersection	перекресток, точка пересечения
-858	a market	рынок
-859	an office	офис
-860	a park	парк
-861	a pavement (AmE: a sidewalk)	тротуар
-862	a pharmacy (AmE: a drug store)	аптека
-863	a police	полиция
-864	a post office	почта
-865	a restaurant	ресторан
-866	a road	дорога
-867	a school	школа
-868	a shop (AmE: a store)	магазин
-869	a station	станция, вокзал
-870	a street	улица
-871	a theatre (AmE: a theater)	театр
-872	a university	университет
-873	clean	чистый
-874	comfortable	удобный, уютный
-875	crowded	людный, переполненный
-876	dirty	грязный
-877	main	основной, главный
-878	this/these	этот/эти
-879	that/those	тот/те
-880	left	левый, налево
-881	right	правый, направо
-882	here	тут, сюда
-883	there	там, туда
-884	down	вниз
-885	up	вверх
-886	about	о, около, примерно
-887	above	над
-888	against	против
-889	behind	сзади, позади
-890	between	между
-891	from	из
-892	in	в
-893	in front of	впереди
-894	on	на
-895	through	через, сквозь
-896	to	по направлению к
-897	under	под
-898	with	с
-899	without	без
-900	a flat (AmE: an apartment)	квартира
-901	a house	дом (помещение)
-902	a balcony	балкон
-903	a bathroom	ванная
-904	a bedroom	спальня
-905	a curtain	штора
-906	a door	дверь
-907	a fence	забор
-908	a floor	пол, этаж
-909	a hall	коридор
-910	a kitchen	кухня
-911	a living room	гостиная, зал
-912	a roof	крыша
-913	a room	комната
-914	a shower	душ
-915	a sink	раковина
-916	a socket	розетка
-917	stairs	лестница, ступеньки
-918	a toilet	туалет
-919	a wall	стена
-920	a window	окно
-921	a yard	двор
-922	furniture	мебель
-923	an armchair	кресло
-924	a bed	кровать
-925	a chair	стул
-926	a shelf	полка
-927	a sofa	диван
-928	a table	стол
-929	a wardrobe (AmE: a closet)	шкаф
-930	a battery	батарейка, аккумулятор
-931	a camera	камера
-932	a computer	компьютер
-933	a fridge	холодильник
-934	an iron	утюг
-935	a keyboard	клавиатура
-936	a lamp	лампа
-937	a laptop	ноутбук
-938	a microwave	микроволновка
-939	an oven	печь, духовка
-940	a phone	телефон
-941	a radio	радио
-942	a cooker (AmE: a stove)	кухонная плита
-943	a TV	телевизор
-944	a wire	провод
-945	a ball	мяч, шар
-946	a blanket	одеяло
-947	a carpet	ковер
-948	a key	ключ, клавиша
-949	a magazine	журнал
-950	mail	почта
-951	a mirror	зеркало
-952	a newspaper	газета
-953	a package	упаковка, посылка
-954	a pillow	подушка
-955	a sheet	простыня
-956	a soap	мыло
-957	a towel	полотенце
-958	a vase	ваза
 \.
 
 
---
--- TOC entry 3504 (class 0 OID 16543)
--- Dependencies: 245
--- Data for Name: tofannapvp_days_words_list; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.tofannapvp_days_words_list (words_eng, words_rus) FROM stdin;
-a flight attendant	стюардесса, бортпроводник
-\.
-
-
---
--- TOC entry 3505 (class 0 OID 16548)
--- Dependencies: 246
--- Data for Name: tofannapvp_info; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.tofannapvp_info (categories, total_quantity_of_words) FROM stdin;
-\N	5
-1000 самых употребляемых слов	\N
-\.
-
-
---
--- TOC entry 3506 (class 0 OID 16553)
--- Dependencies: 247
--- Data for Name: tofannapvp_repetition_list; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.tofannapvp_repetition_list (words_eng, words_rus, words_count) FROM stdin;
-\.
-
-
---
--- TOC entry 3507 (class 0 OID 16558)
--- Dependencies: 248
--- Data for Name: tofannapvp_words; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.tofannapvp_words (words_eng, words_rus, words_count, last_repetition_time) FROM stdin;
-a socket	розетка	6	\N
-to believe	верить	6	\N
-September	сентябрь	6	\N
-a policeman (pl. policemen)	полицейский	6	\N
-it	оно (о неодушевленном в единственном числе)	6	\N
-a shoulder	плечо	6	\N
-an organ	орган	6	\N
-this/these	этот/эти	6	\N
-much	много (с неисчисляемыми существительными в отрицаниях и вопросах)	6	\N
-pyjamas (AmE: pajamas)	пижама	6	\N
-temperature	температура	6	\N
-a bush	куст	6	\N
-dark	темный	6	\N
-a newspaper	газета	6	\N
-a flight attendant	стюардесса, бортпроводник	2	2022-12-04 00:12:00
-a tongue	язык	2	2022-12-04 00:12:00
-cool	прохладный, прохладно	2	2022-12-04 00:13:00
-a lake	озеро	2	2022-12-04 00:13:00
-a beetroot	свекла	2	2022-12-04 00:13:00
-\.
-
-
---
--- TOC entry 3508 (class 0 OID 16563)
--- Dependencies: 249
--- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.users (user_id, time_of_repetition, date_of_registration, state) FROM stdin;
-1076024956	\N	2022-11-30 21:03:47.300228	Start
-342710991	\N	2022-12-01 02:38:20.403733	Start
-230365130	\N	2022-12-01 13:47:55.778621	Start
-192182939	\N	2022-12-01 16:02:24.068245	Start
-101297572	\N	2022-12-02 23:08:02.165924	Start
-2028724688	\N	2022-12-03 01:45:42.921900	Start
-721754210	\N	2022-12-03 03:37:12.934608	Start
-1789361392	\N	2022-12-03 04:00:28.644129	Start
-70084098	\N	2022-11-29 03:35:22.653388	change_translation
-\.
-
-
---
--- TOC entry 3509 (class 0 OID 16568)
--- Dependencies: 250
--- Data for Name: valeriaaleksan_days_words_list; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.valeriaaleksan_days_words_list (words_eng, words_rus) FROM stdin;
-crazy	безумный, сумасшедший
-to like	нравиться
-a pig	свинья
-a day	день
-snowy	снежный, снежно
-a driver	водитель
-проводить (время), тратить	to take off
-easy	легкий, нетрудный
-energetic	энергичный
-an uncle	дядя
-стоять	to start
-vegetables	овощи
-sun	солнце
-a mustache	усы
-a napkin	салфетка
-hundred	сто
-long	длинный, долгий
-читать	to sing (sang – sung)
-to love	любить
-passion	страсть
-\.
-
-
---
--- TOC entry 3510 (class 0 OID 16573)
--- Dependencies: 251
--- Data for Name: valeriaaleksan_info; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.valeriaaleksan_info (categories, total_quantity_of_words) FROM stdin;
-\N	20
-1000 самых употребляемых слов	\N
-\.
-
-
---
--- TOC entry 3511 (class 0 OID 16578)
--- Dependencies: 252
--- Data for Name: valeriaaleksan_repetition_list; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.valeriaaleksan_repetition_list (words_eng, words_rus, words_count) FROM stdin;
-\.
-
-
---
--- TOC entry 3512 (class 0 OID 16583)
--- Dependencies: 253
--- Data for Name: valeriaaleksan_words; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.valeriaaleksan_words (words_eng, words_rus, words_count, last_repetition_time) FROM stdin;
-quick	быстрый	6	\N
-art	искусство	6	\N
-to belong	принадлежать 	3	2022-12-07 01:20:00
-glory	слава 	3	2022-12-07 01:20:00
-narration	повествование 	2	2022-12-06 21:15:00
-concern	беспокойство 	2	2022-12-06 21:15:00
-roughly	грубо 	2	2022-12-06 21:15:00
-consist	состоять 	2	2022-12-06 21:16:00
-neat	аккуратный 	2	2022-12-06 21:16:00
-distract	отвлекать 	2	2022-12-06 21:16:00
-advantage	преимущество 	2	2022-12-06 21:16:00
-all the way up	все вплоть до 	2	2022-12-06 21:16:00
-be capable	быть в состоянии 	2	2022-12-06 21:16:00
-struggle	борьба 	2	2022-12-06 21:16:00
-claim	требовать 	2	2022-12-06 21:16:00
-consensual	согласие 	2	2022-12-06 21:16:00
-assault	атаковать 	2	2022-12-06 21:16:00
-assume	предполагать 	2	2022-12-06 21:16:00
-definite	определенный 	2	2022-12-06 21:16:00
-restriction	ограничение 	2	2022-12-06 21:16:00
-rumor	слух 	2	2022-12-06 21:16:00
-split the cost	разделить стоимость 	2	2022-12-06 21:16:00
-sloppy	небрежный 	2	2022-12-06 21:17:00
-light-headed	легкомысленное 	2	2022-12-06 21:17:00
-temptation	искушение 	2	2022-12-06 21:17:00
-at a loss	в убыток 	2	2022-12-06 21:17:00
-widespread	широко распространен 	2	2022-12-06 21:17:00
-to be a means	быть средством 	2	2022-12-06 21:17:00
-partly	частично 	2	2022-12-06 21:17:00
-wages	зарплата 	2	2022-12-06 21:17:00
-fed up	сытый по горло 	2	2022-12-06 21:17:00
-astute	проницательный 	2	2022-12-06 21:17:00
-innate	врожденный 	2	2022-12-06 21:17:00
-artificial	искусственный 	2	2022-12-06 21:17:00
-resourceful	находчивый 	2	2022-12-06 21:17:00
-emerge	появляться 	2	2022-12-06 21:17:00
-to capture	захватить 	2	2022-12-06 21:17:00
-possess	владеть 	2	2022-12-06 21:17:00
-argue	спорить 	2	2022-12-06 21:17:00
-traits	черты 	2	2022-12-06 21:17:00
-dexterity	ловкость 	2	2022-12-06 21:18:00
-intentions	намерения 	2	2022-12-06 21:18:00
-to be excel	быть excel 	2	2022-12-06 21:18:00
-to fond of	любить 	2	2022-12-06 21:18:00
-appliance	приспособление 	2	2022-12-06 21:18:00
-action-packed	действие 	2	2022-12-06 21:18:00
-chase	гнаться 	2	2022-12-06 21:18:00
-unreliable	ненадежный 	2	2022-12-06 21:18:00
-improbable	невероятно 	2	2022-12-06 21:18:00
-coast	морской берег 	2	2022-12-06 21:18:00
-seashore	море 	2	2022-12-06 21:18:00
-countryside	сельская местность 	2	2022-12-06 21:18:00
-abrupt	внезапно 	2	2022-12-06 21:18:00
-scenery	пейзаж 	2	2022-12-06 21:18:00
-gale	шарнир 	2	2022-12-06 21:18:00
-misty	туман 	2	2022-12-06 21:18:00
-foggy	туманно 	2	2022-12-06 21:19:00
-expire	истекает 	2	2022-12-06 21:19:00
-furnished	меблирован 	2	2022-12-06 21:19:00
-featuring	с участием 	2	2022-12-06 21:19:00
-clearance	прозрачный 	2	2022-12-06 21:19:00
-abundance	избыток 	2	2022-12-06 21:19:00
-inevitably	неизбежно 	2	2022-12-06 21:19:00
-itemized	подробно 	2	2022-12-06 21:19:00
-significance	значение 	2	2022-12-06 21:19:00
-capture	захватывать 	2	2022-12-06 21:19:00
-map out	отобразить 	2	2022-12-06 21:19:00
-oftentimes	часто 	2	2022-12-06 21:19:00
-go awry	иди не так 	2	2022-12-06 21:19:00
-likelihood	вероятность 	2	2022-12-06 21:19:00
-pursue	преследовать 	2	2022-12-06 21:19:00
-get to grips	добраться до захвата 	2	2022-12-06 21:19:00
-consider	рассмотреть возможность 	2	2022-12-06 21:19:00
-align	выровнять 	2	2022-12-06 21:19:00
-prosperous	процветающий 	2	2022-12-06 21:19:00
-malnutrition	недоедание 	2	2022-12-06 21:19:00
-deceptive	обманчиво 	2	2022-12-06 21:19:00
-conscious	сознательный 	2	2022-12-06 21:20:00
-refers to	относится к 	2	2022-12-06 21:20:00
-ratio	соотношение 	2	2022-12-06 21:20:00
-perception	восприятие 	2	2022-12-06 21:20:00
-allow	разрешать 	3	2022-12-07 01:20:00
-hello	привет 	3	2022-12-07 01:20:00
-anxious	тревожный 	3	2022-12-07 01:20:00
-\.
-
-
--- Completed on 2023-01-26 18:36:35 UTC
-
---
--- PostgreSQL database dump complete
---
 

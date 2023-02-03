@@ -15,9 +15,11 @@ config = dotenv_values("env.txt")
 bot = Bot(config['TOKEN'])
 dp = Dispatcher(bot)
 
+
 @dp.message_handler(commands=['tests'])
 async def tests(message: types.Message):
     await bot.send_message(message.from_user.id, "Привет! Это бот для запоминания английских слов!")
+
 
 @dp.message_handler(commands=['start'])
 async def start_command(message: types.Message):
@@ -207,7 +209,6 @@ async def new_user_word_changes(call: types.CallbackQuery):
 @dp.message_handler(content_types=['text'])
 async def add_new_user_word(message: types.Message):
     new_word = NewUserWords(message, bot, callback=False)
-    print(message)
     if await new_word.state_is_change_card():
         await new_word.change_translation()
     else:

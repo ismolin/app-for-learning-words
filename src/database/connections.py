@@ -4,6 +4,7 @@ from psycopg2.extras import execute_values
 
 config = dotenv_values("env.txt")
 
+
 async def db_select(sql):
     with psycopg2.connect(host=config['host'], port=config['port'], database=config['database'], user=config['user'],
                           password=config['password']) as conn:
@@ -27,5 +28,3 @@ async def db_update_many(sql, *data):
             execute_values(cur, sql, *data)
 
 #
-
-
