@@ -1,4 +1,4 @@
 aiogram == 2.23.1
-psycopg2 == 2.9.5
+asyncpg== 0.27.0
 async-google-trans-new == 1.4.6
 python-dotenv == 0.21.0

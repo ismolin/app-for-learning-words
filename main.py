@@ -2,7 +2,7 @@ from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
 from dotenv import dotenv_values
-from src.keyboards.buttons import user_keyboard, word_count_keyboard, \
+from src.content.buttons import user_keyboard, word_count_keyboard, \
     categories_keyboard, categories_keyboard_with_next_button, \
     time_repeat_keyboard, general_menu_button, settings_keyboard
 from src.database.connections import db_select
@@ -10,15 +10,14 @@ from src.modules.repetition_of_words import RepeatingWords
 from src.modules.add_user_words import NewUserWords
 from src.modules.new_words_quizlet import NewWordsQuizlet
 from src.modules.settings import UserSettings
+from src.content.messages import come_back_message, start_message, quantity_selection_of_words_message, \
+    quantity_of_words_set, timing_message, selecting_categories_message, categories_of_words, timing_map, \
+    start_work_with_bot_message, category_already_exist_maessage, start_settings_message
+
 
 config = dotenv_values("env.txt")
 bot = Bot(config['TOKEN'])
 dp = Dispatcher(bot)
-
-
-@dp.message_handler(commands=['tests'])
-async def tests(message: types.Message):
-    await bot.send_message(message.from_user.id, "Привет! Это бот для запоминания английских слов!")
 
 
 @dp.message_handler(commands=['start'])
@@ -27,70 +26,71 @@ async def start_command(message: types.Message):
 
     user_settings = UserSettings(message, bot, callback=False)
     if await user_settings.user_exist():
-        await bot.send_message(message.from_user.id, "С возвращением!", reply_markup=user_keyboard)
+        await bot.send_message(chat_id=message.from_user.id,
+                               text=come_back_message,
+                               reply_markup=user_keyboard)
         await user_settings.set_state("Work")
     else:
         await user_settings.create_user_tables()
         await user_settings.set_state("Start")
-        await bot.send_message(message.from_user.id, "Привет! Это бот для запоминания английских слов!")
-        await bot.send_message(message.from_user.id, "Выбери количество слов в день, которое бы ты хотел изучать:",
+        await bot.send_message(chat_id=message.from_user.id,
+                               text=start_message)
+        await bot.send_message(chat_id=message.from_user.id,
+                               text=quantity_selection_of_words_message,
                                reply_markup=word_count_keyboard)
 
 
-@dp.message_handler(lambda message: message.text in {'5', '10', '15', '20'})
+@dp.message_handler(lambda message: message.text in quantity_of_words_set)
 async def set_and_update_total_quantity_of_words(message: types.Message):
     user_settings = UserSettings(message, bot, callback=False)
     if await user_settings.this_is_first_settings():
         await user_settings.update_total_quantity_of_words()
-        await bot.send_message(message.from_user.id,
-                               "Давай я буду напоминать тебе изучать слова, чтобы прогресс шел быстрее? \n "
-                               "\nВыбери время (МСК) в которое тебе будет удобно заниматься:",
+        await bot.send_message(chat_id=message.from_user.id,
+                               text=timing_message,
                                reply_markup=time_repeat_keyboard)
     else:
         await user_settings.update_total_quantity_of_words()
 
 
-@dp.message_handler(lambda message: message.text in {'00:00', '01:00', '02:00', '03:00', '04:00', '05:00',
-                                                     '06:00', '07:00', '08:00', '09:00', '10:00', '11:00',
-                                                     '12:00', '13:00', '14:00', '15:00', '16:00', '17:00',
-                                                     '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'})
+@dp.message_handler(lambda message: message.text in timing_map)
 async def set_and_update_time_repetition(message: types.Message):
     user_settings = UserSettings(message, bot, callback=False)
     if await user_settings.this_is_first_settings():
         await user_settings.set_time_repetition()
-        await bot.send_message(message.from_user.id, "Выбери категории слов, которые бы ты хотел изучать:",
+        await bot.send_message(chat_id=message.from_user.id,
+                               text=selecting_categories_message,
                                reply_markup=categories_keyboard)
     else:
         await user_settings.update_time_repetition()
 
 
-@dp.message_handler(lambda message: message.text in {'1000 самых употребляемых слов',
-                                                     '5000 самых употребляемых слов',
-                                                     'Слова для IT', 'Продолжить'})
+@dp.message_handler(lambda message: message.text in categories_of_words)
 async def set_and_update_categories(message: types.Message):
     user_settings = UserSettings(message, bot, callback=False)
     if user_settings.this_is_first_settings():
         if message.text == 'Продолжить':
-            await bot.send_message(message.from_user.id,
-                                   "Ну что, начнем? \n\nКнопками внизу можно делать все, что душе угодно...\n"
-                                   "\nА для добавления своего слова - просто пришли его боту!",
+            await bot.send_message(chat_id=message.from_user.id,
+                                   text=start_work_with_bot_message,
                                    reply_markup=user_keyboard)
             await user_settings.set_state("Work")
 
         else:
             if await user_settings.category_exist():
-                await bot.send_message(message.from_user.id, f"Вы уже добавили категорию '{message.text}' к себе...",
+                await bot.send_message(chat_id=message.from_user.id,
+                                       text=category_already_exist_maessage,
                                        reply_markup=categories_keyboard_with_next_button)
             else:
                 await user_settings.update_category()
     else:
         if message.text == 'Продолжить':
-            await bot.send_message(message.from_user.id, 'Давай мы с тобой тут все настроим...',
+            await bot.send_message(chat_id=message.from_user.id,
+                                   text=start_settings_message,
                                    reply_markup=settings_keyboard)
 
         else:
             if await user_settings.category_exist():
-                await bot.send_message(message.from_user.id, f"Вы уже добавили категорию '{message.text}' к себе...",
+                await bot.send_message(chat_id=message.from_user.id,
+                                       text=category_already_exist_maessage,
                                        reply_markup=categories_keyboard_with_next_button)
             else:
                 await user_settings.update_category()

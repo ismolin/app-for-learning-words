@@ -1,5 +1,5 @@
 import datetime
-from src.keyboards.buttons import repetition_words_keyboard, general_menu_button, user_keyboard
+from src.content.buttons import repetition_words_keyboard, general_menu_button, user_keyboard
 from datetime import timedelta
 from src.database.connections import db_select, db_update_many, db_update
 from aiogram.utils.markdown import hspoiler
