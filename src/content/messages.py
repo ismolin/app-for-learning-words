@@ -15,3 +15,4 @@ start_work_with_bot_message = "Ну что, начнем? \n\nКнопками �
 category_already_exist_message = f"Вы уже добавили категорию '{message.text}' к себе..."
 start_settings_message = 'Давай мы с тобой тут все настроим...'
 
+

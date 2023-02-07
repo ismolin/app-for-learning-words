@@ -12,7 +12,7 @@ from src.modules.new_words_quizlet import NewWordsQuizlet
 from src.modules.settings import UserSettings
 from src.content.messages import come_back_message, start_message, quantity_selection_of_words_message, \
     quantity_of_words_set, timing_message, selecting_categories_message, categories_of_words, timing_map, \
-    start_work_with_bot_message, category_already_exist_maessage, start_settings_message
+    start_work_with_bot_message, category_already_exist_message, start_settings_message
 
 
 config = dotenv_values("env.txt")
@@ -77,7 +77,7 @@ async def set_and_update_categories(message: types.Message):
         else:
             if await user_settings.category_exist():
                 await bot.send_message(chat_id=message.from_user.id,
-                                       text=category_already_exist_maessage,
+                                       text=category_already_exist_message,
                                        reply_markup=categories_keyboard_with_next_button)
             else:
                 await user_settings.update_category()
@@ -90,7 +90,7 @@ async def set_and_update_categories(message: types.Message):
         else:
             if await user_settings.category_exist():
                 await bot.send_message(chat_id=message.from_user.id,
-                                       text=category_already_exist_maessage,
+                                       text=category_already_exist_message,
                                        reply_markup=categories_keyboard_with_next_button)
             else:
                 await user_settings.update_category()
