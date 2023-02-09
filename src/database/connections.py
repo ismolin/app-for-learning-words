@@ -1,46 +1,35 @@
 import asyncio
 import asyncpg
+import os
+from dotenv import load_dotenv
 
-async def run():
-    conn = await asyncpg.connect(user='user', password='password',
-                                 database='database', host='127.0.0.1')
-    values = await conn.fetch(
-        'SELECT * FROM mytable WHERE id = $1',
-        10,
-    )
-    await conn.close()
-
-loop = asyncio.get_event_loop()
-loop.run_until_complete(run())
+load_dotenv('env.txt')
 
 
-# from dotenv import dotenv_values
-# import psycopg2
-# from psycopg2.extras import execute_values
-#
-# config = dotenv_values("env.txt")
-#
-#
-# async def db_select(sql):
-#     with psycopg2.connect(host=config['host'], port=config['port'], database=config['database'], user=config['user'],
-#                           password=config['password']) as conn:
-#         with conn.cursor() as cur:
-#             cur.execute(sql)
-#             return cur.fetchall()
-#
-#
-# async def db_update(sql):
-#     with psycopg2.connect(host=config['host'], port=config['port'], database=config['database'], user=config['user'],
-#                           password=config['password']) as conn:
-#         with conn.cursor() as cur:
-#             cur.execute(sql)
-#             conn.commit()
-#
-#
-# async def db_update_many(sql, *data):
-#     with psycopg2.connect(host=config['host'], port=config['port'], database=config['database'], user=config['user'],
-#                           password=config['password']) as conn:
-#         with conn.cursor() as cur:
-#             execute_values(cur, sql, *data)
+class PostgresAsync:
+    def __init__(self, loop=None):
+        self.loop = loop or asyncio.get_event_loop()
+        self.conn = None
+        self.host = os.getenv("DB_HOST")
+        self.port = os.getenv("DB_PORT")
+        self.database = os.getenv("DB_DATABASE")
+        self.user = os.getenv("DB_USER")
+        self.password = os.getenv("DB_PASSWORD")
 
-#
+    async def connect(self):
+        self.conn = await asyncpg.connect(
+            host=self.host,
+            port=self.port,
+            database=self.database,
+            user=self.user,
+            password=self.password
+        )
+
+    async def close(self):
+        await self.conn.close()
+
+    async def execute(self, query, parameters=None):
+        if not self.conn:
+            await self.connect()
+        result = await self.conn.fetch(query, *parameters)
+        return result
