@@ -1,4 +1,5 @@
 come_back_message = "С возвращением!"
+
 start_message = "Привет! Это бот для запоминания английских слов!"
 quantity_selection_of_words_message = "Выбери количество слов в день, которое бы ты хотел изучать:"
 quantity_of_words_set = {'5', '10', '15', '20'}

@@ -1,0 +1,40 @@
+# Python-compiles и среды
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Виртуальное окружение
+venv/
+.env
+env.txt
+
+# Логи и база данных
+*.log
+*.sqlite3
+
+# Docker Compose
+*.env.txt  # env.txt содержит секреты
+docker-compose.override.yml
+
+# IDE и редакторы
+.vscode/
+.idea/
+
+# Сборки Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Проверочные кеши
+.mypy_cache/
+.pytest_cache/
+.coverage
+*.cover
+
+# Cython
+cython_debug/
+
+# Mac / Windows
+.DS_Store
+Thumbs.db
