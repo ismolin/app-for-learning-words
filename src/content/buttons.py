@@ -9,6 +9,8 @@ settings = KeyboardButton('Настройки')
 user_keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
 user_keyboard.add(new_words).add(repeat_words).add(settings)
 
+
+
 ########################### word count keyboard ########################
 
 button5 = KeyboardButton('5')
