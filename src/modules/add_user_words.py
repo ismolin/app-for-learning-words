@@ -1,5 +1,5 @@
-import async_google_trans_new
-from src.database.connections import db_update, db_select
+from deep_translator import GoogleTranslator
+from src.database.connections import db
 import datetime
 from src.content.buttons import add_user_words_keyboard
 
@@ -18,14 +18,12 @@ class NewUserWords:
 
     async def translate_word(self):
 
-        translator = async_google_trans_new.AsyncTranslator()
-
         if not set('абвгдеёжзийклмнопрстуфхцчшщъыьэюя').isdisjoint(self.text):
-            eng_word = await translator.translate(self.text, 'en')
+            eng_word = GoogleTranslator(source='auto', target='en').translate(self.text)
             return [eng_word, self.text]
 
         else:
-            rus_word = await translator.translate(self.text, 'ru')
+            rus_word = GoogleTranslator(source='auto', target='ru').translate(self.text)
             return [self.text, rus_word]
 
     async def add_word_to_words_list(self, *translate_word):
@@ -34,7 +32,7 @@ class NewUserWords:
         word_rus = translate_word[1].lower()
         time_now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-        await db_update(sql=f"""INSERT INTO {self.user_name}_words
+        await db.execute_void(query=f"""INSERT INTO {self.user_name}_words
                                 (words_eng, words_rus, words_count, last_repetition_time)
                                 VALUES ('{word_eng}', '{word_rus}', {1},  '{time_now}')""")
         await self.bot.send_message(self.user_id, f"""Карточка {word_eng} - {word_rus}, добавлена в твой список для изучения!""",
@@ -44,14 +42,14 @@ class NewUserWords:
 
         await self.bot.send_message(self.user_id, '''Отправь нужный перевод одним сообщением в формате: 
 ’ENG WORD'-'RUSSIAN WORD', например 'hello-привет' без пробелов и кавычек!''')
-        await db_update(sql=f"""UPDATE users
+        await db.execute_void(query=f"""UPDATE users
                                 SET state = 'change_card'
                                 WHERE user_id = '{self.user_id}'""")
 
     async def change_translation(self):
 
-        flag_of_last_card = await db_select(sql=f"""SELECT MAX(last_repetition_time) FROM {self.user_name}_words""")
-        await db_update(sql=f"""UPDATE {self.user_name}_words
+        flag_of_last_card = await db.execute(query=f"""SELECT MAX(last_repetition_time) FROM {self.user_name}_words""")
+        await db.execute_void(query=f"""UPDATE {self.user_name}_words
                                 SET words_eng = '{self.text.split('-')[0].lower()}', 
                                 words_rus = '{self.text.split('-')[1].lower()}'
                                 WHERE last_repetition_time = '{flag_of_last_card[0][0]}'""")
@@ -60,15 +58,15 @@ class NewUserWords:
         await self.update_state(user_id=self.user_id, state='Work')
 
     async def do_not_add_this_word(self):
-        await db_update(sql=f"""DELETE FROM {self.user_name}_words
+        await db.execute_void(query=f"""DELETE FROM {self.user_name}_words
                                 WHERE words_eng = '{self.text.split(' ')[1]}'""")
         await self.bot.delete_message(self.user_id, self.message_id)
 
     async def state_is_change_card(self):
-        return len(await db_select(sql=f"""SELECT * FROM users 
+        return len(await db.execute(query=f"""SELECT * FROM users 
                                            WHERE state = 'change_card' AND user_id = '{self.user_id}' """)) > 0
     @ staticmethod
     async def update_state(user_id, state):
-        await db_update(sql=f"""UPDATE users 
+        await db.execute_void(query=f"""UPDATE users 
                                 SET state = '{state}' 
                                 WHERE user_id = '{user_id}'""")
