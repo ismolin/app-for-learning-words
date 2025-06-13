@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv(".env")
 
-class PostgresAsync:
+class Db:
     def __init__(self, loop=None):
         self.loop = loop or asyncio.get_event_loop()
         self.conn: asyncpg.Connection | None = None

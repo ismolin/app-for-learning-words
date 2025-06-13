@@ -1,22 +1,27 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.types import (
+    ReplyKeyboardMarkup,
+    KeyboardButton as AiogramKeyboardButton,
+    InlineKeyboardButton,
+    InlineKeyboardMarkup
+)
+
 
 ############################### user keyboard ##########################
 
-new_words = KeyboardButton('Учить новые слова')
-repeat_words = KeyboardButton('Повторить слова')
-settings = KeyboardButton('Настройки')
+new_words = AiogramKeyboardButton('Учить новые слова')
+repeat_words = AiogramKeyboardButton('Повторить слова')
+settings = AiogramKeyboardButton('Настройки')
 
 user_keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
 user_keyboard.add(new_words).add(repeat_words).add(settings)
 
 
-
 ########################### word count keyboard ########################
 
-button5 = KeyboardButton('5')
-button10 = KeyboardButton('10')
-button15 = KeyboardButton('15')
-button20 = KeyboardButton('20')
+button5 = AiogramKeyboardButton('5')
+button10 = AiogramKeyboardButton('10')
+button15 = AiogramKeyboardButton('15')
+button20 = AiogramKeyboardButton('20')
 
 word_count_keyboard = ReplyKeyboardMarkup()
 word_count_keyboard.add(button5, button10).add(button15, button20)
@@ -24,15 +29,15 @@ word_count_keyboard.add(button5, button10).add(button15, button20)
 ##################### time repeat keyboard #############################
 
 time_repeat_keyboard = ReplyKeyboardMarkup()
-time_repeat_keyboard.add(*[KeyboardButton(f'{x:02}:00') for x in range(24)]).add(KeyboardButton('Не надо '
+time_repeat_keyboard.add(*[AiogramKeyboardButton(f'{x:02}:00') for x in range(24)]).add(AiogramKeyboardButton('Не надо '
                                                                                                 'мне напоминать'))
 
 ##################### categories keyboard #############################
 
-button_1000 = KeyboardButton('1000 самых употребляемых слов')
-button_5000 = KeyboardButton('5000 самых употребляемых слов')
-button_IT = KeyboardButton('Слова для IT')
-button_continue = KeyboardButton('Продолжить')
+button_1000 = AiogramKeyboardButton('1000 самых употребляемых слов')
+button_5000 = AiogramKeyboardButton('5000 самых употребляемых слов')
+button_IT = AiogramKeyboardButton('Слова для IT')
+button_continue = AiogramKeyboardButton('Продолжить')
 
 categories_keyboard = ReplyKeyboardMarkup()
 categories_keyboard_with_next_button = ReplyKeyboardMarkup()
@@ -63,25 +68,25 @@ repetition_words_keyboard.add(button_yes).add(button_nope)
 
 ##################### general menu button #############################
 
-buttonGeneralMenuButton = KeyboardButton('Завершить')
+buttonGeneralMenuButton = AiogramKeyboardButton('Завершить')
 
 general_menu_button = ReplyKeyboardMarkup(resize_keyboard=True)
 general_menu_button.add(buttonGeneralMenuButton)
 
 ##################### settings keyboard #############################
 
-words_per_day_button = KeyboardButton('Изменить количество слов в день')
-change_categories_button = KeyboardButton('Изменить категории')
-notification_settings = KeyboardButton('Настройки уведомлений')
-general_menu = KeyboardButton('Главное меню')
+words_per_day_button = AiogramKeyboardButton('Изменить количество слов в день')
+change_categories_button = AiogramKeyboardButton('Изменить категории')
+notification_settings = AiogramKeyboardButton('Настройки уведомлений')
+general_menu = AiogramKeyboardButton('Главное меню')
 
 settings_keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
 settings_keyboard.add(words_per_day_button).add(change_categories_button).add(notification_settings).add(general_menu)
 
 ##################### add user words keyboard #############################
 
-change_translate = InlineKeyboardButton('Изменить карточку', callback_data='Изменить перевод')
-do_not_add_this_card = InlineKeyboardButton('Не добавлять эту карточку', callback_data='Не добавлять эту карточку')
+change_translate = InlineAiogramKeyboardButton('Изменить карточку', callback_data='Изменить перевод')
+do_not_add_this_card = InlineAiogramKeyboardButton('Не добавлять эту карточку', callback_data='Не добавлять эту карточку')
 
 add_user_words_keyboard = InlineKeyboardMarkup()
 add_user_words_keyboard.add(change_translate).add(do_not_add_this_card)

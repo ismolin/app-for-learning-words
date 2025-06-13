@@ -5,7 +5,7 @@ from dotenv import dotenv_values
 from src.content.buttons import user_keyboard, word_count_keyboard, \
     categories_keyboard, categories_keyboard_with_next_button, \
     time_repeat_keyboard, general_menu_button, settings_keyboard
-from src.database.connections import db_select
+from src.database.connections import Db
 from src.modules.repetition_of_words import RepeatingWords
 from src.modules.add_user_words import NewUserWords
 from src.modules.new_words_quizlet import NewWordsQuizlet
@@ -21,7 +21,7 @@ if token is None:
     raise ValueError("TOKEN not found in .env file")
 bot = Bot(token)
 dp = Dispatcher()
-
+db = Db()
 
 @dp.message(commands=['start'])
 async def start_command(message: types.Message):
@@ -67,7 +67,7 @@ async def set_and_update_time_repetition(message: types.Message):
         await user_settings.update_time_repetition()
 
 
-@dp.message_handler(lambda message: message.text in categories_of_words)
+@dp.message(lambda message: message.text in categories_of_words)
 async def set_and_update_categories(message: types.Message):
     user_settings = UserSettings(message, bot, callback=False)
     if user_settings.this_is_first_settings():
@@ -106,7 +106,7 @@ async def start_new_words_quizlet(message: types.Message):
     categories_list = await quizlet.create_categories_list()
     await quizlet.create_new_words_list(categories_list, quantity_of_words_from_category_list)
 
-    words_count = await db_select(f"""SELECT COUNT(*) FROM {message.from_user.username}_days_words_list""")
+    words_count = await db.execute(query=f"""SELECT COUNT(*) FROM {message.from_user.username}_days_words_list""")
     await bot.send_message(message.from_user.id,
                            f'Я подобрал тебе {words_count[0][0]} разных слов из всех твоих категорий',
                            reply_markup=general_menu_button)
