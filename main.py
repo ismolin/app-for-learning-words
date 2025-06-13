@@ -1,6 +1,6 @@
 from aiogram import Bot, types
-from aiogram.dispatcher import Dispatcher
-from aiogram.utils import executor
+from aiogram import Bot, Dispatcher
+import asyncio
 from dotenv import dotenv_values
 from src.content.buttons import user_keyboard, word_count_keyboard, \
     categories_keyboard, categories_keyboard_with_next_button, \
@@ -15,12 +15,15 @@ from src.content.messages import come_back_message, start_message, quantity_sele
     start_work_with_bot_message, category_already_exist_message, start_settings_message
 
 
-config = dotenv_values("env.txt")
-bot = Bot(config['TOKEN'])
-dp = Dispatcher(bot)
+config = dotenv_values(".env")
+token = config.get('TOKEN')
+if token is None:
+    raise ValueError("TOKEN not found in .env file")
+bot = Bot(token)
+dp = Dispatcher()
 
 
-@dp.message_handler(commands=['start'])
+@dp.message(commands=['start'])
 async def start_command(message: types.Message):
     """Handler of the start command: checks the presence in the database or creation of custom tables"""
 
@@ -40,7 +43,7 @@ async def start_command(message: types.Message):
                                reply_markup=word_count_keyboard)
 
 
-@dp.message_handler(lambda message: message.text in quantity_of_words_set)
+@dp.message(lambda message: message.text in quantity_of_words_set)
 async def set_and_update_total_quantity_of_words(message: types.Message):
     user_settings = UserSettings(message, bot, callback=False)
     if await user_settings.this_is_first_settings():
@@ -52,7 +55,7 @@ async def set_and_update_total_quantity_of_words(message: types.Message):
         await user_settings.update_total_quantity_of_words()
 
 
-@dp.message_handler(lambda message: message.text in timing_map)
+@dp.message(lambda message: message.text in timing_map)
 async def set_and_update_time_repetition(message: types.Message):
     user_settings = UserSettings(message, bot, callback=False)
     if await user_settings.this_is_first_settings():
@@ -96,7 +99,7 @@ async def set_and_update_categories(message: types.Message):
                 await user_settings.update_category()
 
 
-@dp.message_handler(lambda message: message.text in {'Учить новые слова'})
+@dp.message(lambda message: message.text in {'Учить новые слова'})
 async def start_new_words_quizlet(message: types.Message):
     quizlet = NewWordsQuizlet(message, bot, callback=False)
     quantity_of_words_from_category_list = await quizlet.create_quantity_of_words_from_category_list()
@@ -111,7 +114,7 @@ async def start_new_words_quizlet(message: types.Message):
     await quizlet.send_quizlet_card(quizlet_card, start_quizlet=True)
 
 
-@dp.callback_query_handler(lambda call: call.data in {'Я уже знаю это слово',
+@dp.callback_query(lambda call: call.data in {'Я уже знаю это слово',
                                                       'Начать учить это слово',
                                                       'Я запомнил, отложить для повтора',
                                                       'Показывать это слово еще'})
@@ -150,14 +153,14 @@ async def new_words_quizlet(call: types.CallbackQuery):
             await quizlet.send_quizlet_card(next_word_card, start_quizlet=False)
 
 
-@dp.message_handler(lambda message: message.text in {'Повторить слова'})
+@dp.message(lambda message: message.text in {'Повторить слова'})
 async def start_repeating_words(message: types.Message):
     new_repeating_words = RepeatingWords(message, bot, callback=False)
     await new_repeating_words.start_repeating_words()
     await new_repeating_words.send_repetition_card()
 
 
-@dp.callback_query_handler(lambda call: call.data in {'Я вспомнил это слово', 'Не вспомнил'})
+@dp.callback_query(lambda call: call.data in {'Я вспомнил это слово', 'Не вспомнил'})
 async def repeating_words(call: types.CallbackQuery):
     new_repeating_words = RepeatingWords(call, bot, callback=True)
     if call.data in {'Я вспомнил это слово'}:
@@ -172,7 +175,7 @@ async def repeating_words(call: types.CallbackQuery):
         await new_repeating_words.send_repetition_card()
 
 
-@dp.message_handler(lambda message: message.text in {'Настройки', 'Изменить количество слов в день',
+@dp.message(lambda message: message.text in {'Настройки', 'Изменить количество слов в день',
                                                      'Главное меню', 'Завершить', 'Изменить категории',
                                                      'Настройки уведомлений'})
 async def set_settings(message: types.Message):
@@ -197,7 +200,7 @@ async def set_settings(message: types.Message):
                                reply_markup=time_repeat_keyboard)
 
 
-@dp.callback_query_handler(lambda call: call.data in {'Изменить перевод', 'Не добавлять эту карточку'})
+@dp.callback_query(lambda call: call.data in {'Изменить перевод', 'Не добавлять эту карточку'})
 async def new_user_word_changes(call: types.CallbackQuery):
     new_word = NewUserWords(call, bot, callback=True)
     if call.data in {'Изменить перевод'}:
@@ -206,7 +209,7 @@ async def new_user_word_changes(call: types.CallbackQuery):
         await new_word.do_not_add_this_word()
 
 
-@dp.message_handler(content_types=['text'])
+@dp.message(content_types=['text'])
 async def add_new_user_word(message: types.Message):
     new_word = NewUserWords(message, bot, callback=False)
     if await new_word.state_is_change_card():
@@ -216,4 +219,8 @@ async def add_new_user_word(message: types.Message):
         await new_word.add_word_to_words_list(*translate_word)
 
 
-executor.start_polling(dp, skip_updates=True)
+async def main():
+    await dp.start_polling(bot)
+
+if __name__ == "__main__":
+    asyncio.run(main())
