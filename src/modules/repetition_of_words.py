@@ -1,8 +1,7 @@
 import datetime
 from src.content.buttons import repetition_words_keyboard, general_menu_button, user_keyboard
 from datetime import timedelta
-from src.database.connections import db_select, db_update_many, db_update
-from aiogram.utils.markdown import hspoiler
+from src.database.connections import db
 
 
 class RepeatingWords:
@@ -22,14 +21,14 @@ class RepeatingWords:
         """This method generates a list of the user's words that are ready for repetition"""
 
         now = datetime.datetime.now()
-        await db_update(f"""TRUNCATE TABLE {self.user_name}_repetition_list""")
-        words = await db_select(sql=f"""SELECT words_eng, words_rus, words_count
+        await db.execute_void(f"""TRUNCATE TABLE {self.user_name}_repetition_list""")
+        words = await db.execute(query=f"""SELECT words_eng, words_rus, words_count
                                         FROM {self.user_name}_words
                                         WHERE 
                                         last_repetition_time < '{now}' 
                                         AND words_count < 6""")
         if len(words) == 0:
-            nearest_time = await db_select(sql=f"""SELECT MIN(last_repetition_time) 
+            nearest_time = await db.execute(query=f"""SELECT MIN(last_repetition_time) 
                                                    FROM {self.user_name}_words
                                                    WHERE words_count < 6""")
             time = str(nearest_time[0][0] - now).split(":")
@@ -38,26 +37,28 @@ class RepeatingWords:
                                                       f'следующие слова для повтора будут доступны через '
                                                       f'{time[0]} ч {time[1]} мин!')
         else:
-            await db_update_many(f"""INSERT INTO {self.user_name}_repetition_list
-                                     (words_eng, words_rus, words_count) 
-                                     VALUES %s""", words)
+            await db.execute_many(
+            f"""INSERT INTO {self.user_name}_repetition_list
+            (words_eng, words_rus, words_count)
+            VALUES ($1, $2, $3)""",words
+            )
             await self.bot.send_message(self.user_id, f'Тебе доступно {len(words)} слов для повтора!',
                                         reply_markup=general_menu_button)
 
     async def send_repetition_card(self):
         """This method sends the card to be repeated"""
 
-        result = await db_select(f'''SELECT words_eng, words_rus 
+        result = await db.execute(f'''SELECT words_eng, words_rus 
                                      FROM {self.user_name}_repetition_list 
                                      LIMIT 1''')
-        spoiler = hspoiler(result[0][0])
+        spoiler = f'||{result[0][0]}||'
         await self.bot.send_message(self.user_id, result[0][1] + '\n' + f'{spoiler}', parse_mode='HTML',
                                     reply_markup=repetition_words_keyboard)
 
     async def this_is_last_word_in_list(self):
         """This method checks this is last word in list or not"""
 
-        return len(await db_select(sql=f"""SELECT * FROM {self.user_name}_repetition_list 
+        return len(await db.execute(sql=f"""SELECT * FROM {self.user_name}_repetition_list 
                                            WHERE words_eng NOT IN ('{self.word_en}')""")) == 0
 
     async def update_information_of_word(self):
@@ -65,10 +66,10 @@ class RepeatingWords:
         quantity of repetition and next available time of repetition"""
 
         now = datetime.datetime.now()
-        known_word = await db_select(sql=f"""SELECT * FROM {self.user_name}_repetition_list
+        known_word = await db.execute(sql=f"""SELECT * FROM {self.user_name}_repetition_list
                                              LIMIT 1""")
         interval = await self._get_repetition_intervals(known_word[0][2])
-        await db_update(sql=f"""DELETE FROM {self.user_name}_repetition_list
+        await db.execute_void(sql=f"""DELETE FROM {self.user_name}_repetition_list
                                 WHERE words_eng = '{known_word[0][0]}';
                                 UPDATE {self.user_name}_words
                                 SET words_count = {known_word[0][2] + 1},
@@ -80,7 +81,7 @@ class RepeatingWords:
         """This method allows you to finish the repetition of words"""
 
         now = datetime.datetime.now()
-        nearest_time = await db_select(sql=f"""SELECT MIN(last_repetition_time) 
+        nearest_time = await db.execute(sql=f"""SELECT MIN(last_repetition_time) 
                                                FROM {self.user_name}_words
                                                WHERE words_count < 6""")
         time = str(nearest_time[0][0] - now).split(":")
