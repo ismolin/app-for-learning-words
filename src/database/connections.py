@@ -52,3 +52,15 @@ class Db:
         await self.connect()
         assert self.conn is not None
         return await self.conn.fetchval(query, *(parameters or []))
+    
+    async def execute_void(self, query: str, parameters: list | tuple | None = None):
+        await self.connect()
+        assert self.conn is not None
+        await self.conn.execute(query, *(parameters or []))
+
+    async def execute_many(self, query: str, values: list[tuple]):
+        await self.connect()
+        assert self.conn is not None
+        await self.conn.executemany(query, values)
+
+db = Db()
