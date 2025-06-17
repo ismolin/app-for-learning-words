@@ -58,7 +58,7 @@ class RepeatingWords:
     async def this_is_last_word_in_list(self):
         """This method checks this is last word in list or not"""
 
-        return len(await db.execute(sql=f"""SELECT * FROM {self.user_name}_repetition_list 
+        return len(await db.execute(query=f"""SELECT * FROM {self.user_name}_repetition_list 
                                            WHERE words_eng NOT IN ('{self.word_en}')""")) == 0
 
     async def update_information_of_word(self):
@@ -66,10 +66,10 @@ class RepeatingWords:
         quantity of repetition and next available time of repetition"""
 
         now = datetime.datetime.now()
-        known_word = await db.execute(sql=f"""SELECT * FROM {self.user_name}_repetition_list
+        known_word = await db.execute(query=f"""SELECT * FROM {self.user_name}_repetition_list
                                              LIMIT 1""")
         interval = await self._get_repetition_intervals(known_word[0][2])
-        await db.execute_void(sql=f"""DELETE FROM {self.user_name}_repetition_list
+        await db.execute_void(query=f"""DELETE FROM {self.user_name}_repetition_list
                                 WHERE words_eng = '{known_word[0][0]}';
                                 UPDATE {self.user_name}_words
                                 SET words_count = {known_word[0][2] + 1},
@@ -81,7 +81,7 @@ class RepeatingWords:
         """This method allows you to finish the repetition of words"""
 
         now = datetime.datetime.now()
-        nearest_time = await db.execute(sql=f"""SELECT MIN(last_repetition_time) 
+        nearest_time = await db.execute(query=f"""SELECT MIN(last_repetition_time) 
                                                FROM {self.user_name}_words
                                                WHERE words_count < 6""")
         time = str(nearest_time[0][0] - now).split(":")
