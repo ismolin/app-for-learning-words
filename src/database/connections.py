@@ -1,66 +1,34 @@
-import asyncio
-import asyncpg
-import os
-from dotenv import load_dotenv
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
+from sqlalchemy.orm import declarative_base
+from typing import AsyncGenerator
+from config import DBConfig
 
-load_dotenv(".env")
+Base = declarative_base()
 
-class Db:
-    def __init__(self, loop=None):
-        self.loop = loop or asyncio.get_event_loop()
-        self.conn: asyncpg.Connection | None = None
-        self.host = os.getenv("DB_HOST")
-        self.port = os.getenv("DB_PORT")
-        self.database = os.getenv("DB_DATABASE")
-        self.user = os.getenv("DB_USER")
-        self.password = os.getenv("DB_PASSWORD")
+async_session_factory: async_sessionmaker[AsyncSession] | None = None
 
-        if not all([self.host, self.port, self.database, self.user, self.password]):
-            raise ValueError("Отсутствуют обязательные переменные окружения для подключения к БД.")
 
-    async def connect(self):
-        if self.conn is None or self.conn.is_closed():
-            try:
-                self.conn = await asyncpg.connect(
-                    host=self.host,
-                    port=self.port,
-                    database=self.database,
-                    user=self.user,
-                    password=self.password
-                )
-                print("Подключение к базе данных успешно установлено.")
-            except Exception as e:
-                print(f"Ошибка при подключении к базе данных: {e}")
-                raise
+def create_database_url(config: DBConfig) -> str:
+    return f"postgresql+asyncpg://{config.user}:{config.password}@{config.host}:{config.port}/{config.database}"
 
-    async def close(self):
-        if self.conn and not self.conn.is_closed():
-            await self.conn.close()
-            self.conn = None
 
-    async def execute(self, query: str, parameters: list | tuple | None = None):
-        await self.connect()
-        assert self.conn is not None
-        return await self.conn.fetch(query, *(parameters or []))
+def init_engine_and_session(config: DBConfig):
 
-    async def execute_one(self, query: str, parameters: list | tuple | None = None):
-        await self.connect()
-        assert self.conn is not None
-        return await self.conn.fetchrow(query, *(parameters or []))
+    global async_session_factory
 
-    async def execute_scalar(self, query: str, parameters: list | tuple | None = None):
-        await self.connect()
-        assert self.conn is not None
-        return await self.conn.fetchval(query, *(parameters or []))
-    
-    async def execute_void(self, query: str, parameters: list | tuple | None = None):
-        await self.connect()
-        assert self.conn is not None
-        await self.conn.execute(query, *(parameters or []))
+    database_url = create_database_url(config)
+    engine = create_async_engine(database_url, echo=False)
 
-    async def execute_many(self, query: str, values: list[tuple]):
-        await self.connect()
-        assert self.conn is not None
-        await self.conn.executemany(query, values)
+    async_session_factory = async_sessionmaker(
+        bind=engine,
+        expire_on_commit=False,
+        class_=AsyncSession
+    )
 
-db = Db()
+
+async def get_session() -> AsyncGenerator[AsyncSession, None]:
+
+    if async_session_factory is None:
+        raise RuntimeError("Database not initialized. Call init_engine_and_session first.")
+    async with async_session_factory() as session:
+        yield session
