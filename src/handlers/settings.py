@@ -33,3 +33,20 @@ SETTINGS_ACTIONS = {
     ),
 }
 
+@router.message(F.text.in_(SETTINGS_ACTIONS.keys()))
+async def settings_handler(message: Message, state: FSMContext):
+    action_text = message.text
+    if action_text is None:
+        raise ValueError("action_text is None")
+
+    response_text, reply_markup = SETTINGS_ACTIONS[action_text]
+
+    if action_text == 'Завершить':
+        bot = message.bot
+        if bot:
+            try:
+                await bot.delete_message(message.chat.id, message.message_id - 1)
+            except Exception:
+                pass  
+
+    await message.answer(response_text, reply_markup=reply_markup)
