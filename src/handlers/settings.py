@@ -2,8 +2,8 @@ from aiogram import Router, F
 from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
 
-from src.states.user_setup import UserSetup
-from src.database.session import get_session
+from src.modules.user_states import UserStates
+from src.database.connections import get_session
 from src.services.user_service import UserService
 from src.content.keyboards import (
     word_count_keyboard,
@@ -23,10 +23,10 @@ fsm_router = Router()
 
 @fsm_router.message(F.text == "Настройки")
 async def start_setup(message: Message, state: FSMContext):
-    await state.set_state(UserSetup.choosing_word_count)
+    await state.set_state(UserStates.choosing_word_count)
     await message.answer("Сколько слов в день ты хочешь учить?", reply_markup=word_count_keyboard)
 
-@fsm_router.message(UserSetup.choosing_word_count)
+@fsm_router.message(UserStates.choosing_word_count)
 async def choose_word_count(message: Message, state: FSMContext):
     if not message.text.isdigit():
         await message.answer("Пожалуйста, введи число.")
@@ -37,20 +37,20 @@ async def choose_word_count(message: Message, state: FSMContext):
         user = await service.get_or_create_user()
         await service.update_words_per_day(user, int(message.text))
 
-    await state.set_state(UserSetup.choosing_time)
+    await state.set_state(UserStates.choosing_time)
     await message.answer(timing_message, reply_markup=time_repeat_keyboard)
 
-@fsm_router.message(UserSetup.choosing_time)
+@fsm_router.message(UserStates.choosing_time)
 async def choose_time(message: Message, state: FSMContext):
     async for session in get_session():
         service = UserService(session, str(message.from_user.id), message.from_user.username)
         user = await service.get_or_create_user()
         await service.update_reminder_time(user, message.text)
 
-    await state.set_state(UserSetup.choosing_categories)
+    await state.set_state(UserStates.choosing_categories)
     await message.answer(selecting_categories_message, reply_markup=categories_keyboard)
 
-@fsm_router.message(UserSetup.choosing_categories)
+@fsm_router.message(UserStates.choosing_categories)
 async def choose_categories(message: Message, state: FSMContext):
     async for session in get_session():
         service = UserService(session, str(message.from_user.id), message.from_user.username)
