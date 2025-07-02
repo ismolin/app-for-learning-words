@@ -4,7 +4,7 @@ from aiogram.fsm.context import FSMContext
 
 from src.modules.user_states import UserStates
 from src.database.connections import get_session
-from src.services.user_service import UserService
+from src.modules.settings import UserSettings
 from src.content.keyboards import (
     word_count_keyboard,
     time_repeat_keyboard,
@@ -33,8 +33,8 @@ async def choose_word_count(message: Message, state: FSMContext):
         return
 
     async for session in get_session():
-        service = UserService(session, str(message.from_user.id), message.from_user.username)
-        user = await service.get_or_create_user()
+        service = UserSettings(session, str(message.from_user.id), message.from_user.username)
+        user = await service.create_user_tables()
         await service.update_words_per_day(user, int(message.text))
 
     await state.set_state(UserStates.choosing_time)
@@ -43,7 +43,7 @@ async def choose_word_count(message: Message, state: FSMContext):
 @fsm_router.message(UserStates.choosing_time)
 async def choose_time(message: Message, state: FSMContext):
     async for session in get_session():
-        service = UserService(session, str(message.from_user.id), message.from_user.username)
+        service = UserSettings(session, str(message.from_user.id), message.from_user.username)
         user = await service.get_or_create_user()
         await service.update_reminder_time(user, message.text)
 
@@ -53,7 +53,7 @@ async def choose_time(message: Message, state: FSMContext):
 @fsm_router.message(UserStates.choosing_categories)
 async def choose_categories(message: Message, state: FSMContext):
     async for session in get_session():
-        service = UserService(session, str(message.from_user.id), message.from_user.username)
+        service = UserSettings(session, str(message.from_user.id), message.from_user.username)
         user = await service.get_or_create_user()
 
         if message.text == "Продолжить":
