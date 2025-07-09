@@ -89,3 +89,11 @@ class UserService:
             self.session.add(user)
             await self.session.commit()
         return user
+    
+    async def update_words_per_day(self, user: User, value: int):
+        user.words_per_day = value
+        await self.session.commit()
+
+    async def update_reminder_time(self, user: User, time_text: str):
+        user.time_of_repetition = time_text
+        await self.session.commit()
