@@ -97,3 +97,19 @@ class UserService:
     async def update_reminder_time(self, user: User, time_text: str):
         user.time_of_repetition = time_text
         await self.session.commit()
+
+        async def add_category(self, user: User, category_name: str) -> str:
+        result = await self.session.execute(
+            select(Category).where(Category.name == category_name)
+        )
+        existing = result.scalar_one_or_none()
+        if not existing:
+            new_cat = Category(name=category_name)
+            self.session.add(new_cat)
+            await self.session.commit()
+            return "added"
+        return "exists"
+
+    async def set_user_state(self, user: User, state: str):
+        user.state = state
+        await self.session.commit()
